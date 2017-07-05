@@ -15,9 +15,19 @@ class CodecoolerController:
         found = False
         for ccooler in mergedlist:
             if login == ccooler.name and password == ccooler.surname:
-                ccooler.print_menu()
+                self.start_controller(ccooler)
                 found = True
                 break
 
         if not found:
             print("Wrong login or password!")
+
+    def start_controller(self, ccooler):
+        if ccooler.__class__.__name__ == "Student":
+            StudentController.start_controller(ccooler.name, ccooler.surname)
+        elif ccooler.__class__.__name__ == "Mentor":
+            MentorController.start_controller(ccooler.name, ccooler.surname)
+        elif ccooler.__class__.__name__ == "Manager":
+            ManagerController.start_controller(ccooler.name, ccooler.surname)
+        elif ccooler.__class__.__name__ == "OfficeManager":
+            OfficeManagerController.start_controller(ccooler.name, ccooler.surname)
