@@ -1,4 +1,5 @@
 from Models.employee import Employee
 
-class MiriamView(Employee):
+
+class OfficeEmployeeView(Employee):
     pass
