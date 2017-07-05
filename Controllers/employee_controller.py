@@ -13,6 +13,6 @@ class EmployeerCotroller(CodecoolerController):
             :obj: list of :obj: `Student`: list off students
         """
 
-        student_list = Student.student_list
+        student_list = Student.student_list.container
 
         return student_list
