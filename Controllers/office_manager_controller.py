@@ -2,7 +2,7 @@ from Controllers.employee_controller import EmployeeController
 from View.employee_view import EmployeeView
 
 
-class OfficeEmployeeController(EmployeeController):
+class OfficeManagerController:
     def start_controller():
 
         CodecoolerView.print_menu("Welcome {} {}", ["Show studen list"], "Exit")
@@ -15,3 +15,4 @@ class OfficeEmployeeController(EmployeeController):
 
             if choice == "1":
                 print_student_list(students)
+>>>>>>> master
