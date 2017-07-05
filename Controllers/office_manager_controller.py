@@ -15,4 +15,3 @@ class OfficeManagerController:
 
             if choice == "1":
                 print_student_list(students)
->>>>>>> master

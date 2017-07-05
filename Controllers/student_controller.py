@@ -9,7 +9,8 @@ class StudentController:
     @classmethod
     def start_controller(cls, name, surname):
 
-        CodecoolerView.print_menu("Welcome {} {}", ["Submit assignment", "View my grades"], "Exit")
+        CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
+                                  ["Submit assignment", "View my grades"], "Exit")
 
         option = 0
         while not option == "3":
