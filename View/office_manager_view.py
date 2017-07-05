@@ -1,5 +1,5 @@
-from Models.employee import Employee
+from View.employee_view import EmployeeView
 
 
-class OfficeEmployeeView(Employee):
+class OfficeManagerView(EmployeeView):
     pass

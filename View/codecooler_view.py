@@ -1,3 +1,5 @@
+import getpass
+
 class CodecoolerView:
 
     @staticmethod
@@ -16,8 +18,11 @@ class CodecoolerView:
         print('\033[92m' + title + ':' + '\033[0m')
 
         for question in questions_list:
-            user_input = input(question + ': ')
-            temp.append(user_input)
+            if question == "Password":
+                temp.append(getpass.getpass())
+            else:
+                user_input = input(question + ': ')
+                temp.append(user_input)
 
         else:
             print()

@@ -12,6 +12,8 @@ from Models.student import Student
 
 
 def main():
+    Student.student_list.append(Student("login", "password", "Jakub", "Janiszewski", "@cc",
+                                        codecooler_controller.CodecoolerController.gen_idx("student")))
     codecooler_controller.CodecoolerController.login()
 
 
