@@ -5,7 +5,8 @@ from codecooler_controller import CodecoolerController
 class EmployeerCotroller(CodecoolerController):
     ''' Class with controll methods for all employeers'''
 
-    def get_student_list(self):
+    @staticmethod
+    def get_student_list():
         """
         Method for get student list from Student model
 
@@ -13,6 +14,7 @@ class EmployeerCotroller(CodecoolerController):
             :obj: list of :obj: `Student`: list off students
         """
 
-        student_list = Student.student_list.container
+        return Student.student_list
 
-        return student_list
+
+    view_studen(get_student_list)
