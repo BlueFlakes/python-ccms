@@ -1,4 +1,3 @@
-from Controllers.employee_controller import EmployeeController
 
-class MiriamController(EmployeeController):
+class OfficeManagerController():
     pass

@@ -1,9 +1,8 @@
 from Models.mentor import Mentor
 from Controllers.instances_manager import InstancesList
-from Controllers.employee_controller import EmployeeController
 
 
-class MenagerController(EmployeeController):
+class ManagerController:
     def start_controller():
 
         choice = None

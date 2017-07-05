@@ -6,7 +6,8 @@ from View.codecooler_view import CodecoolerView
 
 class StudentController:
 
-    def start_controller(self, name, surname):
+    @classmethod
+    def start_controller(cls, name, surname):
 
         CodecoolerView.print_menu("Welcome {} {}", ["Submit assignment", "View my grades"], "Exit")
 
