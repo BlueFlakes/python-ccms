@@ -1,8 +1,8 @@
-from Controllers.employee_controller import EmployeerCotroller
+from Controllers.employee_controller import EmployeeController
 from Controllers.instances_manager import InstancesList
 
 
-class MentorController(EmployeerCotroller):
+class MentorController(EmployeeController):
 
     def start_controller():
 
