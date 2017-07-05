@@ -1,8 +1,9 @@
-import os
 from Models.codecooler import Codecooler
 from View.codecooler_view import CodecoolerView
 from Models.mentor import Mentor
 from Models.student import Student
+from Models.office_manager import OfficeManager
+from Models.manager import Manager
 from Controllers.student_controller import StudentController
 from Controllers.mentor_controller import MentorController
 from Controllers.manager_controller import ManagerController
@@ -15,7 +16,7 @@ class CodecoolerController:
     @classmethod
     def login(cls):
         found = False
-        mergedlist = Student.student_list + Mentor.mentor_list
+        mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers + Manager.managers
 
         while not found:
             passes = CodecoolerView.get_inputs("Please provide your login and password", ["Login", "Password"])
@@ -23,7 +24,6 @@ class CodecoolerController:
 
             for ccooler in mergedlist:
                 if login == ccooler.login and password == ccooler.password:
-                    os.system("clear")
                     cls.start_controller(ccooler)
                     found = True
                     break
@@ -40,7 +40,7 @@ class CodecoolerController:
         elif ccooler.__class__.__name__ == "Manager":
             ManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "OfficeManager":
-            OfficeManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
+            OfficeManagerController.start_controller(ccooler.name, ccooler.surname)
 
     @staticmethod
     def gen_idx(position):

@@ -1,17 +1,21 @@
+import os
 from Controllers.employee_controller import EmployeeController
-from View.employee_view import EmployeeView
+from View.codecooler_view import CodecoolerView
 
 
-class OfficeManagerController:
-    def start_controller():
+class OfficeManagerController(EmployeeController):
 
-        CodecoolerView.print_menu("Welcome {} {}", ["Show studen list"], "Exit")
+    @classmethod
+    def start_controller(self, name, surname):
 
-        choice = None
-        while choice != "0":
-            students = self.get_student_list()
-            print_menu()
-            choice = get_choice()
+        option = 0
+        while not option == "0":
+            os.system("clear")
 
-            if choice == "1":
-                print_student_list(students)
+            CodecoolerView.print_menu("Welcome {} {}".format(name, surname), ["Show student list"], "Exit")
+            options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
+            option = options[0]
+
+            if option == "1":
+                student_list = self.get_student_list()
+                print(student_list)
