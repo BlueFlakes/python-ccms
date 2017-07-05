@@ -1,4 +1,4 @@
-from Models.codecooler import Codecooler
+from Models.employee import Employee
 
-class Manager(Codecooler):
+class Manager(Employee):
     pass

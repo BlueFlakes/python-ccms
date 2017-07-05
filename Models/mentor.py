@@ -1,5 +1,5 @@
-from Models.codecooler import Codecooler
+from Models.employee import Employee
 from Controllers.instances_manager import InstancesList
 
-class Mentor(Codecooler):
+class Mentor(Employee):
     mentor_list = InstancesList()
