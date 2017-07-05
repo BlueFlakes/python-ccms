@@ -1,11 +1,12 @@
-from codecooler import Codecooler
-from codecooler_view import CodecoolerView
-from mentor import Mentor
-from student import Student
+from Models.codecooler import Codecooler
+from View.codecooler_view import CodecoolerView
+from Models.mentor import Mentor
+from Models.student import Student
 
 
 class CodecoolerController:
 
+    @classmethod
     def login(self):
         passes = CodecoolerView.get_inputs("Please provide your login and password", ["Login", "Password"])
         login, password = passes[0], passes[1]
