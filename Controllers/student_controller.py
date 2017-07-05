@@ -13,8 +13,9 @@ class StudentController:
                                   ["Submit assignment", "View my grades"], "Exit")
 
         option = 0
-        while not option == "3":
-            option = CodecoolerView.get_inputs("", "Please choose a number")
+        while not option == "0":
+            options = CodecoolerView.get_inputs("Please choose a number", [""])
+            option = options[0]
 
             if option == "1":
                 self.submit_assignment()
