@@ -2,7 +2,7 @@ class CodecoolerView:
 
     @staticmethod
     def get_inputs(title, questions_list):
-        """Show menu to user
+        """Get imput form user
 
         Args:
             title (str): menu title
