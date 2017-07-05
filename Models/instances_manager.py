@@ -37,7 +37,6 @@ class InstancesList():
         except ValueError:
             pass
 
-
     @staticmethod
     def add_person(a_list, person):
         """Add person to the list
