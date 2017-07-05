@@ -34,13 +34,13 @@ class CodecoolerController:
     @classmethod
     def start_controller(cls, ccooler):
         if ccooler.__class__.__name__ == "Student":
-            StudentController.start_controller(ccooler.name, ccooler.surname)
+            StudentController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "Mentor":
-            MentorController.start_controller(ccooler.name, ccooler.surname)
+            MentorController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "Manager":
-            ManagerController.start_controller(ccooler.name, ccooler.surname)
+            ManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "OfficeManager":
-            OfficeManagerController.start_controller(ccooler.name, ccooler.surname)
+            OfficeManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
 
     @staticmethod
     def gen_idx(position):
