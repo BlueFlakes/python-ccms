@@ -1,5 +1,5 @@
 from Models.student import Student
-from codecooler_controller import CodecoolerController
+from Controllers.codecooler_controller import CodecoolerController
 
 
 class EmployeeController(CodecoolerController):
@@ -15,6 +15,3 @@ class EmployeeController(CodecoolerController):
         """
 
         return Student.student_list
-
-
-    view_studen(get_student_list)

@@ -1,5 +1,5 @@
 from Models.employee import Employee
 
 
-class Mentor(Codecooler):
+class Mentor(Employee):
     mentor_list = []

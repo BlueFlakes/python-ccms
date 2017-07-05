@@ -1,5 +1,5 @@
-from employee_controller import EmployeerCotroller
-from instances_manager import InstancesList
+from Controllers.employee_controller import EmployeerCotroller
+from Controllers.instances_manager import InstancesList
 
 
 class MentorController(EmployeerCotroller):
