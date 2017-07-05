@@ -2,7 +2,7 @@ from Models.student import Student
 from Controllers.codecooler_controller import CodecoolerController
 
 
-class EmployeerCotroller(CodecoolerController):
+class EmployeeController(CodecoolerController):
     ''' Class with controll methods for all employeers'''
 
     @staticmethod
