@@ -1,4 +1,7 @@
 from View.codecooler_view import CodecoolerView
 
+
 class EmployeeView(CodecoolerView):
-    pass
+    def print_student_list(students):
+        for student in students:
+            print("{}, {}, {}".format(student.idex, student.name, student.surname))
