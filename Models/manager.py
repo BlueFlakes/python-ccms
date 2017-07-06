@@ -2,4 +2,4 @@ from Models.employee import Employee
 
 
 class Manager(Employee):
-    managers = []
+    manager_list = []

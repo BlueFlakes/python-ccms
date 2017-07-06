@@ -12,5 +12,4 @@ class EmployeeController():
         Returns:
             :obj: list of :obj: `Student`: list off students
         """
-
         return Student.student_list

@@ -16,14 +16,14 @@ class CodecoolerController:
     @classmethod
     def login(cls):
         found = False
-        mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers + Manager.managers
+        mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers + Manager.manager_list
 
         while not found:
             passes = CodecoolerView.get_inputs("Please provide your login and password", ["Login", "Password"])
-            login, password = passes[0], passes[1]
+            idx, password = passes[0], passes[1]
 
             for ccooler in mergedlist:
-                if login == ccooler.login and password == ccooler.password:
+                if idx == ccooler.idx and password == ccooler.password:
                     cls.start_controller(ccooler)
                     found = True
                     break
@@ -41,12 +41,3 @@ class CodecoolerController:
             ManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "OfficeManager":
             OfficeManagerController.start_controller(ccooler.name, ccooler.surname)
-
-    @staticmethod
-    def gen_idx(position):
-        types_dict = {"student": "st", "mentor": "mt", "office": "ofc", "manager": "mgr"}
-        random_numbers = [str(randint(0, 9)) for number in range(4)]
-
-        if position in types_dict:
-            idx = types_dict[position] + random_numbers[0] + random_numbers[1] + random_numbers[2] + random_numbers[3]
-            return idx

@@ -19,8 +19,7 @@ class StudentController:
 
             CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
                                       ["Submit assignment", "View my grades"], "Exit")
-            options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
-            option = options[0]
+            option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
             if option == "1":
                 SubmitAssignmentController.start_controller("student", assignments)
