@@ -12,9 +12,14 @@ from random import randint
 
 
 class CodecoolerController:
+    """This class contain logic to proper user login and start his/her part of program"""
 
     @classmethod
     def login(cls):
+        """
+        Check if user of given id exist and entered correct password
+        """
+
         found = False
         mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers + Manager.manager_list
 
@@ -33,6 +38,16 @@ class CodecoolerController:
 
     @classmethod
     def start_controller(cls, ccooler):
+        """
+        Start proper part of program depending on user's role
+
+        Args:
+            ccooler (:obj:): objest representing user
+
+        Examples:
+            Use can have role of Manager, Office Employee, Mentor or Student
+        """
+
         if ccooler.__class__.__name__ == "Student":
             StudentController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
         elif ccooler.__class__.__name__ == "Mentor":
