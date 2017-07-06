@@ -9,7 +9,7 @@ from Controllers.attendance_controller import AttendanceController
 
 
 class MentorController():
-    """Contain logic for OfficeManagerController"""
+    """Contain logic for MentorController"""
 
     @classmethod
     def start_controller(cls, name, surname, idx):
@@ -49,7 +49,7 @@ class MentorController():
     @staticmethod
     def add_mentor():
         """
-        Create mentor object
+        Create Mentor object and add to mentor_list
         """
 
         title = 'Creating mentor'
@@ -60,7 +60,7 @@ class MentorController():
     @staticmethod
     def remove_mentor():
         """
-        Remove Mentor object form mentor_list
+        Remove Mentor object from mentor_list
         """
 
         InstancesList.remove_person(Mentor.mentor_list)
