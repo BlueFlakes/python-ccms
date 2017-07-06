@@ -14,7 +14,7 @@ class StudentController:
     @classmethod
     def start_controller(cls, name, surname, idx):
         """
-        Allow student user perform assign tasks. 
+        Allow student user perform assign tasks.
         Call functions to print menu for user and get input of choosen option
 
         Args:
