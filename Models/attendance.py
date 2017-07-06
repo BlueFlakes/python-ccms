@@ -8,7 +8,7 @@ class AttendanceModel:
         Constructor of attendance object.
 
         Args:
-            student_idx (string): uniqe student ide
+            student_idx (string): uniqe student id
             date (:obj: `datetime.date`): date of cheak attendance
             state (int): status of student attendane
 
