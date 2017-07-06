@@ -13,10 +13,13 @@ from Models.student import Student
 from Models.manager import Manager
 
 def main():
-    Student.student_list.append(Student(Tools.gen_idx("student"), "password", "Jakub", "Janiszewski", "@cc"))
+    idx = Tools.gen_idx("student")
+    print(idx)
+    Student.student_list.append(Student(idx, "password", "Jakub", "Janiszewski", "@cc"))
 
-
-    mentor.Mentor.mentor_list.append(mentor.Mentor(Tools.gen_idx("mentor"), "x", "x", "x", "@cc"))
+    idxx = Tools.gen_idx("mentor")
+    print(idxx)
+    mentor.Mentor.mentor_list.append(mentor.Mentor(idxx, "x", "x", "x", "@cc"))
 
     idx = Tools.gen_idx("manager")
     print(idx)
