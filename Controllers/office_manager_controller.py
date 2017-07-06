@@ -4,9 +4,17 @@ from View.codecooler_view import CodecoolerView
 
 
 class OfficeManagerController(EmployeeController):
+    """Contain logic for OfficeManagerController"""
 
     @classmethod
     def start_controller(self, name, surname):
+        """
+        Allow office manager user perform assign tasks
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+        """
 
         option = 0
         while not option == "0":
