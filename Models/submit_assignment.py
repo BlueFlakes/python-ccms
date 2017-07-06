@@ -5,8 +5,13 @@ class SubmitAssignment:
 
     assignments = []
 
-    def __init__(self, idx, link, comment, date=datetime.time()):
+    def __init__(self, idx, link, name, date=None):
         self.idx = idx
-        self.date = date
         self.link = link
-        self.comment
+        self.name = name
+
+        if type(date) == str:
+            self.date = date
+        else:
+            date = datetime.today()
+            self.date = "{}.{}.{} - {}:{}".format(date.day, date.month, date.year, date.hour, date.minute)
