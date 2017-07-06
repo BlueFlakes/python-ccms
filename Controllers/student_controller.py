@@ -17,11 +17,11 @@ class StudentController:
 
             CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
                                       ["Submit assignment", "View my grades"], "Exit")
-            options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
-            option = options[0]
+            option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
             if option == "1":
                 cls.submit_assignment()
+
             elif option == "2":
                 cls.view_grades(idx)
 
