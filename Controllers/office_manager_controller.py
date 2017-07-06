@@ -17,5 +17,5 @@ class OfficeManagerController(EmployeeController):
             option = options[0]
 
             if option == "1":
-                student_list = self.get_student_list()
-                print(student_list)
+                students = self.get_student_list()
+                EmployeeView.print_student_list(students)
