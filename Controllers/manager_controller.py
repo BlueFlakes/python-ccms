@@ -52,7 +52,8 @@ class ManagerController:
     @classmethod
     def handle_main_menu_requests(cls, user_request):
         """
-        Call function that perform task from menu choosen by user
+        Call function that perform task from menu choosen by user: see list of students, mentors, 
+        edit mentors
 
         Args:
             user_request (string): option choosen by user
@@ -73,7 +74,9 @@ class ManagerController:
 
     @classmethod
     def start_mentor_edit_menu(cls):
-        """Call functions that get user input and show inner menu"""
+        """
+        Call functions that get user input and show inner menu
+        """
 
         user_request = None
 
@@ -87,7 +90,8 @@ class ManagerController:
     @classmethod
     def handle_mentor_edit_requests(cls, user_request):
         """
-        Call function that perform task from inner menu choosen by user
+        Call function that perform task from inner menu choosen by user: add mentor, remove mentor,
+        chenge mentros details
 
         Args:
             user_request (string): option choosen by user
