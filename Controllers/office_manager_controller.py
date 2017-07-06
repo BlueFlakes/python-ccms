@@ -10,7 +10,7 @@ class OfficeManagerController(EmployeeController):
     def start_controller(self, name, surname):
         """
         Allow office manager user perform assign tasks.
-        Call functions to print menu for user and get input of choosen option
+        Call functions to print menu for user and get input of choosen option: show students list
 
         Args:
             name (string): name of user
