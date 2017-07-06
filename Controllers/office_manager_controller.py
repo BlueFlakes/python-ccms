@@ -4,9 +4,18 @@ from data_manager import DataManager
 
 
 class OfficeManagerController:
+    """Contain logic for OfficeManagerController"""
 
     @classmethod
     def start_controller(self, name, surname):
+        """
+        Allow office manager user perform assign tasks.
+        Call functions to print menu for user and get input of choosen option: show students list
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+        """
 
         option = 0
         while not option == "0":
