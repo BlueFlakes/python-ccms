@@ -1,10 +1,13 @@
 import getpass
 
+
 class CodecoolerView:
+    """This class contains major part of view logic for all controllers""".
 
     @staticmethod
     def get_inputs(title, questions_list):
-        """Get imput form user
+        """
+        Get imput form user
 
         Args:
             title (str): menu title
@@ -12,8 +15,8 @@ class CodecoolerView:
 
         Return:
             temp (list): list with user inputs
-
         """
+
         temp = []
         print('\033[92m' + title + ':' + '\033[0m')
 
@@ -31,17 +34,15 @@ class CodecoolerView:
 
     @staticmethod
     def print_menu(title, available_options, exit_message):
-        """Show menu to user
+        """
+        Show menu to user
 
         Args:
             title (str): menu title
             available_options (list): possible ways to operate in app
             exit_message (str): exit message
-
-        Return:
-            None
-
         """
+
         print(title+':')
 
         for i, option in enumerate(available_options):
@@ -52,13 +53,11 @@ class CodecoolerView:
 
     @staticmethod
     def print_result(result):
-        """Show results of action
+        """
+        Show results of action
 
         Args:
             result (str): print message with result to user
-
-        Return:
-            None
-
         """
+
         print(result)
