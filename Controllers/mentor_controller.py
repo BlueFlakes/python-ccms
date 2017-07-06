@@ -1,4 +1,5 @@
 from Controllers.instances_manager import InstancesList
+from Controllers.attendance_controller import AttendanceController
 
 
 class MentorController():
@@ -17,3 +18,7 @@ class MentorController():
 
             elif choice == "2":
                 InstancesList.remove_person(students, self.login)
+
+            elif choice == "3":
+                AttendanceController.start_controller(students)
+
