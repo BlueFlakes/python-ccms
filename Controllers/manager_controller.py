@@ -40,7 +40,6 @@ class ManagerController:
         Call functions that get user input and show menu
         """
 
-        # user_request (None): further string that is choosen menu option given by user
         user_request = None
 
         while user_request != "0":
@@ -76,7 +75,6 @@ class ManagerController:
     def start_mentor_edit_menu(cls):
         """Call functions that get user input and show inner menu"""
 
-        # user_request (None): further string that is choosen menu option given by user
         user_request = None
 
         while user_request != "0":
