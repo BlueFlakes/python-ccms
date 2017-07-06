@@ -35,7 +35,7 @@ class AttendanceController:
                 # here we need add print table
                 cls.calculate_attendnace(students_attendance, choosen_student[0])
 
-        DataManager.save_file("csv/attendance.csv", students_attendance)
+        cls.save_attendance(students_attendance)
 
     @staticmethod
     def calculate_attendnace(students_attendance, student_idx):
@@ -107,3 +107,18 @@ class AttendanceController:
             students_attendance.append(attendnace)
 
         return students_attendance
+
+
+    @staticmethod
+    def save_attendance(students_attendance):
+        """
+        Save list of attendance of all students in csv file
+
+        Args:
+            students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        """
+        for i in range(len(students_attendance)):
+            students_attendance[i] = [students_attendance[i].student_idx, students_attendance[i].date,
+                                      students_attendance[i].state]
+
+        DataManager.save_file("csv/attendance.csv", students_attendance)
