@@ -42,10 +42,10 @@ class StudentController:
         assignments = SubmitAssignment.assignments
 
         for i in range(len(assignments_list)):
-            to_append = SubmitAssignment(assignments_list[i][0], assignments_list[i][1],
-                                                assignments_list[i][2], assignments_list[3])
-            assignments.append(to_append)
 
+            to_append = SubmitAssignment(assignments_list[i][0], assignments_list[i][1],
+                                         assignments_list[i][2], assignments_list[i][3])
+            assignments.append(to_append)
 
         return assignments
 
