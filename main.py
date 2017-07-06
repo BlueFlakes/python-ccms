@@ -12,6 +12,7 @@ from Controllers.tools import Tools
 from Models.student import Student
 from Models.manager import Manager
 
+
 def main():
     idx = Tools.gen_idx("student")
     print(idx)
