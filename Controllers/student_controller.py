@@ -1,7 +1,6 @@
 import os
 from Models.student import Student
 from Models.codecooler import Codecooler
-from View.student_view import StudentView
 from View.codecooler_view import CodecoolerView
 from data_manager import DataManager
 
