@@ -4,7 +4,17 @@ from Controllers.mentor_controller import MentorController
 import os
 import sys
 
+
 class ManagerController:
+    """
+    Contain logic for OfficeManagerController
+
+    Attributes:
+        user_welcome (None): further change to string greeting actual user.
+        main_menu (list of strings): list of user's available options
+        mentor_edit_menu (list of strings): list of user's available options in inner menu
+    """
+
     user_welcome = None
     main_menu = ['List mentors', 'Edit mentors', 'List Students']
     mentor_edit_menu = ['Add mentor', 'Delete mentor', 'Modify mentor name',
@@ -13,11 +23,24 @@ class ManagerController:
 
     @classmethod
     def start_controller(cls, name, surname, idx):
+        """
+        Allow manager user perform assign tasks
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+            idx (string): unique user's id
+        """
         cls.user_welcome = "Welcome {} {}".format(name, surname)
         cls.start_main_menu()
 
     @classmethod
     def start_main_menu(cls):
+        """
+        Call functions that get user input and show menu
+        """
+
+        # user_request (None): further string that is choosen menu option given by user
         user_request = None
 
         while user_request != "0":
@@ -27,9 +50,14 @@ class ManagerController:
 
             cls.handle_main_menu_requests(user_request)
 
-
     @classmethod
     def handle_main_menu_requests(cls, user_request):
+        """
+        Call function that perform task from menu choosen by user
+
+        Args:
+            user_request (string): option choosen by user
+        """
         if user_request == '1':
             # Mentors list
             pass
@@ -46,6 +74,9 @@ class ManagerController:
 
     @classmethod
     def start_mentor_edit_menu(cls):
+        """Call functions that get user input and show inner menu"""
+
+        # user_request (None): further string that is choosen menu option given by user
         user_request = None
 
         while user_request != "0":
@@ -57,6 +88,13 @@ class ManagerController:
 
     @classmethod
     def handle_mentor_edit_requests(cls, user_request):
+        """
+        Call function that perform task from inner menu choosen by user
+
+        Args:
+            user_request (string): option choosen by user
+        """
+
         if user_request == '1':
             MentorController.add_mentor()
 
@@ -74,10 +112,3 @@ class ManagerController:
 
         elif user_request == '6':
             MentorController.change_mentor_email()
-
-
-
-
-
-
-        #
