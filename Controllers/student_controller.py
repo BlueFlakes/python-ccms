@@ -31,10 +31,20 @@ class StudentController:
 
     @classmethod
     def view_grades(cls, idx):
-        grades = DataManager.read_file("csv/grades.csv")
+        students_grades = []
+        all_grades = DataManager.read_file("csv/grades.csv")
 
-        print(grades)
-        option = CodecoolerView.get_inputs("Enter anything to exit", [""])
+        for grade in all_grades:
+            if idx in grade[0]:
+                students_grades.append(grade)
+
+        if len(students_grades) > 0:
+            titles = ["Students idx", "Assignment", "Grade"]
+            CodecoolerView.print_table(titles, students_grades)
+        else:
+            CodecoolerView.print_result("There is no grades!")
+            option = CodecoolerView.get_inputs("Enter anything to exit", [""])
+
 
     @staticmethod
     def read_assignments(return_type):

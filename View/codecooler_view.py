@@ -1,4 +1,5 @@
 import getpass
+from Controllers.table import Table
 
 class CodecoolerView:
 
@@ -62,3 +63,8 @@ class CodecoolerView:
 
         """
         print(result)
+
+    @staticmethod
+    def print_table(titles, data):
+        print(Table.table_creator(titles, data))
+        option = CodecoolerView.get_inputs("Enter anything to exit", [""])

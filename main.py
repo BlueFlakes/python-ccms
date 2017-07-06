@@ -11,11 +11,16 @@ from Controllers import mentor_controller, office_manager_controller, student_co
 from Controllers.tools import Tools
 from Models.student import Student
 from Models.manager import Manager
+from Models.office_manager import OfficeManager
 
 def main():
     idx = Tools.gen_idx("student")
     print(idx)
     Student.student_list.append(Student(idx, "password", "Jakub", "Janiszewski", "@cc"))
+
+    idx = Tools.gen_idx("office")
+    print(idx)
+    OfficeManager.office_managers.append(OfficeManager(idx, "office", "Miriam", "B", "@cc"))
 
     idxx = Tools.gen_idx("mentor")
     print(idxx)
