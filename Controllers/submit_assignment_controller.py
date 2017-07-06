@@ -5,10 +5,10 @@ from Models.submit_assignment import SubmitAssignment
 class SubmitAssignmentController:
 
     @classmethod
-    def start_controller(cls, position, assignments):
+    def start_controller(cls, position, assignments, idx):
 
         if position == "student":
-            cls.student_side(assignments)
+            cls.student_side(assignments, idx)
         elif position == "mentor":
             cls.mentor_side(assignments)
 
@@ -25,10 +25,11 @@ class SubmitAssignmentController:
                 CodecoolerView.print_result("Link: {}".format(assgn[1]))
 
                 grade = CodecoolerView.get_inputs("Grade this assignment: ", [""])
+                grade = grade[0]
                 DataManager.extend_file("csv/grades.csv", [assgn[0], task, grade])
 
     @staticmethod
-    def student_side(assignments):
-        args = CodecoolerView.get_inputs("Submit your assignment", ["Your idx", "Link", "Assignment name"])
+    def student_side(assignments, idx):
+        args = CodecoolerView.get_inputs("Submit your assignment", ["Link", "Assignment name"])
 
-        assignments.append(SubmitAssignment(args[0], args[1], args[2]))
+        assignments.append(SubmitAssignment(idx, args[0], args[1]))

@@ -1,26 +1,39 @@
+import os
 from Controllers.instances_manager import InstancesList
+from Controllers.student_controller import StudentController
+from Controllers.submit_assignment_controller import SubmitAssignmentController
+from View.codecooler_view import CodecoolerView
 from Models.mentor import Mentor
+from Models.student import Student
 from Controllers.attendance_controller import AttendanceController
 
 
 class MentorController():
 
-    def start_controller():
+    @classmethod
+    def start_controller(cls, name, surname, idx):
+        assignments = StudentController.read_assignments("lists")
+        students = Student.student_list
 
-        choice = None
-        while choice != "0":
-            students = self.get_student_list()
-            print_menu()
-            choice = get_choice()
+        option = 0
+        while not option == "0":
+            os.system("clear")
 
-            if choice == "1":
-                person = Student()
-                InstancesList.add_person(students, person)
+            CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
+                                      ["Students list", "Add assignment", "Grade assignment",
+                                       "Check attendace", "Edit student"], "Exit")
+            option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
-            elif choice == "2":
-                InstancesList.remove_person(students, self.login)
-            elif choice == "3":
-                AttendanceController.start_controller(students)
+            if option == "1":
+                print(students)
+            elif option == "2":
+                pass # add assignment
+            elif option == "3":
+                SubmitAssignmentController.start_controller("mentor", assignments, idx)
+            elif option == "4":
+                pass # check attendance
+            elif option == "5":
+                cls.start_student_edit_menu()
 
     @staticmethod
     def add_mentor():
@@ -56,3 +69,38 @@ class MentorController():
         title = 'Modify email'
         task = ['Provide new email']
         InstancesList.modify_person_details(Mentor.mentor_list, 'email', title, task)
+
+    @classmethod
+    def start_student_edit_menu(cls):
+        user_request = None
+        user_welcome = "Student edit manager"
+        student_edit_menu = ['Add student', 'Delete student', 'Modify student name',
+                            'Modify student surname', 'Modify student password',
+                            'Modify student email']
+
+        while user_request != "0":
+            os.system("clear")
+            CodecoolerView.print_menu(user_welcome, student_edit_menu, "Exit")
+            user_request = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+
+            cls.handle_student_edit_requests(user_request)
+
+    @classmethod
+    def handle_student_edit_requests(cls, user_request):
+        if user_request == '1':
+            StudentController.add_student()
+
+        elif user_request == '2':
+            StudentController.remove_student()
+
+        elif user_request == '3':
+            StudentController.change_student_name()
+
+        elif user_request == '4':
+            StudentController.change_student_surname()
+
+        elif user_request == '5':
+            StudentController.change_student_password()
+
+        elif user_request == '6':
+            StudentController.change_student_email()

@@ -56,7 +56,7 @@ class InstancesList:
 
 
     @staticmethod
-    def add_person(a_list, obj_to_create ,title, questions):
+    def add_person(a_list, obj_to_create, title, questions):
         """Add person to the list
 
         Args:
