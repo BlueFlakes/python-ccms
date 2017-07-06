@@ -3,9 +3,9 @@ from View.codecooler_view import CodecoolerView
 
 class AttendanceController:
 
-    def start_controller(self):
-        CodecoolerView.get_inputs("Check attendance", ["Student idx", "Attendance state"])
-        attendance = AttendanceModel(student_idx, state)
+    def start_controller(self, students):
+        student_detail = CodecoolerView.get_inputs("Check attendance", ["Student idx", "Attendance state"])
+        attendance = AttendanceModel(student_detail[0], student_detail[1])
 
         for student in students:
             if student.idx == student_idx:
