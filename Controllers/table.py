@@ -7,7 +7,7 @@ class Table:
         cls.table = [table_titles] + data
         cls.table_sizes = cls._get_table_sizes()
         table_visualisation = cls._create_table()
-        print(table_visualisation)
+
         return table_visualisation
 
 
