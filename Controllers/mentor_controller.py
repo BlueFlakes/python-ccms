@@ -6,6 +6,7 @@ from View.codecooler_view import CodecoolerView
 from Models.mentor import Mentor
 from Models.student import Student
 from Controllers.attendance_controller import AttendanceController
+from data_manager import DataManager
 
 
 class MentorController():
@@ -36,7 +37,7 @@ class MentorController():
             option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
             if option == "1":
-                print(students)
+                cls.get_students_list()
             elif option == "2":
                 pass     # add assignment
             elif option == "3":
@@ -148,3 +149,9 @@ class MentorController():
 
         elif user_request == '6':
             StudentController.change_student_email()
+
+    @classmethod
+    def get_students_list(cls):
+        students = DataManager.read_file("csv/students.csv")
+        titles = ["Idx", "Password", "Name", "Surname", "Email"]
+        CodecoolerView.print_table(titles, students)

@@ -1,9 +1,9 @@
 import os
-from Controllers.employee_controller import EmployeeController
 from View.codecooler_view import CodecoolerView
+from data_manager import DataManager
 
 
-class OfficeManagerController(EmployeeController):
+class OfficeManagerController:
     """Contain logic for OfficeManagerController"""
 
     @classmethod
@@ -26,5 +26,6 @@ class OfficeManagerController(EmployeeController):
             option = options[0]
 
             if option == "1":
-                students = self.get_student_list()
-                EmployeeView.print_student_list(students)
+                students = DataManager.read_file("csv/students.csv")
+                titles = ["Idx", "Password", "Name", "Surname", "Email"]
+                CodecoolerView.print_table(titles, students)

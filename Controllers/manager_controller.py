@@ -1,6 +1,7 @@
 from Models.student import Student
 from View.codecooler_view import CodecoolerView
 from Controllers.mentor_controller import MentorController
+from data_manager import DataManager
 import os
 import sys
 
@@ -59,15 +60,13 @@ class ManagerController:
             user_request (string): option choosen by user
         """
         if user_request == '1':
-            # Mentors list
-            pass
+            cls.get_mentors_list()
 
         elif user_request == '2':
             cls.start_mentor_edit_menu()
 
         elif user_request == '3':
-            # List students
-            pass
+            cls.get_students_list()
 
         elif user_request == '0':
             sys.exit()
@@ -114,3 +113,17 @@ class ManagerController:
 
         elif user_request == '6':
             MentorController.change_mentor_email()
+
+    @classmethod
+    def get_mentors_list(cls):
+        mentors = DataManager.read_file("csv/mentors.csv")
+        titles = ["Idx", "Password", "Name", "Surname", "Email"]
+        CodecoolerView.print_table(titles, mentors)
+
+    @classmethod
+    def get_students_list(cls):
+        students = DataManager.read_file("csv/students.csv")
+        titles = ["Idx", "Password", "Name", "Surname", "Email"]
+        CodecoolerView.print_table(titles, students)
+
+
