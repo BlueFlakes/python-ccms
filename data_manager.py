@@ -28,8 +28,16 @@ class DataManager:
         with open(file_name, 'w') as csvfile:
             data_writer = csv.writer(csvfile)
 
-            for record in data:
-                data_writer.writerow([record])
+            for i in range(len(data)):
+                data_writer.writerow(data[i])
+
+    @staticmethod
+    def extend_file(file_name, data):
+
+        with open(file_name, 'a') as csvfile:
+            data_writer = csv.writer(csvfile)
+
+            data_writer.writerow(data)
 
     @staticmethod
     def get_person_details(idx, file_name):
