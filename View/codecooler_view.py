@@ -29,6 +29,10 @@ class CodecoolerView:
                 user_input = input(question + ': ')
                 user_input = EmployeeController.check_given_email(user_input)
                 temp.append(user_input)
+            elif question.lower() == "grade":
+                user_input = input(question + ': ')
+                user_input = EmployeeController.check_given_grade(user_input)
+                temp.append(user_input)
             else:
                 user_input = input(question + ': ')
                 temp.append(user_input)
