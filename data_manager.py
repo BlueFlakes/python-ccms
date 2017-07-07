@@ -16,8 +16,8 @@ class DataManager:
         Returns:
             temp (list of lists): data read from csv file to further use
         """
-
         temp = []
+
         try:
             with open(file_name, 'r') as csvfile:
                 data_reader = csv.reader(csvfile)
