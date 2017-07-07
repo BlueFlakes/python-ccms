@@ -11,7 +11,10 @@ class Tools:
     @staticmethod
     def gen_idx(position):
         """
-        Generate user id
+        Returns unical id for new user
+
+        Args:
+            position: string
         """
 
         types_dict = {"student": "st", "mentor": "mt", "office": "ofc", "manager": "mgr"}
@@ -28,6 +31,14 @@ class Tools:
 
     @staticmethod
     def check_idx_availability(idx):
+        """
+        Returns False if any of users already have given idx.
+        Otherwise returns True.
+
+        Args:
+            idx: string
+        """
+
         merged_list = Student.student_list + Mentor.mentor_list
         merged_list += Manager.manager_list + OfficeManager.office_managers_list
         for i in range(len(merged_list)):
