@@ -70,5 +70,12 @@ class CodecoolerView:
 
     @staticmethod
     def print_table(titles, data):
+        """
+        Print formatted table
+
+        Args:
+            title (string): title of table
+            data (list of lists): list that contains details about persons as inner list
+        """
         print(Table.table_creator(titles, data))
         option = CodecoolerView.get_inputs("Enter anything to exit", [""])
