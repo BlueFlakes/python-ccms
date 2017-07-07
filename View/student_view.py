@@ -1,2 +1,0 @@
-class StudentView:
-    pass
