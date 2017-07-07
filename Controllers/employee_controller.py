@@ -17,7 +17,10 @@ class EmployeeController():
     @staticmethod
     def check_given_email(email):
         """
-        Check if user email is vaidate
+        Check if given email is vaidate
+
+        Args:
+            email (string): givven email
         """
 
         if "@" in email and "." in email:
