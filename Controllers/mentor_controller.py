@@ -26,7 +26,10 @@ class MentorController():
             option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
             if option == "1":
-                cls.get_students_list()
+                titles = ["Idx", "Password", "Name", "Surname", "Email"]
+                students = InstancesList.prepare_data_to_visualize(Student.student_list)
+                CodecoolerView.print_table(titles, students)
+
             elif option == "2":
                 pass # add assignment
             elif option == "3":
@@ -35,6 +38,9 @@ class MentorController():
                 pass # check attendance
             elif option == "5":
                 cls.start_student_edit_menu()
+            elif option == "0":
+                StudentController.save_students_data()
+
 
     @staticmethod
     def add_mentor():
@@ -111,3 +117,13 @@ class MentorController():
         students = DataManager.read_file("csv/students.csv")
         titles = ["Idx", "Password", "Name", "Surname", "Email"]
         CodecoolerView.print_table(titles, students)
+
+
+    @staticmethod
+    def load_mentors(data):
+        Mentor.mentor_list = InstancesList.convert_data_to_object('mentor', data)
+
+    @staticmethod
+    def save_mentors_data():
+        data = InstancesList.prepare_data_to_visualize(Mentor.mentor_list)
+        DataManager.save_file('csv/mentors.csv', data)

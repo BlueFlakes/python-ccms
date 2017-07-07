@@ -104,3 +104,12 @@ class StudentController:
         title = 'Modify email'
         task = ['Provide new email']
         InstancesList.modify_person_details(Student.student_list, 'email', title, task)
+
+    @staticmethod
+    def load_students(data):
+        Student.student_list = InstancesList.convert_data_to_object('student', data)
+
+    @staticmethod
+    def save_students_data():
+        data = InstancesList.prepare_data_to_visualize(Student.student_list)
+        DataManager.save_file('csv/students.csv', data)

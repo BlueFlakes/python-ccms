@@ -1,4 +1,5 @@
 import csv
+from Controllers.instances_manager import InstancesList
 
 class DataManager:
 
@@ -16,8 +17,9 @@ class DataManager:
 
         with open(file_name, 'r') as csvfile:
             data_reader = csvfile.readlines()
+
             for row in data_reader:
-                row =   row.replace('\n', '')
+                row = row.replace('\n', '')
                 temp.append(row.split(","))
 
         return temp
@@ -58,3 +60,10 @@ class DataManager:
                 temp.append(info)
 
         return temp
+
+
+def load_data_setup(Manager, Student, Mentor, OfficeManager):
+    Manager.load_managers(DataManager.read_file("csv/managers.csv"))
+    Mentor.load_mentors(DataManager.read_file("csv/mentors.csv"))
+    Student.load_students(DataManager.read_file("csv/students.csv"))
+    OfficeManager.load_office_managers(DataManager.read_file("csv/officemanagers.csv"))

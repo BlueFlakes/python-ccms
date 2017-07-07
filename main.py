@@ -12,15 +12,24 @@ from Controllers.tools import Tools
 from Models.student import Student
 from Models.manager import Manager
 from Models.office_manager import OfficeManager
+from Controllers.manager_controller import ManagerController
+from Controllers.office_manager_controller import OfficeManagerController
+from Controllers.mentor_controller import MentorController
+from Controllers.student_controller import StudentController
+import data_manager
+
+
 
 def main():
+    data_manager.load_data_setup(ManagerController, StudentController, MentorController, OfficeManagerController)
+
     idx = Tools.gen_idx("student")
     print(idx)
     Student.student_list.append(Student(idx, "password", "Jakub", "Janiszewski", "@cc"))
 
     idx = Tools.gen_idx("office")
     print(idx)
-    OfficeManager.office_managers.append(OfficeManager(idx, "office", "Miriam", "B", "@cc"))
+    OfficeManager.office_managers_list.append(OfficeManager(idx, "office", "Miriam", "B", "@cc"))
 
     idxx = Tools.gen_idx("mentor")
     print(idxx)
@@ -31,7 +40,6 @@ def main():
     Manager.manager_list.append(Manager(idx, "admin", "Kamil", "Konior", "@cc"))
 
     codecooler_controller.CodecoolerController.login()
-
 
 if __name__ == "__main__":
     main()

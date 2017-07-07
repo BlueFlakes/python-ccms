@@ -1,5 +1,9 @@
 from View.codecooler_view import CodecoolerView
 from Controllers.tools import Tools
+from Models.manager import Manager
+from Models.mentor import Mentor
+from Models.student import Student
+from Models.office_manager import OfficeManager
 from time import sleep
 
 class InstancesList:
@@ -93,3 +97,42 @@ class InstancesList:
 
         elif choosen_detail == 'surname':
             person.surname = updated_information
+
+    @staticmethod
+    def prepare_data_to_visualize(data):
+        person_collection = []
+
+        for person in data:
+            person_collection.append([person.idx, person.password, person.name,
+                                        person.surname, person.email])
+        return person_collection
+
+    @staticmethod
+    def convert_data_to_object(given_type, data):
+        temp = []
+
+        for record in data:
+            idx = record[0]
+            password = record[1]
+            name = record[2]
+            surname = record[3]
+            email = record[4]
+
+            if given_type == 'manager':
+                temp.append(Manager(idx, password, name, surname, email))
+
+            elif given_type == 'mentor':
+                temp.append(Mentor(idx, password, name, surname, email))
+
+            elif given_type == 'student':
+                temp.append(Student(idx, password, name, surname, email))
+
+            elif given_type == 'officemanager':
+                temp.append(OfficeManager(idx, password, name, surname, email))
+
+        return temp
+
+
+
+
+        #
