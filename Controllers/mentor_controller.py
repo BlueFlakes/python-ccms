@@ -2,6 +2,7 @@ import os
 from Controllers.instances_manager import InstancesList
 from Controllers.student_controller import StudentController
 from Controllers.submit_assignment_controller import SubmitAssignmentController
+from Controllers.assignment_controller import AssignmentController
 from View.codecooler_view import CodecoolerView
 from Models.mentor import Mentor
 from Models.student import Student
@@ -28,11 +29,11 @@ class MentorController():
             if option == "1":
                 cls.get_students_list()
             elif option == "2":
-                pass # add assignment
+                AssignmentController.start_controller()
             elif option == "3":
                 SubmitAssignmentController.start_controller("mentor", assignments, idx)
             elif option == "4":
-                pass # check attendance
+                AttendanceController.start_controller()
             elif option == "5":
                 cls.start_student_edit_menu()
 
