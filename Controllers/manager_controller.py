@@ -1,5 +1,6 @@
 from Models.student import Student
 from Controllers.instances_manager import InstancesList
+from Controllers.student_controller import StudentController
 from View.codecooler_view import CodecoolerView
 from Controllers.mentor_controller import MentorController
 from Models.manager import Manager
@@ -129,6 +130,16 @@ class ManagerController:
         titles = ["Idx", "Password", "Name", "Surname", "Email"]
         students = InstancesList.prepare_data_to_visualize(Student.student_list)
         CodecoolerView.print_table(titles, students)
+        cls.get_students_grades()
+
+    @staticmethod
+    def get_students_grades():
+        check_grades = CodecoolerView.get_inputs("Do you want to see grades of any student?",
+                                                 ["Yes/no"])
+        check_grades = check_grades[0].lower()
+        if check_grades == "yes":
+            idx = CodecoolerView.get_inputs("Please provide idx of the student", ["Idx"])[0]
+            StudentController.view_grades(idx)
 
 
     @staticmethod
