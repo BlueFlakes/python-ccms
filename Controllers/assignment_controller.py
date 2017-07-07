@@ -4,11 +4,15 @@ from data_manager import DataManager
 
 
 class AssignmentController:
-    """Contain methods to work on Attendance object"""
+    """Contain methods to work on Assignment object"""
 
     @classmethod
     def start_controller(cls):
-        """Contain main logic for AttendanceController. Ask user about assigemnt details"""
+        """
+        Contain main logic for AssignmentController.
+        Ask user about assigemnt details and add it to assigments list
+        """
+
         assgn = CodecoolerView.get_inputs("Add assignment", ["Title", "Description"])
         Assignment.assignments.append(Assignment(assgn[0], assgn[1]))
 
@@ -16,5 +20,11 @@ class AssignmentController:
 
     @staticmethod
     def save_assignment(assgn):
-        """Save list of assignments in csv file"""
+        """
+        Save list of assignments in csv file
+        
+        Args:
+            assgn (list of :obj: `Assignment`): list with all assigmnts
+        """
+
         DataManager.extend_file("csv/assignments.csv", assgn)
