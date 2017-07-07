@@ -18,15 +18,18 @@ class DataManager:
         """
 
         temp = []
+        try:
+            with open(file_name, 'r') as csvfile:
+                data_reader = csv.reader(csvfile)
 
-        with open(file_name, 'r') as csvfile:
-            data_reader = csvfile.readlines()
+                for row in data_reader:
+                    temp.append(row)
 
-            for row in data_reader:
-                row = row.replace('\n', '')
-                temp.append(row.split(","))
+        except FileNotFoundError:
+            open(file_name, 'w').close()
 
-        return temp
+        finally:
+            return temp
 
     @staticmethod
     def save_file(file_name, data):
