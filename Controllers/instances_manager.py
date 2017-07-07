@@ -113,15 +113,30 @@ class InstancesList:
 
     @staticmethod
     def prepare_data_to_visualize(data):
+        """
+        Get attributes from evry objects in data list
+        and add them to inner list as full detail about one object
+
+        Args:
+            data (list of :obj:): list objects where evry object is information about person
+        """
+
         person_collection = []
 
         for person in data:
             person_collection.append([person.idx, person.password, person.name,
-                                        person.surname, person.email])
+                                     person.surname, person.email])
         return person_collection
 
     @staticmethod
     def convert_data_to_object(given_type, data):
+        """
+        Convert data from list of elements to proper objec and add it to list of objects
+
+        Args:
+            given_type (string): arbitrary name that indicate class of created object
+            data (list of lists): list that contains details about persons as inner list
+        """
         temp = []
 
         for record in data:
@@ -144,8 +159,3 @@ class InstancesList:
                 temp.append(OfficeManager(idx, password, name, surname, email))
 
         return temp
-
-
-
-
-        #
