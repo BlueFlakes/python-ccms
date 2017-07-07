@@ -136,6 +136,9 @@ class InstancesList:
         Args:
             given_type (string): arbitrary name that indicate class of created object
             data (list of lists): list that contains details about persons as inner list
+
+        Returns:
+            list of :obj: list of objects from proper class
         """
         temp = []
 

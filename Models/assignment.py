@@ -1,7 +1,21 @@
 class Assignment:
+    """
+    This class represents assigment created by mentor
+
+    Attributes:
+        assignments (list): list of created assigments
+    """
 
     assignments = []
 
     def __init__(self, title, description):
+        """
+        Constructor of assigment object.
+
+        Args:
+            title (string): title of assigement
+            description (string): description of assigement
+        """
+
         self.title = title
         self.description = description
