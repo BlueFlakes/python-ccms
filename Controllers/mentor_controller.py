@@ -110,7 +110,7 @@ class MentorController():
         """
 
         title = 'Modify email'
-        task = ['Provide new email']
+        task = ['Email']
         InstancesList.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
     @classmethod

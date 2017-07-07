@@ -45,7 +45,7 @@ class StudentController:
         """
         Read grades from csv file. Allow student to see his/her grades
         """
-   
+
         students_grades = []
         all_grades = DataManager.read_file("csv/grades.csv")
 
@@ -150,7 +150,7 @@ class StudentController:
         """
 
         title = 'Modify email'
-        task = ['Provide new email']
+        task = ['Email']
         InstancesList.modify_person_details(Student.student_list, 'email', title, task)
 
     @staticmethod
