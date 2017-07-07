@@ -21,6 +21,9 @@ class EmployeeController():
 
         Args:
             email (string): givven email
+
+        Returns:
+            string: validate email given by user
         """
 
         if "@" in email and "." in email:
