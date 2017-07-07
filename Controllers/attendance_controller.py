@@ -111,8 +111,8 @@ class AttendanceController:
         """
         students_attendance = []
         attendance_list = DataManager.read_file("csv/attendance.csv")
-
-        if attendance_list[0][0] and attendance_list[0] and attendance_list:
+        print(attendance_list)
+        if attendance_list:
             for attendance_detail in attendance_list:
                 attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
                 students_attendance.append(attendnace)
