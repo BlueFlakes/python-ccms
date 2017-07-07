@@ -21,7 +21,7 @@ class Tools:
             idx = types_dict[position] + ''.join(random_idx)
             is_available = False
             while not is_available:
-                is_available = check_idx_availability(idx)
+                is_available = Tools.check_idx_availability(idx)
                 if not is_available:
                     idx = types_dict[position] + ''.join([str(randint(0, 9)) for number in range(4)])
             return idx
@@ -29,7 +29,7 @@ class Tools:
     @staticmethod
     def check_idx_availability(idx):
         merged_list = Student.student_list + Mentor.mentor_list
-        merged_list += Manager.manager_list + OfficeManager.office_managers
+        merged_list += Manager.manager_list + OfficeManager.office_managers_list
         for i in range(len(merged_list)):
             merged_list[i] = merged_list[i].idx
 
