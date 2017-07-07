@@ -9,9 +9,20 @@ from data_manager import DataManager
 
 
 class StudentController:
+    """Contain logic for StudentController"""
 
     @classmethod
     def start_controller(cls, name, surname, idx):
+        """
+        Allow student user perform assign tasks.
+        Call functions to print menu for user and get input of choosen option
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+            idx (string): unique user's id
+        """
+
         assignments = cls.read_assignments("objects")
 
         option = 0
@@ -31,6 +42,10 @@ class StudentController:
 
     @classmethod
     def view_grades(cls, idx):
+        """
+        Read grades from csv file. Allow student to see his/her grades
+        """
+   
         students_grades = []
         all_grades = DataManager.read_file("csv/grades.csv")
 
@@ -48,6 +63,12 @@ class StudentController:
 
     @staticmethod
     def read_assignments(return_type):
+        """
+        Convert data from csv file to SubmitAssignment object and add it to list
+
+        Args:
+            return_type (string): indicate whta type return will be
+        """
         assignments_list = DataManager.read_file("csv/submitted_assgn.csv")
         assignments = SubmitAssignment.assignments
 
@@ -64,6 +85,9 @@ class StudentController:
 
     @staticmethod
     def save_assignments(assignments):
+        """
+        Allow save submitted assigement to csv file
+        """
         for i in range(len(assignments)):
             assignments[i] = [assignments[i].idx, assignments[i].link,
                               assignments[i].name, assignments[i].date]
@@ -72,10 +96,18 @@ class StudentController:
 
     @staticmethod
     def remove_student():
+        """
+        Remove Student object from student_list
+        """
+
         InstancesList.remove_person(Student.student_list)
 
     @staticmethod
     def add_student():
+        """
+        Create Student object and add to student_list
+        """
+
         title = 'Creating student'
         basic_questions = ['password', 'Name', 'Surname', 'email']
 
@@ -83,24 +115,40 @@ class StudentController:
 
     @staticmethod
     def change_student_name():
+        """
+        Change student name
+        """
+
         title = 'Modify name'
         task = ['Provide new name']
         InstancesList.modify_person_details(Student.student_list, 'name', title, task)
 
     @staticmethod
     def change_student_password():
+        """
+        Change student password
+        """
+
         title = 'Modify password'
         task = ['Provide new password']
         InstancesList.modify_person_details(Student.student_list, 'password', title, task)
 
     @staticmethod
     def change_student_surname():
+        """
+        Change student surname
+        """
+
         title = 'Modify surname'
         task = ['Provide new surname']
         InstancesList.modify_person_details(Student.student_list, 'surname', title, task)
 
     @staticmethod
     def change_student_email():
+        """
+        Change student email
+        """
+
         title = 'Modify email'
         task = ['Provide new email']
         InstancesList.modify_person_details(Student.student_list, 'email', title, task)

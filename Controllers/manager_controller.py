@@ -8,7 +8,17 @@ from data_manager import DataManager
 import os
 import sys
 
+
 class ManagerController:
+    """
+    Contain logic for OfficeManagerController
+
+    Attributes:
+        user_welcome (None): further change to string greeting actual user.
+        main_menu (list of strings): list of user's available options
+        mentor_edit_menu (list of strings): list of user's available options in inner menu
+    """
+
     user_welcome = None
     main_menu = ['List mentors', 'Edit mentors', 'List Students']
     mentor_edit_menu = ['Add mentor', 'Delete mentor', 'Modify mentor name',
@@ -17,11 +27,23 @@ class ManagerController:
 
     @classmethod
     def start_controller(cls, name, surname, idx):
+        """
+        Allow manager user perform assign tasks
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+            idx (string): unique user's id
+        """
         cls.user_welcome = "Welcome {} {}".format(name, surname)
         cls.start_main_menu()
 
     @classmethod
     def start_main_menu(cls):
+        """
+        Call functions that get user input and show menu
+        """
+
         user_request = None
 
         while user_request != "0":
@@ -31,9 +53,15 @@ class ManagerController:
 
             cls.handle_main_menu_requests(user_request)
 
-
     @classmethod
     def handle_main_menu_requests(cls, user_request):
+        """
+        Call function that perform task from menu choosen by user: see list of students, mentors,
+        edit mentors
+
+        Args:
+            user_request (string): option choosen by user
+        """
         if user_request == '1':
             cls.get_mentors_list()
 
@@ -49,6 +77,10 @@ class ManagerController:
 
     @classmethod
     def start_mentor_edit_menu(cls):
+        """
+        Call functions that get user input and show inner menu
+        """
+
         user_request = None
 
         while user_request != "0":
@@ -60,6 +92,14 @@ class ManagerController:
 
     @classmethod
     def handle_mentor_edit_requests(cls, user_request):
+        """
+        Call function that perform task from inner menu choosen by user: add mentor, remove mentor,
+        chenge mentros details
+
+        Args:
+            user_request (string): option choosen by user
+        """
+
         if user_request == '1':
             MentorController.add_mentor()
 
@@ -90,6 +130,7 @@ class ManagerController:
         students = InstancesList.prepare_data_to_visualize(Student.student_list)
         CodecoolerView.print_table(titles, students)
 
+
     @staticmethod
     def load_managers(data):
         Manager.manager_list = InstancesList.convert_data_to_object('manager', data)
@@ -98,9 +139,3 @@ class ManagerController:
     def save_managers_data():
         data = InstancesList.prepare_data_to_visualize(Manager.manager_list)
         DataManager.save_file('csv/managers.csv', data)
-
-
-
-
-
-        #

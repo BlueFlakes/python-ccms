@@ -6,19 +6,22 @@ from Models.student import Student
 from Models.office_manager import OfficeManager
 from time import sleep
 
+
 class InstancesList:
+    """Class with common used methods. Use to DRY"""
 
     @staticmethod
     def get_person(a_list, title, task):
-        """Check is there such user
+        """
+        Check is there such user
 
         Args:
             login (str): user login
 
         Return:
             accounts_list (object) or None if couldn't find user.
-
         """
+
         idx = CodecoolerView.get_inputs(title, task)[0]
         person = None
 
@@ -34,18 +37,15 @@ class InstancesList:
             print('Not found person !')
             sleep(1.5)
 
-
     @classmethod
     def remove_person(cls, a_list):
-        """Remove given user if he exist.
+        """
+        Remove given user if he exist.
 
         Args:
             login (str): user login
-
-        Return:
-            None
-
         """
+
         title = 'Remove person'
         task = ['Provide me a idx of person to delete']
 
@@ -57,19 +57,15 @@ class InstancesList:
         except ValueError:
             pass
 
-
-
     @staticmethod
     def add_person(a_list, obj_to_create, title, questions):
-        """Add person to the list
+        """
+        Add person to the list
 
         Args:
             person (object): Student or mentor object in this case
-
-        Return:
-            None
-
         """
+
         person = CodecoolerView.get_inputs(title, questions)
         idx = Tools.gen_idx(obj_to_create.__name__.lower())
         a_list.append(obj_to_create(idx, *person))
@@ -78,6 +74,15 @@ class InstancesList:
 
     @classmethod
     def modify_person_details(cls, a_list, choosen_detail, title, task):
+        """
+        Use to choose person and details we want to modify
+
+        Args:
+            a_list (list of :obj:): attribute of choosen class as list of persons
+            choosen_detail (string): detail about person we want to change
+            title (str): menu title
+            task (list): list of questions
+        """
         person = cls.get_person(a_list, 'Choose person', ['Please provide person idx to modify'])
 
         if person:
@@ -86,6 +91,14 @@ class InstancesList:
 
     @staticmethod
     def _modify_person_details_requests(person, choosen_detail, updated_information):
+        """
+        Use to modify detail about choosen person
+
+        Args:
+            choosen_detail (string): detail about person we want to change
+            updated_information (string): updated information
+        """
+
         if choosen_detail == 'name':
             person.name = updated_information
 

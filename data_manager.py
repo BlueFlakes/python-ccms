@@ -1,16 +1,20 @@
 import csv
 from Controllers.instances_manager import InstancesList
 
+
 class DataManager:
+    """This class represents utilites to load data from csv file and save them to it ."""
 
     @staticmethod
     def read_file(file_name):
-        """Reads given file and returns list of lists, where every list is a line of csv file.
+        """
+        Reads given file and returns list of lists, where every list is a line of csv file.
 
-           Args:
-                file_name: string
-           Returns:
-                temp: list of lists
+        Args:
+            file_name (string): name of csv file
+
+        Returns:
+            temp (list of lists): data read from csv file to further use
         """
 
         temp = []
@@ -26,6 +30,13 @@ class DataManager:
 
     @staticmethod
     def save_file(file_name, data):
+        """
+        Save data to csv file.
+
+        Args:
+            file_name (string): name of csv file
+            data (list of strings): data that will be save in csv file
+        """
 
         with open(file_name, 'w') as csvfile:
             data_writer = csv.writer(csvfile)
@@ -35,6 +46,13 @@ class DataManager:
 
     @staticmethod
     def extend_file(file_name, data):
+        """
+        Extend csv file wit new data.
+
+        Args:
+            file_name (string): name of csv file
+            data (list of strings): data that will be save in csv file
+        """
 
         with open(file_name, 'a') as csvfile:
             data_writer = csv.writer(csvfile)
@@ -43,15 +61,18 @@ class DataManager:
 
     @staticmethod
     def get_person_details(idx, file_name):
-        """Returns list of lists, where every nested list is one line in csv file.
-           Lines which are in list are determined on given idx.
-
-           Args:
-                idx: string
-                file_name: string
-           Returns:
-           temp: list of lists
         """
+        Returns list of lists, where every nested list is one line in csv file.
+        Lines which are in list are determined on given idx.
+
+        Args:
+            idx (string): uniqe person id
+            file_name (string): name of csv file
+
+        Returns:
+            temp (list of lists): data read from csv file to further use
+        """
+
         temp = []
         people_info = DataManager.read_file(file_name)
 
