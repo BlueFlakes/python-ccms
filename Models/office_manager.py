@@ -8,5 +8,4 @@ class OfficeManager(Employee):
     Attributes:
         office_managers (list): list of Codecool office employee
     """
-
-    office_managers = []
+    office_managers_list = []

@@ -21,7 +21,7 @@ class CodecoolerController:
         """
 
         found = False
-        mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers + Manager.manager_list
+        mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
 
         while not found:
             passes = CodecoolerView.get_inputs("Please provide your login and password", ["Login", "Password"])

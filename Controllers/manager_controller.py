@@ -1,6 +1,9 @@
 from Models.student import Student
+from Controllers.instances_manager import InstancesList
 from View.codecooler_view import CodecoolerView
 from Controllers.mentor_controller import MentorController
+from Models.manager import Manager
+from Models.mentor import Mentor
 from data_manager import DataManager
 import os
 import sys
@@ -53,7 +56,7 @@ class ManagerController:
     @classmethod
     def handle_main_menu_requests(cls, user_request):
         """
-        Call function that perform task from menu choosen by user: see list of students, mentors, 
+        Call function that perform task from menu choosen by user: see list of students, mentors,
         edit mentors
 
         Args:
@@ -69,6 +72,7 @@ class ManagerController:
             cls.get_students_list()
 
         elif user_request == '0':
+            MentorController.save_mentors_data()
             sys.exit()
 
     @classmethod
@@ -116,14 +120,22 @@ class ManagerController:
 
     @classmethod
     def get_mentors_list(cls):
-        mentors = DataManager.read_file("csv/mentors.csv")
         titles = ["Idx", "Password", "Name", "Surname", "Email"]
+        mentors = InstancesList.prepare_data_to_visualize(Mentor.mentor_list)
         CodecoolerView.print_table(titles, mentors)
 
     @classmethod
     def get_students_list(cls):
-        students = DataManager.read_file("csv/students.csv")
         titles = ["Idx", "Password", "Name", "Surname", "Email"]
+        students = InstancesList.prepare_data_to_visualize(Student.student_list)
         CodecoolerView.print_table(titles, students)
 
 
+    @staticmethod
+    def load_managers(data):
+        Manager.manager_list = InstancesList.convert_data_to_object('manager', data)
+
+    @staticmethod
+    def save_managers_data():
+        data = InstancesList.prepare_data_to_visualize(Manager.manager_list)
+        DataManager.save_file('csv/managers.csv', data)
