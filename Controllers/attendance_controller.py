@@ -119,7 +119,6 @@ class AttendanceController:
 
         return students_attendance
 
-
     @staticmethod
     def save_attendance(students_attendance):
         """
