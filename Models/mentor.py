@@ -1,7 +1,7 @@
-from Models.employee import Employee
+from Models.codecooler import Codecooler
 
 
-class Mentor(Employee):
+class Mentor(Codecooler):
     """
     This class represents Codecoole mentor
 

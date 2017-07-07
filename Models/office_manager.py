@@ -1,7 +1,7 @@
-from Models.employee import Employee
+from Models.codecooler import Codecooler
 
 
-class OfficeManager(Employee):
+class OfficeManager(Codecooler):
     """
     This class represents Codecoole office employee
 
