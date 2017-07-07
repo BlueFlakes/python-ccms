@@ -13,6 +13,7 @@ from Models.student import Student
 from Models.manager import Manager
 from Models.office_manager import OfficeManager
 
+
 def main():
     idx = Tools.gen_idx("student")
     print(idx)

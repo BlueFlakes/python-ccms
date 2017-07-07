@@ -3,10 +3,20 @@ from data_manager import DataManager
 from Models.submit_assignment import SubmitAssignment
 from time import sleep
 
+
 class SubmitAssignmentController:
+    """Contain logic to perform task on SubmitAssignment object"""
 
     @classmethod
     def start_controller(cls, position, assignments, idx):
+        """
+        Determines user role in Codecool. Allow user perform assign tasks.
+
+        Args:
+            position (string): user role in Codecool
+            assignments (list of :obj: `SubmitAssignment`): list of assigemts
+            idx (string): uniqe student id
+        """
 
         if position == "student":
             cls.student_side(assignments, idx)
@@ -15,6 +25,12 @@ class SubmitAssignmentController:
 
     @staticmethod
     def mentor_side(assignments):
+        """
+        Allow mentor to grade submited assigemts. Then list of assigemts is save to csv file.
+
+        Args:
+            assignments (list of :obj: `SubmitAssignment`): list of assigemts
+        """
         task = CodecoolerView.get_inputs("Please provide task's name", ["Task"])
         task = task[0]
 
@@ -31,6 +47,13 @@ class SubmitAssignmentController:
 
     @staticmethod
     def student_side(assignments, idx):
+        """
+        Allows student to submit assignment
+
+        Args:
+            idx (string): uniqe student id
+        """
+
         assignments_available = DataManager.read_file("csv/assignments.csv")
         args = CodecoolerView.get_inputs("Submit your assignment", ["Link", "Assignment name"])
 

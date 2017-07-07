@@ -11,9 +11,20 @@ from data_manager import DataManager
 
 
 class MentorController():
+    """Contain logic for MentorController"""
 
     @classmethod
     def start_controller(cls, name, surname, idx):
+        """
+        Allow mentor user perform assign tasks.
+        Call functions to print menu for user and get input of choosen option
+
+        Args:
+            name (string): name of user
+            surname (string): surname of user
+            idx (string): unique user's id
+        """
+
         assignments = StudentController.read_assignments("lists")
         students = Student.student_list
 
@@ -39,6 +50,10 @@ class MentorController():
 
     @staticmethod
     def add_mentor():
+        """
+        Create Mentor object and add to mentor_list
+        """
+
         title = 'Creating mentor'
         basic_questions = ['password', 'Name', 'Surname', 'email']
 
@@ -46,39 +61,63 @@ class MentorController():
 
     @staticmethod
     def remove_mentor():
+        """
+        Remove Mentor object from mentor_list
+        """
+
         InstancesList.remove_person(Mentor.mentor_list)
 
     @staticmethod
     def change_mentor_name():
+        """
+        Change mentor name
+        """
+
         title = 'Modify name'
         task = ['Provide new name']
         InstancesList.modify_person_details(Mentor.mentor_list, 'name', title, task)
 
     @staticmethod
     def change_mentor_password():
+        """
+        Change mentor password
+        """
+
         title = 'Modify password'
         task = ['Provide new password']
         InstancesList.modify_person_details(Mentor.mentor_list, 'password', title, task)
 
     @staticmethod
     def change_mentor_surname():
+        """
+        Change mentor surname
+        """
+
         title = 'Modify surname'
         task = ['Provide new surname']
         InstancesList.modify_person_details(Mentor.mentor_list, 'surname', title, task)
 
     @staticmethod
     def change_mentor_email():
+        """
+        Change mentor email
+        """
+
         title = 'Modify email'
         task = ['Provide new email']
         InstancesList.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
     @classmethod
     def start_student_edit_menu(cls):
+        """
+        Call functions that get user input and show inner menu
+        """
+
         user_request = None
         user_welcome = "Student edit manager"
         student_edit_menu = ['Add student', 'Delete student', 'Modify student name',
-                            'Modify student surname', 'Modify student password',
-                            'Modify student email']
+                             'Modify student surname', 'Modify student password',
+                             'Modify student email']
 
         while user_request != "0":
             os.system("clear")
@@ -89,6 +128,11 @@ class MentorController():
 
     @classmethod
     def handle_student_edit_requests(cls, user_request):
+        """
+        Call function that perform task from inner menu choosen by user: add student, remove student,
+        change details about student
+        """
+
         if user_request == '1':
             StudentController.add_student()
 
