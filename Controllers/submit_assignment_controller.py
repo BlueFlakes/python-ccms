@@ -1,6 +1,7 @@
 from View.codecooler_view import CodecoolerView
 from data_manager import DataManager
 from Models.submit_assignment import SubmitAssignment
+from time import sleep
 
 class SubmitAssignmentController:
 
@@ -30,6 +31,13 @@ class SubmitAssignmentController:
 
     @staticmethod
     def student_side(assignments, idx):
+        assignments_available = DataManager.read_file("csv/assignments.csv")
         args = CodecoolerView.get_inputs("Submit your assignment", ["Link", "Assignment name"])
 
-        assignments.append(SubmitAssignment(idx, args[0], args[1]))
+        for assgn in assignments_available:
+            if args[1] == assgn[0]:
+                assignments.append(SubmitAssignment(idx, args[0], args[1]))
+                break
+        else:
+            CodecoolerView.print_result("Wrong assignment name!")
+            sleep(1.5)
