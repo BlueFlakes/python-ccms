@@ -2,7 +2,7 @@ from Models.student import Student
 
 
 class EmployeeController():
-    ''' Class with controll methods for all employeers'''
+    '''Class with controll methods for all employeers'''
 
     @staticmethod
     def get_student_list():
@@ -16,6 +16,13 @@ class EmployeeController():
 
     @staticmethod
     def check_given_email(email):
+        """
+        Check if given email is vaidate
+
+        Args:
+            email (string): givven email
+        """
+
         if "@" in email and "." in email:
             is_correct = True
         else:
