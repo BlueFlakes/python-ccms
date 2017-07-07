@@ -38,7 +38,12 @@ class MentorController():
             option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
 
             if option == "1":
-                cls.get_students_list()
+                titles = ["Idx", "Password", "Name", "Surname", "Email"]
+                students = InstancesList.prepare_data_to_visualize(Student.student_list)
+                CodecoolerView.print_table(titles, students)
+                cls.get_students_grades()
+
+
             elif option == "2":
                 AssignmentController.start_controller()
             elif option == "3":
@@ -153,13 +158,6 @@ class MentorController():
 
         elif user_request == '6':
             StudentController.change_student_email()
-
-    @classmethod
-    def get_students_list(cls):
-        students = DataManager.read_file("csv/students.csv")
-        titles = ["Idx", "Password", "Name", "Surname", "Email"]
-        CodecoolerView.print_table(titles, students)
-        cls.get_students_grades()
 
     @staticmethod
     def get_students_grades():
