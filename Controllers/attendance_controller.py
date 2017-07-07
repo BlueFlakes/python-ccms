@@ -11,13 +11,11 @@ class AttendanceController:
     """Contain methods to work on AttendanceModel object"""
 
     @classmethod
-    def start_controller(cls, students):
+    def start_controller(cls):
         """
         Contain main logic for AttendanceController.
-
-        Args:
-            students (list of :obj: `StudentModels`):list with detail of all students
         """
+        students = Student.student_list
         students_attendance = cls.create_students_attendance_list()
         option = 0
         while not option == "0":
@@ -71,7 +69,7 @@ class AttendanceController:
         current_date = date.today()
         for student in students:
             question = "Check attendance for {} {}".format(student.name, student.surname)
-            student_detail = CodecoolerView.get_inputs("{}".format(question), ["Attendance state"])
+            student_detail = CodecoolerView.get_inputs(question, ["Attendance state"])
 
             attendance = AttendanceModel(student.idx, current_date, student_detail[0])
             students_attendance.append(attendance)
@@ -86,7 +84,7 @@ class AttendanceController:
             student_idx (str): uniqe id number of student
 
         Returns:
-            list of list: str: list of attendnace detail for student with given idx 
+            list of list: str: list of attendnace detail for student with given idx
         """
         attendance_student_list = []
         for attendance in students_attendance:

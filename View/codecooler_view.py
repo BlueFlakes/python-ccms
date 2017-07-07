@@ -1,9 +1,10 @@
 import getpass
 from Controllers.table import Table
+from Controllers.employee_controller import EmployeeController
 
 
 class CodecoolerView:
-    """This class contains major part of view logic for all controllers""".
+    """This class contains major part of view logic for all controllers"""
 
     @staticmethod
     def get_inputs(title, questions_list):
@@ -24,6 +25,10 @@ class CodecoolerView:
         for question in questions_list:
             if question == "Password":
                 temp.append(getpass.getpass())
+            elif question.lower() == "email":
+                user_input = input(question + ': ')
+                user_input = EmployeeController.check_given_email(user_input)
+                temp.append(user_input)
             else:
                 user_input = input(question + ': ')
                 temp.append(user_input)
