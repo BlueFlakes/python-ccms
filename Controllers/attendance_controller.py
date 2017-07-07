@@ -36,7 +36,7 @@ class AttendanceController:
         cls.save_attendance(students_attendance)
 
     @staticmethod
-    def calculate_attendnace(students_attendance, student_idx):
+    def calculate_attendnace(students_attendance, given_student_idx):
         """
         Print attendnace for student with given idx in percent
 
@@ -45,15 +45,20 @@ class AttendanceController:
             student_idx (str): uniqe id number of student
         """
         attendance_sum = 0
-        for attendance in students_attendance:
-            if attendance.student_idx == student_idx:
-                attendance_sum += float(attendance.state)
+        max_possible_attendance = 0
+
+        for student in students_attendance:
+            if student.student_idx == given_student_idx:
+                attendance_sum += float(student.state)
+                max_possible_attendance += 1
 
         try:
-            attendance_procent = round((attendance_sum/len(students_attendance)*100), 2)
+            attendance_procent = round(((attendance_sum/max_possible_attendance)*100), 2)
+
         except ZeroDivisionError:
             print("This student have no attendance")
             pass
+
         else:
             print("Student attendance {}%".format(attendance_procent))
 
@@ -69,17 +74,15 @@ class AttendanceController:
         current_date = date.today()
         for student in students:
             question = "Check attendance for {} {}".format(student.name, student.surname)
+            student_detail = None
 
-            is_float = False
-            while not is_float:
-                student_detail = CodecoolerView.get_inputs(question, ["Attendance state (float)"])[0]
-                try:
-                    float(student_detail)
-                    is_float = True
-                except ValueError:
-                    pass
+            while student_detail not in ['0', '1']:
+                student_detail = CodecoolerView.get_inputs(question, ["Attendance state (1 or 0)"])[0]
 
-            attendance = AttendanceModel(student.idx, current_date, student_detail)
+                if student_detail not in ['0', '1']:
+                    print('Wrong value!')
+
+            attendance = AttendanceModel(student.idx, current_date, float(student_detail))
             students_attendance.append(attendance)
 
     @staticmethod
@@ -108,9 +111,11 @@ class AttendanceController:
         """
         students_attendance = []
         attendance_list = DataManager.read_file("csv/attendance.csv")
-        for attendance_detail in attendance_list:
-            attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
-            students_attendance.append(attendnace)
+
+        if attendance_list[0][0] and attendance_list[0] and attendance_list:
+            for attendance_detail in attendance_list:
+                attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
+                students_attendance.append(attendnace)
 
         return students_attendance
 
