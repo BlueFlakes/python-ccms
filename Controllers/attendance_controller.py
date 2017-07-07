@@ -69,9 +69,17 @@ class AttendanceController:
         current_date = date.today()
         for student in students:
             question = "Check attendance for {} {}".format(student.name, student.surname)
-            student_detail = CodecoolerView.get_inputs(question, ["Attendance state"])
 
-            attendance = AttendanceModel(student.idx, current_date, student_detail[0])
+            is_float = False
+            while not is_float:
+                student_detail = CodecoolerView.get_inputs(question, ["Attendance state (float)"])[0]
+                try:
+                    float(student_detail)
+                    is_float = True
+                except ValueError:
+                    pass
+
+            attendance = AttendanceModel(student.idx, current_date, student_detail)
             students_attendance.append(attendance)
 
     @staticmethod
