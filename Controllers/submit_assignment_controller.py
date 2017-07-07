@@ -41,7 +41,7 @@ class SubmitAssignmentController:
                 CodecoolerView.print_result("Assignment name: {}".format(assgn[2]))
                 CodecoolerView.print_result("Link: {}".format(assgn[1]))
 
-                grade = CodecoolerView.get_inputs("Grade this assignment: ", [""])
+                grade = CodecoolerView.get_inputs("Grade this assignment: ", ["Grade"])
                 grade = grade[0]
                 DataManager.extend_file("csv/grades.csv", [assgn[0], task, grade])
 
