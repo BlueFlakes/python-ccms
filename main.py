@@ -1,17 +1,14 @@
 # imports all models
-from Models import codecooler, employee, manager, mentor, office_manager, student
+from Models import codecooler, manager, mentor, office_manager, student
 
 # imports all view modules
-from View import codecooler_view, employee_view, manager_view, mentor_view, office_manager_view, student_view
+from View import codecooler_view, employee_view
 
 # imports all controllers
 from Controllers import codecooler_controller, employee_controller, manager_controller
 from Controllers import mentor_controller, office_manager_controller, student_controller
 
 from Controllers.tools import Tools
-from Models.student import Student
-from Models.manager import Manager
-from Models.office_manager import OfficeManager
 from Controllers.manager_controller import ManagerController
 from Controllers.office_manager_controller import OfficeManagerController
 from Controllers.mentor_controller import MentorController
