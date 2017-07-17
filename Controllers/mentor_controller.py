@@ -43,7 +43,6 @@ class MentorController():
                 CodecoolerView.print_table(titles, students)
                 cls.get_students_grades()
 
-
             elif option == "2":
                 AssignmentController.start_controller()
             elif option == "3":
@@ -54,7 +53,6 @@ class MentorController():
                 cls.start_student_edit_menu()
             elif option == "0":
                 StudentController.save_students_data()
-
 
     @staticmethod
     def add_mentor():

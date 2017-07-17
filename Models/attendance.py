@@ -1,5 +1,3 @@
-
-
 class AttendanceModel:
     """This class represents attendance of students on lessons"""
 
@@ -15,6 +13,7 @@ class AttendanceModel:
         Exmaples:
             There are three states for attendance: 0 - not present, 0.5 - late
             and 1 - present
+
         """
         self.student_idx = student_idx
         self.date = date

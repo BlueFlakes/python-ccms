@@ -10,7 +10,6 @@ class Table:
 
         return table_visualisation
 
-
     @classmethod
     def _get_table_sizes(cls):
         record_length = len(cls.table[0])
@@ -31,7 +30,6 @@ class Table:
     @classmethod
     def _create_table(cls):
         table_visualisation = ''
-
 
         for record in cls.table:
             row = cls._make_row(record)

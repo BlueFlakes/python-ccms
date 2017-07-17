@@ -60,7 +60,6 @@ class StudentController:
             CodecoolerView.print_result("There is no grades!")
             option = CodecoolerView.get_inputs("Enter anything to exit", [""])
 
-
     @staticmethod
     def read_assignments(return_type):
         """

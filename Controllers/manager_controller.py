@@ -141,7 +141,6 @@ class ManagerController:
             idx = CodecoolerView.get_inputs("Please provide idx of the student", ["Idx"])[0]
             StudentController.view_grades(idx)
 
-
     @staticmethod
     def load_managers(data):
         Manager.manager_list = InstancesList.convert_data_to_object('manager', data)

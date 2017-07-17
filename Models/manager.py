@@ -7,6 +7,6 @@ class Manager(Codecooler):
 
     Attributes:
         manager_list (list): list of Codecool managers
-    """
 
+    """
     manager_list = []

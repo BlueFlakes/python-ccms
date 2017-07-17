@@ -22,9 +22,9 @@ class AssignmentController:
     def save_assignment(assgn):
         """
         Save list of assignments in csv file
-        
+
         Args:
             assgn (list of :obj: `Assignment`): list with all assigmnts
-        """
 
+        """
         DataManager.extend_file("csv/assignments.csv", assgn)

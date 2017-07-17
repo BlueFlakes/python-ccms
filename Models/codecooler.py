@@ -11,6 +11,7 @@ class Codecooler:
             name (string): person's name
             surname (string): person's surname
             email (string): person's email
+
         """
         self.idx = idx
         self.password = password
