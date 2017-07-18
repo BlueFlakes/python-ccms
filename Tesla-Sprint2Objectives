@@ -1,0 +1,62 @@
+TESLA xD
+Marcin Ogorzałek, Kamil Konior, Jakub Janiszewski
+
+
+
+1. Wykluczenie stworzenia pustego assignmentu.
+
+	- Mentor nie może stworzyć assignmentu z pustą treścią i tytułem.
+
+2. Przeniesienie walidacji inputów z view do controller.
+
+3. Poprawić model MVC.
+
+	- View nie może importować controllerów, refactoring, clean code.
+
+4. Usunąć klasy controller i view.
+
+	- Zmienić strukturę kodu -> controller i view nie powinny być klasami.
+
+5. Usunąć zbędne OS cleary.
+
+	- Program czyszcząc ekran nie usuwa potrzebnych informacji
+
+6. Zmiana idx na login.
+
+	- Usunąć losowe generowane idx
+	- Użytkownik ma swój unikalny login
+	- Edycja użytkownika odbywa się przy pomocy loginu
+
+7. Zmiana systemu attendance.
+
+	- Mentor może oznaczyć obecnośc studenta (obecny, spóźniony, nieobecny)
+	- Każdej opcji odpowiada wartość kolejno: 1, 0.8, 0
+
+8. Skala ocen jak na canvasie.
+
+	- Zmiana skali ocen z 1 do 100 na -3 do 12.
+
+9. Wyświetlanie listy przy edycji mentora/studenta.
+
+	- Po wejściu do menu edycji mentora/studenta wyświetli nam się lista mentorów/studentów
+	- Ułatwienie dostępu
+
+10. Możliwość zmiany passów przez użytkownika.
+
+11. Error handling.
+
+	- Wyłapanie wszystkich* błędów programu, obsługa błędów.
+
+12. Additional feature: dodać deadline do assignment.
+
+	- Mentor może ustawić deadline assignmentu
+	- Mentor nie może ustawić deadlinu na przeszłość
+	- Mentor przy ocenie dostaje informacje o tym, jaki był deadline, a kiedy student oddał program
+
+
+
+
+
+
+
+	Podpis diabła										Nasz podpis
