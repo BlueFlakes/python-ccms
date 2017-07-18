@@ -111,6 +111,9 @@ def change_mentor_email():
 def start_student_edit_menu(students):
     """
     Call functions that get user input and show inner menu
+
+    Args:
+        students (list of :obj: Student): list of all students
     """
 
     user_request = None
@@ -134,6 +137,9 @@ def handle_student_edit_requests(user_request):
     """
     Call function that perform task from inner menu choosen by user: add student, remove student,
     change details about student
+
+    Args:
+        user_request (string): option from menu choosen by user
     """
 
     if user_request == '1':
@@ -156,8 +162,11 @@ def handle_student_edit_requests(user_request):
 
 
 def get_students_grades():
+    """
+    Call functions to display detail about choosen student grades
+    """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
-                                             ["Yes/no"])
+                                              ["Yes/no"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
@@ -165,15 +174,30 @@ def get_students_grades():
 
 
 def load_mentors(data):
+    """
+    Call function to convet data from csv file to Mentor objects
+
+    Args:
+        data (lista of list): data to convert from csv file
+    """
     Mentor.mentor_list = instances_manager.convert_data_to_object('mentor', data)
 
 
 def save_mentors_data():
+    """
+    Call function to save data in csv file
+    """
     data = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
     DataManager.save_file('csv/mentors.csv', data)
 
 
 def display_student_list(students):
+    """
+    Call functions to display formatted table with all students
+
+    Args:
+        students (list of :obj: Student): list of all students
+    """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(students)
     codecooler_view.print_table(titles, students)
