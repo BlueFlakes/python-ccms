@@ -102,12 +102,18 @@ def handle_mentor_edit_requests(user_request):
 
 
 def get_mentors_list():
+    """
+    Call functions to display formatted table with all Mentor objects details
+    """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     mentors = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
     codecooler_view.print_table(titles, mentors)
 
 
 def get_students_list():
+    """
+    Call functions to display formatted table with Student object details
+    """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
@@ -115,6 +121,9 @@ def get_students_list():
 
 
 def get_students_grades():
+    """
+    Call functions to display detail about choosen student grades
+    """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
                                              ["Yes/no"])
     check_grades = check_grades[0].lower()
@@ -124,9 +133,18 @@ def get_students_grades():
 
 
 def load_managers(data):
+    """
+    Call function to convet data from csv file to Manager objects
+
+    Args:
+        data (lista of list): data to convert from csv file
+    """
     Manager.manager_list = instances_manager.convert_data_to_object('manager', data)
 
 
 def save_managers_data():
+    """
+    Call function to save data in csv file
+    """
     data = instances_manager.prepare_data_to_visualize(Manager.manager_list)
     DataManager.save_file('csv/managers.csv', data)
