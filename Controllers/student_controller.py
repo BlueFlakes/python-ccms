@@ -4,6 +4,7 @@ from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
 from Controllers import submit_assignment_controller
 from Controllers import instances_manager
+from Controllers import codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
 
@@ -26,15 +27,18 @@ def start_controller(name, surname, idx):
         os.system("clear")
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                  ["Submit assignment", "View my grades"], "Exit")
+                                  ["Submit assignment", "View grades", "Change your password"], "Exit")
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
             submit_assignment_controller.start_controller("student", assignments, idx)
         elif option == "2":
             view_grades(idx)
+        elif option == "3":
+            codecooler_controller.change_password(idx)
 
     save_assignments(assignments)
+    save_students_data()
 
 
 def view_grades(idx):

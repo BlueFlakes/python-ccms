@@ -4,6 +4,7 @@ from Controllers import student_controller
 from Controllers import submit_assignment_controller
 from Controllers import assignment_controller
 from Controllers import attendance_controller
+from Controllers import codecooler_controller
 from View import codecooler_view
 from Models.mentor import Mentor
 from Models.student import Student
@@ -30,7 +31,7 @@ def start_controller(name, surname, idx):
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
-                                   "Check attendace", "Edit student"], "Exit")
+                                   "Check attendace", "Edit student", "Change your password"], "Exit")
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
@@ -43,9 +44,12 @@ def start_controller(name, surname, idx):
         elif option == "4":
             attendance_controller.start_controller()
         elif option == "5":
-            start_student_edit_menu(students)
-        elif option == "0":
-            student_controller.save_students_data()
+            start_student_edit_menu()
+        elif option == "6":
+            codecooler_controller.change_password(idx)
+
+    student_controller.save_students_data()
+    save_mentors_data()
 
 
 def add_mentor():

@@ -3,8 +3,9 @@ from Models.manager import Manager
 from Models.mentor import Mentor
 from Controllers import instances_manager
 from Controllers import student_controller
-from View import codecooler_view
 from Controllers import mentor_controller
+from Controllers import codecooler_controller
+from View import codecooler_view
 from data_manager import DataManager
 import os
 import sys
@@ -21,7 +22,7 @@ def start_controller(name, surname, idx):
     """
 
     user_welcome = "Welcome {} {}".format(name, surname)
-    main_menu = ['List mentors', 'Edit mentors', 'List Students']
+    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password']
     user_request = None
 
     while user_request != "0":
@@ -29,10 +30,12 @@ def start_controller(name, surname, idx):
         codecooler_view.print_menu(user_welcome, main_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        handle_main_menu_requests(user_request)
+        handle_main_menu_requests(user_request, idx)
 
+    mentor_controller.save_mentors_data()
+    save_managers_data()
 
-def handle_main_menu_requests(user_request):
+def handle_main_menu_requests(user_request, idx):
     """
     Call function that perform task from menu choosen by user: see list of students, mentors,
     edit mentors
@@ -49,9 +52,8 @@ def handle_main_menu_requests(user_request):
     elif user_request == '3':
         get_students_list()
 
-    elif user_request == '0':
-        mentor_controller.save_mentors_data()
-        sys.exit()
+    elif user_request == '4':
+        codecooler_controller.change_password(idx)
 
 
 def start_mentor_edit_menu():

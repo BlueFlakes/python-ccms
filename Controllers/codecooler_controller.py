@@ -51,4 +51,24 @@ def start_controller(ccooler):
     elif ccooler.__class__.__name__ == "Manager":
         manager_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "OfficeManager":
-        office_manager_controller.start_controller(ccooler.name, ccooler.surname)
+        office_manager_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
+
+def change_password(idx):
+    user = find_user_by_id(idx)
+    correct_pass = False
+
+    while not correct_pass:
+        passes = codecooler_view.get_inputs("Please provide data", ["Old password", "New password"])
+        if passes[0] == user.password:
+            user.password = passes[1]
+            codecooler_view.print_result("Password changed succesfully!")
+            correct_pass = True
+
+
+def find_user_by_id(idx):
+    mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
+
+    for person in mergedlist:
+        if person.idx == idx:
+            user = person
+            return user
