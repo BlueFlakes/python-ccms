@@ -1,12 +1,9 @@
 from Models.attendance import AttendanceModel
-from View.codecooler_view import CodecoolerView
-from datetime import date
-
 from Models.student import Student
-import os
+from View import codecooler_view
 from data_manager import DataManager
-
-
+from datetime import date
+import os
 
 
 def start_controller():
@@ -14,24 +11,24 @@ def start_controller():
     Contain main logic for AttendanceController.
     """
     students = Student.student_list
-    students_attendance = cls.create_students_attendance_list()
+    students_attendance = create_students_attendance_list()
     option = 0
     while not option == "0":
         # os.system("clear")
 
-        CodecoolerView.print_menu("", ["Check attendnace", "View student attendance"], "Exit")
-        options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
+        codecooler_view.print_menu("", ["Check attendnace", "View student attendance"], "Exit")
+        options = codecooler_view.get_inputs("Please choose a number", ["Number"])
         option = options[0]
 
         if option == "1":
-            cls.check_attendance(students_attendance, students)
+            check_attendance(students_attendance, students)
         elif option == "2":
-            choosen_student = CodecoolerView.get_inputs("Student attendance detail", ["Student idx"])
-            attendance_student_list = cls.get_attendnace_list(students_attendance, choosen_student[0])
-            # here we need add print table
-            cls.calculate_attendnace(students_attendance, choosen_student[0])
+            choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
+            attendance_student_list = get_attendnace_list(students_attendance, choosen_student[0])
 
-    cls.save_attendance(students_attendance)
+            calculate_attendnace(students_attendance, choosen_student[0])
+
+    save_attendance(students_attendance)
 
 
 def calculate_attendnace(students_attendance, given_student_idx):
@@ -75,7 +72,7 @@ def check_attendance(students_attendance, students):
         student_detail = None
 
         while student_detail not in ['0', '1']:
-            student_detail = CodecoolerView.get_inputs(question, ["Attendance state (1 or 0)"])[0]
+            student_detail = codecooler_view.get_inputs(question, ["Attendance state (1 or 0)"])[0]
 
             if student_detail not in ['0', '1']:
                 print('Wrong value!')

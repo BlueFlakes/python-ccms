@@ -1,5 +1,5 @@
 from Models.student import Student
-from View.employee_view import EmployeeView
+from View import employee_view
 
 
 def get_student_list():
@@ -29,7 +29,7 @@ def check_given_email(email):
         is_correct = False
 
     while not is_correct:
-        email = EmployeeView.single_input("Please provide correct email: ")
+        email = employee_view.single_input("Please provide correct email: ")
         if "@" in email and "." in email:
             is_correct = True
 
@@ -40,7 +40,7 @@ def check_given_grade(grade):
     is_correct = EmployeeController.try_str_convert(grade)
 
     while not is_correct:
-        grade = EmployeeView.single_input("Please provide grade from 1 to 100: ")
+        grade = employee_view.single_input("Please provide grade from 1 to 100: ")
         is_correct = EmployeeController.try_str_convert(grade)
 
     return grade

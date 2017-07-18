@@ -1,11 +1,10 @@
-from View.codecooler_view import CodecoolerView
-from Controllers.tools import Tools
+from View import codecooler_view
+from Controllers import tools
 from Models.manager import Manager
 from Models.mentor import Mentor
 from Models.student import Student
 from Models.office_manager import OfficeManager
 from time import sleep
-
 
 
 def get_person(a_list, title, task):
@@ -19,7 +18,7 @@ def get_person(a_list, title, task):
         accounts_list (object) or None if couldn't find user.
     """
 
-    idx = CodecoolerView.get_inputs(title, task)[0]
+    idx = codecooler_view.get_inputs(title, task)[0]
     person = None
 
     for homie in a_list:
@@ -47,7 +46,7 @@ def remove_person(cls, a_list):
     task = ['Provide me a idx of person to delete']
 
     try:
-        a_list.remove(cls.get_person(a_list, title, task))
+        a_list.remove(get_person(a_list, title, task))
         print('Succesful remove :)')
         sleep(1.5)
 
@@ -63,14 +62,14 @@ def add_person(a_list, obj_to_create, title, questions):
         person (object): Student or mentor object in this case
     """
 
-    person = CodecoolerView.get_inputs(title, questions)
-    idx = Tools.gen_idx(obj_to_create.__name__.lower())
+    person = codecooler_view.get_inputs(title, questions)
+    idx = tools.gen_idx(obj_to_create.__name__.lower())
     a_list.append(obj_to_create(idx, *person))
     print('Succesfully added new person.')
     sleep(1.5)
 
 
-def modify_person_details(cls, a_list, choosen_detail, title, task):
+def modify_person_details(a_list, choosen_detail, title, task):
     """
     Use to choose person and details we want to modify
 
@@ -80,11 +79,11 @@ def modify_person_details(cls, a_list, choosen_detail, title, task):
         title (str): menu title
         task (list): list of questions
     """
-    person = cls.get_person(a_list, 'Choose person', ['Please provide person idx to modify'])
+    person = get_person(a_list, 'Choose person', ['Please provide person idx to modify'])
 
     if person:
-        updated_information = CodecoolerView.get_inputs(title, task)[0]
-        cls._modify_person_details_requests(person, choosen_detail, updated_information)
+        updated_information = codecooler_view.get_inputs(title, task)[0]
+        _modify_person_details_requests(person, choosen_detail, updated_information)
 
 
 def _modify_person_details_requests(person, choosen_detail, updated_information):

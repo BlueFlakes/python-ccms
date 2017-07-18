@@ -1,10 +1,10 @@
 from Models.student import Student
-from Controllers.instances_manager import InstancesList
-from Controllers.student_controller import StudentController
-from View.codecooler_view import CodecoolerView
-from Controllers.mentor_controller import MentorController
 from Models.manager import Manager
 from Models.mentor import Mentor
+from Controllers import instances_manager
+from Controllers import student_controller
+from View import codecooler_view
+from Controllers import mentor_controller
 from data_manager import DataManager
 import os
 import sys
@@ -27,8 +27,8 @@ def start_controller(name, surname, idx):
         surname (string): surname of user
         idx (string): unique user's id
     """
-    cls.user_welcome = "Welcome {} {}".format(name, surname)
-    cls.start_main_menu()
+    user_welcome = "Welcome {} {}".format(name, surname)
+    start_main_menu()
 
 
 def start_main_menu(cls):
@@ -40,10 +40,10 @@ def start_main_menu(cls):
 
     while user_request != "0":
         os.system("clear")
-        CodecoolerView.print_menu(cls.user_welcome, cls.main_menu, "Exit")
-        user_request = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+        codecooler_view.print_menu(user_welcome, main_menu, "Exit")
+        user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        cls.handle_main_menu_requests(user_request)
+        handle_main_menu_requests(user_request)
 
 
 def handle_main_menu_requests(user_request):
@@ -55,16 +55,16 @@ def handle_main_menu_requests(user_request):
         user_request (string): option choosen by user
     """
     if user_request == '1':
-        cls.get_mentors_list()
+        get_mentors_list()
 
     elif user_request == '2':
-        cls.start_mentor_edit_menu()
+        start_mentor_edit_menu()
 
     elif user_request == '3':
-        cls.get_students_list()
+        get_students_list()
 
     elif user_request == '0':
-        MentorController.save_mentors_data()
+        mentor_controller.save_mentors_data()
         sys.exit()
 
 
@@ -77,10 +77,10 @@ def start_mentor_edit_menu():
 
     while user_request != "0":
         os.system("clear")
-        CodecoolerView.print_menu(cls.user_welcome, cls.mentor_edit_menu, "Exit")
-        user_request = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+        codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
+        user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        cls.handle_mentor_edit_requests(user_request)
+        handle_mentor_edit_requests(user_request)
 
 
 def handle_mentor_edit_requests(user_request):
@@ -93,50 +93,50 @@ def handle_mentor_edit_requests(user_request):
     """
 
     if user_request == '1':
-        MentorController.add_mentor()
+        mentor_controller.add_mentor()
 
     elif user_request == '2':
-        MentorController.remove_mentor()
+        mentor_controller.remove_mentor()
 
     elif user_request == '3':
-        MentorController.change_mentor_name()
+        mentor_controller.change_mentor_name()
 
     elif user_request == '4':
-        MentorController.change_mentor_surname()
+        mentor_controller.change_mentor_surname()
 
     elif user_request == '5':
-        MentorController.change_mentor_password()
+        mentor_controller.change_mentor_password()
 
     elif user_request == '6':
-        MentorController.change_mentor_email()
+        mentor_controller.change_mentor_email()
 
 
 def get_mentors_list():
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
-    mentors = InstancesList.prepare_data_to_visualize(Mentor.mentor_list)
-    CodecoolerView.print_table(titles, mentors)
+    mentors = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
+    codecooler_view.print_table(titles, mentors)
 
 
 def get_students_list():
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
-    students = InstancesList.prepare_data_to_visualize(Student.student_list)
-    CodecoolerView.print_table(titles, students)
-    cls.get_students_grades()
+    students = instances_manager.prepare_data_to_visualize(Student.student_list)
+    codecooler_view.print_table(titles, students)
+    get_students_grades()
 
 
 def get_students_grades():
-    check_grades = CodecoolerView.get_inputs("Do you want to see grades of any student?",
+    check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
                                              ["Yes/no"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
-        idx = CodecoolerView.get_inputs("Please provide idx of the student", ["Idx"])[0]
-        StudentController.view_grades(idx)
+        idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
+        student_controller.view_grades(idx)
 
 
 def load_managers(data):
-    Manager.manager_list = InstancesList.convert_data_to_object('manager', data)
+    Manager.manager_list = instances_manager.convert_data_to_object('manager', data)
 
 
 def save_managers_data():
-    data = InstancesList.prepare_data_to_visualize(Manager.manager_list)
+    data = instances_manager.prepare_data_to_visualize(Manager.manager_list)
     DataManager.save_file('csv/managers.csv', data)

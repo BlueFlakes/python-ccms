@@ -2,15 +2,13 @@ import os
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
-from View.codecooler_view import CodecoolerView
-from Controllers.submit_assignment_controller import SubmitAssignmentController
-from Controllers.instances_manager import InstancesList
+from Controllers import submit_assignment_controller
+from Controllers import instances_manager
+from View import codecooler_view
 from data_manager import DataManager
 
 
-
-
-def start_controller(cls, name, surname, idx):
+def start_controller(name, surname, idx):
     """
     Allow student user perform assign tasks.
     Call functions to print menu for user and get input of choosen option
@@ -21,25 +19,25 @@ def start_controller(cls, name, surname, idx):
         idx (string): unique user's id
     """
 
-    assignments = cls.read_assignments("objects")
+    assignments = read_assignments("objects")
 
     option = 0
     while not option == "0":
         os.system("clear")
 
-        CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
+        codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Submit assignment", "View my grades"], "Exit")
-        option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+        option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
-            SubmitAssignmentController.start_controller("student", assignments, idx)
+            submit_assignment_controller.start_controller("student", assignments, idx)
         elif option == "2":
-            cls.view_grades(idx)
+            view_grades(idx)
 
-    cls.save_assignments(assignments)
+    save_assignments(assignments)
 
 
-def view_grades(cls, idx):
+def view_grades(idx):
     """
     Read grades from csv file. Allow student to see his/her grades
     """
@@ -53,10 +51,10 @@ def view_grades(cls, idx):
 
     if len(students_grades) > 0:
         titles = ["Students idx", "Assignment", "Grade"]
-        CodecoolerView.print_table(titles, students_grades)
+        codecooler_view.print_table(titles, students_grades)
     else:
-        CodecoolerView.print_result("There is no grades!")
-        option = CodecoolerView.get_inputs("Enter anything to exit", [""])
+        codecooler_view.print_result("There is no grades!")
+        option = codecooler_view.get_inputs("Enter anything to exit", [""])
 
 
 def read_assignments(return_type):
@@ -97,7 +95,7 @@ def remove_student():
     Remove Student object from student_list
     """
 
-    InstancesList.remove_person(Student.student_list)
+    instances_manager.remove_person(Student.student_list)
 
 
 def add_student():
@@ -108,7 +106,7 @@ def add_student():
     title = 'Creating student'
     basic_questions = ['password', 'Name', 'Surname', 'email']
 
-    InstancesList.add_person(Student.student_list, Student, title, basic_questions)
+    instances_manager.add_person(Student.student_list, Student, title, basic_questions)
 
 def change_student_name():
     """
@@ -117,7 +115,7 @@ def change_student_name():
 
     title = 'Modify name'
     task = ['Provide new name']
-    InstancesList.modify_person_details(Student.student_list, 'name', title, task)
+    instances_manager.modify_person_details(Student.student_list, 'name', title, task)
 
 
 def change_student_password():
@@ -127,7 +125,7 @@ def change_student_password():
 
     title = 'Modify password'
     task = ['Provide new password']
-    InstancesList.modify_person_details(Student.student_list, 'password', title, task)
+    instances_manager.modify_person_details(Student.student_list, 'password', title, task)
 
 
 def change_student_surname():
@@ -137,7 +135,7 @@ def change_student_surname():
 
     title = 'Modify surname'
     task = ['Provide new surname']
-    InstancesList.modify_person_details(Student.student_list, 'surname', title, task)
+    instances_manager.modify_person_details(Student.student_list, 'surname', title, task)
 
 
 def change_student_email():
@@ -147,13 +145,13 @@ def change_student_email():
 
     title = 'Modify email'
     task = ['Email']
-    InstancesList.modify_person_details(Student.student_list, 'email', title, task)
+    instances_manager.modify_person_details(Student.student_list, 'email', title, task)
 
 
 def load_students(data):
-    Student.student_list = InstancesList.convert_data_to_object('student', data)
+    Student.student_list = instances_manager.convert_data_to_object('student', data)
 
 
 def save_students_data():
-    data = InstancesList.prepare_data_to_visualize(Student.student_list)
+    data = instances_manager.prepare_data_to_visualize(Student.student_list)
     DataManager.save_file('csv/students.csv', data)

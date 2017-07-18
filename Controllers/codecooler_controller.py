@@ -1,16 +1,14 @@
 from Models.codecooler import Codecooler
-from View.codecooler_view import CodecoolerView
 from Models.mentor import Mentor
 from Models.student import Student
 from Models.office_manager import OfficeManager
 from Models.manager import Manager
-from Controllers.student_controller import StudentController
-from Controllers.mentor_controller import MentorController
-from Controllers.manager_controller import ManagerController
-from Controllers.office_manager_controller import OfficeManagerController
+from View import codecooler_view
+from Controllers import student_controller
+from Controllers import mentor_controller
+from Controllers import manager_controller
+from Controllers import office_manager_controller
 from random import randint
-
-
 
 
 def login():
@@ -22,17 +20,17 @@ def login():
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
 
     while not found:
-        passes = CodecoolerView.get_inputs("Please provide your login and password", ["Login", "Password"])
+        passes = codecooler_view.get_inputs("Please provide your login and password", ["Login", "Password"])
         idx, password = passes[0], passes[1]
 
         for ccooler in mergedlist:
             if idx == ccooler.idx and password == ccooler.password:
-                cls.start_controller(ccooler)
+                start_controller(ccooler)
                 found = True
                 break
 
         if not found:
-            CodecoolerView.print_result("Wrong login or password!\n")
+            codecooler_view.print_result("Wrong login or password!\n")
 
 
 def start_controller(ccooler):
@@ -47,10 +45,10 @@ def start_controller(ccooler):
     """
 
     if ccooler.__class__.__name__ == "Student":
-        StudentController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
+        student_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "Mentor":
-        MentorController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
+        mentor_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "Manager":
-        ManagerController.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
+        manager_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "OfficeManager":
-        OfficeManagerController.start_controller(ccooler.name, ccooler.surname)
+        office_manager_controller.start_controller(ccooler.name, ccooler.surname)
