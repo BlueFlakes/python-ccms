@@ -95,7 +95,7 @@ def _check_attendance(students_attendance, students):
                 print("Wrong option")
 
         if attendance_state:
-            student_attendance = AttendanceModel(student.idx, current_date, attendance)
+            student_attendance = AttendanceModel(student.idx, current_date, attendance_state)
             students_attendance.append(student_attendance)
 
 
