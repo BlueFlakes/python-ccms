@@ -9,7 +9,3 @@ def print_student_list(students):
 
     for student in students:
         print("{}, {}, {}".format(student.idex, student.name, student.surname))
-
-
-def single_input(mssg):
-    return input(mssg)

@@ -52,6 +52,7 @@ def view_grades(idx):
     if len(students_grades) > 0:
         titles = ["Students idx", "Assignment", "Grade"]
         codecooler_view.print_table(titles, students_grades)
+
     else:
         codecooler_view.print_result("There is no grades!")
         option = codecooler_view.get_inputs("Enter anything to exit", [""])
@@ -104,9 +105,7 @@ def add_student():
     """
 
     title = 'Creating student'
-    basic_questions = ['password', 'Name', 'Surname', 'email']
-
-    instances_manager.add_person(Student.student_list, Student, title, basic_questions)
+    instances_manager.add_person(Student.student_list, Student, title)
 
 def change_student_name():
     """
