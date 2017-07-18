@@ -10,7 +10,6 @@ from Models.student import Student
 from data_manager import DataManager
 
 
-
 def start_controller(name, surname, idx):
     """
     Allow mentor user perform assign tasks.
@@ -35,9 +34,7 @@ def start_controller(name, surname, idx):
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
-            titles = ["Idx", "Password", "Name", "Surname", "Email"]
-            students = instances_manager.prepare_data_to_visualize(Student.student_list)
-            codecooler_view.print_table(titles, students)
+            display_student_list(students)
             get_students_grades()
 
         elif option == "2":
@@ -47,7 +44,7 @@ def start_controller(name, surname, idx):
         elif option == "4":
             attendance_controller.start_controller()
         elif option == "5":
-            start_student_edit_menu()
+            start_student_edit_menu(students)
         elif option == "0":
             student_controller.save_students_data()
 
@@ -109,9 +106,12 @@ def change_mentor_email():
     instances_manager.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
 
-def start_student_edit_menu():
+def start_student_edit_menu(students):
     """
     Call functions that get user input and show inner menu
+
+    Args:
+        students (list of :obj: Student): list of all students
     """
 
     user_request = None
@@ -122,6 +122,9 @@ def start_student_edit_menu():
 
     while user_request != "0":
         os.system("clear")
+
+        display_student_list(students)
+
         codecooler_view.print_menu(user_welcome, student_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
@@ -132,6 +135,9 @@ def handle_student_edit_requests(user_request):
     """
     Call function that perform task from inner menu choosen by user: add student, remove student,
     change details about student
+
+    Args:
+        user_request (string): option from menu choosen by user
     """
 
     if user_request == '1':
@@ -154,8 +160,11 @@ def handle_student_edit_requests(user_request):
 
 
 def get_students_grades():
+    """
+    Call functions to display detail about choosen student grades
+    """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
-                                             ["Yes/no"])
+                                              ["Yes/no"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
@@ -163,9 +172,30 @@ def get_students_grades():
 
 
 def load_mentors(data):
+    """
+    Call function to convet data from csv file to Mentor objects
+
+    Args:
+        data (lista of list): data to convert from csv file
+    """
     Mentor.mentor_list = instances_manager.convert_data_to_object('mentor', data)
 
 
 def save_mentors_data():
+    """
+    Call function to save data in csv file
+    """
     data = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
     DataManager.save_file('csv/mentors.csv', data)
+
+
+def display_student_list(students):
+    """
+    Call functions to display formatted table with all students
+
+    Args:
+        students (list of :obj: Student): list of all students
+    """
+    titles = ["Idx", "Password", "Name", "Surname", "Email"]
+    students = instances_manager.prepare_data_to_visualize(students)
+    codecooler_view.print_table(titles, students)
