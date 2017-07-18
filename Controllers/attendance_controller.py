@@ -1,9 +1,13 @@
 from Models.attendance import AttendanceModel
-from View.codecooler_view import CodecoolerView
+from Models.student import Student
+
+from View import codecooler_view
 from datetime import date, datetime
 
-from Models.student import Student
 from data_manager import DataManager
+from datetime import date
+import os
+
 
 
 def start_controller():
@@ -167,3 +171,5 @@ def _vaildate_correct_date(current_date, student, students_attendance):
             if attendance.date == current_date:
                 error_msg = "Attendance for {} {} was check today".format(student.name, student.surname)
                 raise ValueError(error_msg)
+
+    DataManager.save_file("csv/attendance.csv", students_attendance)

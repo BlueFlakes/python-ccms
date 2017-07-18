@@ -2,161 +2,156 @@ import os
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
-from View.codecooler_view import CodecoolerView
-from Controllers.submit_assignment_controller import SubmitAssignmentController
-from Controllers.instances_manager import InstancesList
+from Controllers import submit_assignment_controller
+from Controllers import instances_manager
+from View import codecooler_view
 from data_manager import DataManager
 
 
-class StudentController:
-    """Contain logic for StudentController"""
+def start_controller(name, surname, idx):
+    """
+    Allow student user perform assign tasks.
+    Call functions to print menu for user and get input of choosen option
 
-    @classmethod
-    def start_controller(cls, name, surname, idx):
-        """
-        Allow student user perform assign tasks.
-        Call functions to print menu for user and get input of choosen option
+    Args:
+        name (string): name of user
+        surname (string): surname of user
+        idx (string): unique user's id
+    """
 
-        Args:
-            name (string): name of user
-            surname (string): surname of user
-            idx (string): unique user's id
-        """
+    assignments = read_assignments("objects")
 
-        assignments = cls.read_assignments("objects")
+    option = 0
+    while not option == "0":
+        os.system("clear")
 
-        option = 0
-        while not option == "0":
-            os.system("clear")
+        codecooler_view.print_menu("Welcome {} {}".format(name, surname),
+                                  ["Submit assignment", "View my grades"], "Exit")
+        option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-            CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
-                                      ["Submit assignment", "View my grades"], "Exit")
-            option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+        if option == "1":
+            submit_assignment_controller.start_controller("student", assignments, idx)
+        elif option == "2":
+            view_grades(idx)
 
-            if option == "1":
-                SubmitAssignmentController.start_controller("student", assignments, idx)
-            elif option == "2":
-                cls.view_grades(idx)
+    save_assignments(assignments)
 
-        cls.save_assignments(assignments)
 
-    @classmethod
-    def view_grades(cls, idx):
-        """
-        Read grades from csv file. Allow student to see his/her grades
-        """
+def view_grades(idx):
+    """
+    Read grades from csv file. Allow student to see his/her grades
+    """
 
-        students_grades = []
-        all_grades = DataManager.read_file("csv/grades.csv")
+    students_grades = []
+    all_grades = DataManager.read_file("csv/grades.csv")
 
-        for grade in all_grades:
-            if idx in grade[0]:
-                students_grades.append(grade)
+    for grade in all_grades:
+        if idx in grade[0]:
+            students_grades.append(grade)
 
-        if len(students_grades) > 0:
-            titles = ["Students idx", "Assignment", "Grade"]
-            CodecoolerView.print_table(titles, students_grades)
-        else:
-            CodecoolerView.print_result("There is no grades!")
-            option = CodecoolerView.get_inputs("Enter anything to exit", [""])
+    if len(students_grades) > 0:
+        titles = ["Students idx", "Assignment", "Grade"]
+        codecooler_view.print_table(titles, students_grades)
+    else:
+        codecooler_view.print_result("There is no grades!")
+        option = codecooler_view.get_inputs("Enter anything to exit", [""])
 
-    @staticmethod
-    def read_assignments(return_type):
-        """
-        Convert data from csv file to SubmitAssignment object and add it to list
 
-        Args:
-            return_type (string): indicate whta type return will be
-        """
-        assignments_list = DataManager.read_file("csv/submitted_assgn.csv")
-        assignments = SubmitAssignment.assignments
+def read_assignments(return_type):
+    """
+    Convert data from csv file to SubmitAssignment object and add it to list
 
-        for i in range(len(assignments_list)):
+    Args:
+        return_type (string): indicate whta type return will be
+    """
+    assignments_list = DataManager.read_file("csv/submitted_assgn.csv")
+    assignments = SubmitAssignment.assignments
 
-            to_append = SubmitAssignment(assignments_list[i][0], assignments_list[i][1],
-                                         assignments_list[i][2], assignments_list[i][3])
-            assignments.append(to_append)
+    for i in range(len(assignments_list)):
 
-        if return_type == "objects":
-            return assignments
-        elif return_type == "lists":
-            return assignments_list
+        to_append = SubmitAssignment(assignments_list[i][0], assignments_list[i][1],
+                                     assignments_list[i][2], assignments_list[i][3])
+        assignments.append(to_append)
 
-    @staticmethod
-    def save_assignments(assignments):
-        """
-        Allow save submitted assigement to csv file
-        """
-        for i in range(len(assignments)):
-            assignments[i] = [assignments[i].idx, assignments[i].link,
-                              assignments[i].name, assignments[i].date]
+    if return_type == "objects":
+        return assignments
+    elif return_type == "lists":
+        return assignments_list
 
-        DataManager.save_file("csv/submitted_assgn.csv", assignments)
 
-    @staticmethod
-    def remove_student():
-        """
-        Remove Student object from student_list
-        """
+def save_assignments(assignments):
+    """
+    Allow save submitted assigement to csv file
+    """
+    for i in range(len(assignments)):
+        assignments[i] = [assignments[i].idx, assignments[i].link,
+                          assignments[i].name, assignments[i].date]
 
-        InstancesList.remove_person(Student.student_list)
+    DataManager.save_file("csv/submitted_assgn.csv", assignments)
 
-    @staticmethod
-    def add_student():
-        """
-        Create Student object and add to student_list
-        """
 
-        title = 'Creating student'
-        basic_questions = ['password', 'Name', 'Surname', 'email']
+def remove_student():
+    """
+    Remove Student object from student_list
+    """
 
-        InstancesList.add_person(Student.student_list, Student, title, basic_questions)
+    instances_manager.remove_person(Student.student_list)
 
-    @staticmethod
-    def change_student_name():
-        """
-        Change student name
-        """
 
-        title = 'Modify name'
-        task = ['Provide new name']
-        InstancesList.modify_person_details(Student.student_list, 'name', title, task)
+def add_student():
+    """
+    Create Student object and add to student_list
+    """
 
-    @staticmethod
-    def change_student_password():
-        """
-        Change student password
-        """
+    title = 'Creating student'
+    basic_questions = ['password', 'Name', 'Surname', 'email']
 
-        title = 'Modify password'
-        task = ['Provide new password']
-        InstancesList.modify_person_details(Student.student_list, 'password', title, task)
+    instances_manager.add_person(Student.student_list, Student, title, basic_questions)
 
-    @staticmethod
-    def change_student_surname():
-        """
-        Change student surname
-        """
+def change_student_name():
+    """
+    Change student name
+    """
 
-        title = 'Modify surname'
-        task = ['Provide new surname']
-        InstancesList.modify_person_details(Student.student_list, 'surname', title, task)
+    title = 'Modify name'
+    task = ['Provide new name']
+    instances_manager.modify_person_details(Student.student_list, 'name', title, task)
 
-    @staticmethod
-    def change_student_email():
-        """
-        Change student email
-        """
 
-        title = 'Modify email'
-        task = ['Email']
-        InstancesList.modify_person_details(Student.student_list, 'email', title, task)
+def change_student_password():
+    """
+    Change student password
+    """
 
-    @staticmethod
-    def load_students(data):
-        Student.student_list = InstancesList.convert_data_to_object('student', data)
+    title = 'Modify password'
+    task = ['Provide new password']
+    instances_manager.modify_person_details(Student.student_list, 'password', title, task)
 
-    @staticmethod
-    def save_students_data():
-        data = InstancesList.prepare_data_to_visualize(Student.student_list)
-        DataManager.save_file('csv/students.csv', data)
+
+def change_student_surname():
+    """
+    Change student surname
+    """
+
+    title = 'Modify surname'
+    task = ['Provide new surname']
+    instances_manager.modify_person_details(Student.student_list, 'surname', title, task)
+
+
+def change_student_email():
+    """
+    Change student email
+    """
+
+    title = 'Modify email'
+    task = ['Email']
+    instances_manager.modify_person_details(Student.student_list, 'email', title, task)
+
+
+def load_students(data):
+    Student.student_list = instances_manager.convert_data_to_object('student', data)
+
+
+def save_students_data():
+    data = instances_manager.prepare_data_to_visualize(Student.student_list)
+    DataManager.save_file('csv/students.csv', data)
