@@ -34,8 +34,7 @@ def start_controller(name, surname, idx):
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
-            display_student_list(students)
-            get_students_grades()
+            get_students_list()
 
         elif option == "2":
             assignment_controller.start_controller()
@@ -125,7 +124,7 @@ def start_student_edit_menu(students):
     while user_request != "0":
         os.system("clear")
 
-        display_student_list(students)
+        get_students_list()
 
         codecooler_view.print_menu(user_welcome, student_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
@@ -191,13 +190,11 @@ def save_mentors_data():
     DataManager.save_file('csv/mentors.csv', data)
 
 
-def display_student_list(students):
+def get_students_list():
     """
-    Call functions to display formatted table with all students
-
-    Args:
-        students (list of :obj: Student): list of all students
+    Call functions to display formatted table with Student object details
     """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
-    students = instances_manager.prepare_data_to_visualize(students)
+    students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
+    get_students_grades()
