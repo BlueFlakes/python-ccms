@@ -66,6 +66,7 @@ def start_mentor_edit_menu():
 
     while user_request != "0":
         os.system("clear")
+        get_mentors_list()
         codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
