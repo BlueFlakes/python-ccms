@@ -1,7 +1,7 @@
 from Models.student import Student
 from Models.office_manager import OfficeManager
 from Controllers import instances_manager
-from View. import codecooler_view
+from View import codecooler_view
 from data_manager import DataManager
 import os
 

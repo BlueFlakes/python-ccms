@@ -20,7 +20,7 @@ def gen_idx(position):
         idx = types_dict[position] + ''.join(random_idx)
         is_available = False
         while not is_available:
-            is_available = Tools.check_idx_availability(idx)
+            is_available = check_idx_availability(idx)
             if not is_available:
                 idx = types_dict[position] + ''.join([str(randint(0, 9)) for number in range(4)])
         return idx

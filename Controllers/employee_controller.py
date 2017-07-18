@@ -37,11 +37,11 @@ def check_given_email(email):
 
 
 def check_given_grade(grade):
-    is_correct = EmployeeController.try_str_convert(grade)
+    is_correct = try_str_convert(grade)
 
     while not is_correct:
         grade = employee_view.single_input("Please provide grade from 1 to 100: ")
-        is_correct = EmployeeController.try_str_convert(grade)
+        is_correct = try_str_convert(grade)
 
     return grade
 

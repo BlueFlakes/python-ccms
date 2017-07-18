@@ -34,7 +34,7 @@ def get_person(a_list, title, task):
         sleep(1.5)
 
 
-def remove_person(cls, a_list):
+def remove_person(a_list):
     """
     Remove given user if he exist.
 

@@ -9,11 +9,11 @@ def start_controller():
     Contain main logic for AssignmentController.
     Ask user about assigemnt details and add it to assigments list
     """
-    is_empty_input = True
+    is_empty = True
 
-    while is_empty_input:
+    while is_empty:
         assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
-        is_empty_input = is_empty_input(assgn_details)
+        is_empty = is_empty_input(assgn_details)
 
 
     Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1]))

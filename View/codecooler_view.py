@@ -1,5 +1,5 @@
 import getpass
-from Controllers import table
+from Controllers.table import Table
 from Controllers import employee_controller
 
 
@@ -78,5 +78,5 @@ def print_table(titles, data):
         title (string): title of table
         data (list of lists): list that contains details about persons as inner list
     """
-    print(table.table_creator(titles, data))
+    print(Table.table_creator(titles, data))
     option = get_inputs("Enter anything to exit", [""])

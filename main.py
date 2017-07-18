@@ -17,8 +17,8 @@ import data_manager
 
 
 def main():
-    data_manager.load_data_setup(ManagerController, StudentController, MentorController, OfficeManagerController)
-    codecooler_controller.CodecoolerController.login()
+    data_manager.load_data_setup(manager_controller, student_controller, mentor_controller, office_manager_controller)
+    codecooler_controller.login()
 
 
 if __name__ == "__main__":
