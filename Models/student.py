@@ -7,6 +7,6 @@ class Student(Codecooler):
 
     Attributes:
         student_list (list): list of Codecool students
-    """
 
+    """
     student_list = []

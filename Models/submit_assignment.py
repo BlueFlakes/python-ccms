@@ -7,7 +7,6 @@ class SubmitAssignment:
     Attributes:
         assignments (list): list of Codecool students assigemnts
     """
-
     assignments = []
 
     def __init__(self, idx, link, name, date=None):
