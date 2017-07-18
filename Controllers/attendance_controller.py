@@ -5,9 +5,7 @@ from View import codecooler_view
 from datetime import date, datetime
 
 from data_manager import DataManager
-from datetime import date
 import os
-
 
 
 def start_controller():
@@ -20,14 +18,14 @@ def start_controller():
     menu_options = ["Check attendnace", "View student attendance"]
     while not option == "0":
 
-        CodecoolerView.print_menu("Student's attendance menu", menu_options, "Exit")
-        options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
+        codecooler_view.print_menu("Student's attendance menu", menu_options, "Exit")
+        options = codecooler_view.get_inputs("Please choose a number", ["Number"])
         option = options[0]
 
         if option == "1":
             _check_attendance(students_attendance, students)
         elif option == "2":
-            choosen_student = CodecoolerView.get_inputs("Student attendance detail", ["Student idx"])
+            choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
 
@@ -83,8 +81,8 @@ def _check_attendance(students_attendance, students):
         check_attendance_person = "Check attendance for {} {}:".format(student.name, student.surname)
         while attendance_option not in ["0", "1", "2", "3"]:
 
-            CodecoolerView.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
-            attendance_options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
+            codecooler_view.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
+            attendance_options = codecooler_view.get_inputs("Please choose a number", ["Number"])
             attendance_option = attendance_options[0]
 
             if attendance_option == "1":
@@ -171,5 +169,3 @@ def _vaildate_correct_date(current_date, student, students_attendance):
             if attendance.date == current_date:
                 error_msg = "Attendance for {} {} was check today".format(student.name, student.surname)
                 raise ValueError(error_msg)
-
-    DataManager.save_file("csv/attendance.csv", students_attendance)
