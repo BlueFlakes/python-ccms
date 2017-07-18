@@ -25,7 +25,7 @@ def start_controller(name, surname):
 
         if option == "1":
             titles = ["Idx", "Password", "Name", "Surname", "Email"]
-            students = InstancesList.prepare_data_to_visualize(Student.student_list)
+            students = instances_manager.prepare_data_to_visualize(Student.student_list)
             codecooler_view.print_table(titles, students)
 
 def load_office_managers(data):

@@ -10,32 +10,18 @@ import os
 import sys
 
 
-
-user_welcome = None
-main_menu = ['List mentors', 'Edit mentors', 'List Students']
-mentor_edit_menu = ['Add mentor', 'Delete mentor', 'Modify mentor name',
-                    'Modify mentor surname', 'Modify mentor password',
-                    'Modify mentor email']
-
-
 def start_controller(name, surname, idx):
     """
-    Allow manager user perform assign tasks
+    Call functions that get user input and show menu
 
     Args:
         name (string): name of user
         surname (string): surname of user
         idx (string): unique user's id
     """
+
     user_welcome = "Welcome {} {}".format(name, surname)
-    start_main_menu()
-
-
-def start_main_menu(cls):
-    """
-    Call functions that get user input and show menu
-    """
-
+    main_menu = ['List mentors', 'Edit mentors', 'List Students']
     user_request = None
 
     while user_request != "0":
@@ -72,7 +58,10 @@ def start_mentor_edit_menu():
     """
     Call functions that get user input and show inner menu
     """
-
+    mentor_edit_menu = ['Add mentor', 'Delete mentor', 'Modify mentor name',
+                        'Modify mentor surname', 'Modify mentor password',
+                        'Modify mentor email']
+    user_welcome = "Mentors edit manager"
     user_request = None
 
     while user_request != "0":
