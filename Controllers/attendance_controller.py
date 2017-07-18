@@ -1,6 +1,6 @@
 from Models.attendance import AttendanceModel
 from View.codecooler_view import CodecoolerView
-from datetime import date
+from datetime import date, datetime
 
 from Models.student import Student
 from data_manager import DataManager
@@ -67,8 +67,15 @@ def _check_attendance(students_attendance, students):
     """
     current_date = date.today()
     for student in students:
+
+        try:
+            _vaildate_correct_date(current_date, student, students_attendance)
+        except ValueError as err:
+            print(err)
+            continue
+
         attendance_option = None
-        attendance = None
+        attendance_state = None
         check_attendance_person = "Check attendance for {} {}:".format(student.name, student.surname)
         while attendance_option not in ["0", "1", "2", "3"]:
 
@@ -77,15 +84,15 @@ def _check_attendance(students_attendance, students):
             attendance_option = attendance_options[0]
 
             if attendance_option == "1":
-                attendance = 1.0
+                attendance_state = 1.0
             elif attendance_option == "2":
-                attendance = 0.0
+                attendance_state = 0.0
             elif attendance_option == "3":
-                attendance = 0.8
+                attendance_state = 0.8
             else:
                 print("Wrong option")
 
-        if attendance:
+        if attendance_state:
             student_attendance = AttendanceModel(student.idx, current_date, attendance)
             students_attendance.append(student_attendance)
 
@@ -116,10 +123,18 @@ def _create_students_attendance_list():
     students_attendance = []
     attendance_list = DataManager.read_file("csv/attendance.csv")
 
-    if attendance_list:
-        for attendance_detail in attendance_list:
-            attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
-            students_attendance.append(attendnace)
+    try:
+        if attendance_list:
+            for attendance_detail in attendance_list:
+                student_idx = attendance_detail[0]
+                attendance_date = datetime.strptime(attendance_detail[1], "%Y-%m-%d").date()
+                attendance_state = attendance_detail[2]
+
+                attendnace = AttendanceModel(student_idx, attendance_date, attendance_state)
+                students_attendance.append(attendnace)
+
+    except IndexError:
+        pass
 
     return students_attendance
 
@@ -136,3 +151,19 @@ def _save_attendance(students_attendance):
                                   students_attendance[i].state]
 
     DataManager.save_file("csv/attendance.csv", students_attendance)
+
+
+def _vaildate_correct_date(current_date, student, students_attendance):
+    """
+    Check if student's attendance wasn't check today jet
+
+    Args:
+        current_date (datetime :obj:): today date as year, month, day
+        student (Student :obj:): object representation of student person
+        students_attendance (list of datetime :obj:): all students attendance list
+    """
+    for attendance in students_attendance:
+        if attendance.student_idx == student.idx:
+            if attendance.date == current_date:
+                error_msg = "Attendance for {} {} was check today".format(student.name, student.surname)
+                raise ValueError(error_msg)
