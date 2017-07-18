@@ -1,5 +1,5 @@
 import getpass
-from Controllers.table import Table
+from View.table import Table
 from Controllers import employee_controller
 
 
