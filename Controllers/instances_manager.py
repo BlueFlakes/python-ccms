@@ -54,19 +54,50 @@ def remove_person(a_list):
         pass
 
 
-def add_person(a_list, obj_to_create, title, questions):
+def add_person(a_list, obj_to_create, title):
     """
     Add person to the list
 
     Args:
         person (object): Student or mentor object in this case
     """
+    questions_list = ['password', 'Name', 'Surname', 'email']
+    person = get_user_details(questions_list)
 
-    person = codecooler_view.get_inputs(title, questions)
     idx = tools.gen_idx(obj_to_create.__name__.lower())
     a_list.append(obj_to_create(idx, *person))
     print('Succesfully added new person.')
     sleep(1.5)
+
+
+def get_user_details(questions_list):
+    user_details = []
+
+    for question in questions_list:
+        user_input = None
+
+        while not user_input:
+            user_input = codecooler_view.get_inputs('', [question])[0]
+            user_input = additional_filters_for_user_details(question, user_input)
+
+            if not user_input:
+                print('Error 999: [\'@\', \'.\'] one of those sign was not provided.', end=2*'\n')
+
+        user_details.append(user_input)
+
+    return user_details
+
+
+def additional_filters_for_user_details(question, user_input):
+    if question == 'email':
+        expected_signs = ['@', '.']
+
+        for sign in expected_signs:
+            if sign not in user_input:
+                user_input = None
+                break
+
+    return user_input
 
 
 def modify_person_details(a_list, choosen_detail, title, task):

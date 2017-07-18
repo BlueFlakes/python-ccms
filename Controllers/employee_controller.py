@@ -12,30 +12,6 @@ def get_student_list():
     return Student.student_list
 
 
-def check_given_email(email):
-    """
-    Check if given email is vaidate
-
-    Args:
-        email (string): givven email
-
-    Returns:
-        string: validate email given by user
-    """
-
-    if "@" in email and "." in email:
-        is_correct = True
-    else:
-        is_correct = False
-
-    while not is_correct:
-        email = employee_view.single_input("Please provide correct email: ")
-        if "@" in email and "." in email:
-            is_correct = True
-
-    return email
-
-
 def check_given_grade(grade):
     is_correct = try_str_convert(grade)
 

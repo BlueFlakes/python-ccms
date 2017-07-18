@@ -1,7 +1,5 @@
 import getpass
 from Controllers.table import Table
-from Controllers import employee_controller
-
 
 
 def get_inputs(title, questions_list):
@@ -17,24 +15,19 @@ def get_inputs(title, questions_list):
     """
 
     temp = []
-    print('\033[92m' + title + ':' + '\033[0m')
+
+    if title:
+        print('\033[92m' + title + ':' + '\033[0m')
 
     for question in questions_list:
         if question == "Password":
             temp.append(getpass.getpass())
-        elif question.lower() == "email":
-            user_input = input(question + ': ')
-            user_input = employee_controller.check_given_email(user_input)
-            temp.append(user_input)
-        elif question.lower() == "grade":
-            user_input = input(question + ': ')
-            user_input = employee_controller.check_given_grade(user_input)
-            temp.append(user_input)
+
         else:
             user_input = input(question + ': ')
             temp.append(user_input)
 
-    else:
+    if title:
         print()
 
     return temp

@@ -58,9 +58,7 @@ def add_mentor():
     """
 
     title = 'Creating mentor'
-    basic_questions = ['password', 'Name', 'Surname', 'email']
-
-    instances_manager.add_person(Mentor.mentor_list, Mentor, title, basic_questions)
+    instances_manager.add_person(Mentor.mentor_list, Mentor, title)
 
 
 def remove_mentor():
