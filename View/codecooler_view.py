@@ -1,5 +1,5 @@
 import getpass
-from Controllers.table import Table
+from View.table import Table
 
 
 def get_inputs(title, questions_list):
