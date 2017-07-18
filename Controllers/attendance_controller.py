@@ -1,134 +1,129 @@
 from Models.attendance import AttendanceModel
-from View.codecooler_view import CodecoolerView
-from datetime import date
-
 from Models.student import Student
-import os
+from View import codecooler_view
 from data_manager import DataManager
+from datetime import date
+import os
 
 
-class AttendanceController:
-    """Contain methods to work on AttendanceModel object"""
+def start_controller():
+    """
+    Contain main logic for AttendanceController.
+    """
+    students = Student.student_list
+    students_attendance = create_students_attendance_list()
+    option = 0
+    while not option == "0":
+        # os.system("clear")
 
-    @classmethod
-    def start_controller(cls):
-        """
-        Contain main logic for AttendanceController.
-        """
-        students = Student.student_list
-        students_attendance = cls.create_students_attendance_list()
-        option = 0
-        while not option == "0":
-            # os.system("clear")
+        codecooler_view.print_menu("", ["Check attendnace", "View student attendance"], "Exit")
+        options = codecooler_view.get_inputs("Please choose a number", ["Number"])
+        option = options[0]
 
-            CodecoolerView.print_menu("", ["Check attendnace", "View student attendance"], "Exit")
-            options = CodecoolerView.get_inputs("Please choose a number", ["Number"])
-            option = options[0]
+        if option == "1":
+            check_attendance(students_attendance, students)
+        elif option == "2":
+            choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
+            attendance_student_list = get_attendnace_list(students_attendance, choosen_student[0])
 
-            if option == "1":
-                cls.check_attendance(students_attendance, students)
-            elif option == "2":
-                choosen_student = CodecoolerView.get_inputs("Student attendance detail", ["Student idx"])
-                attendance_student_list = cls.get_attendnace_list(students_attendance, choosen_student[0])
-                # here we need add print table
-                cls.calculate_attendnace(students_attendance, choosen_student[0])
+            calculate_attendnace(students_attendance, choosen_student[0])
 
-        cls.save_attendance(students_attendance)
+    save_attendance(students_attendance)
 
-    @staticmethod
-    def calculate_attendnace(students_attendance, given_student_idx):
-        """
-        Print attendnace for student with given idx in percent
 
-        Args:
-            students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
-            student_idx (str): uniqe id number of student
-        """
-        attendance_sum = 0
-        max_possible_attendance = 0
+def calculate_attendnace(students_attendance, given_student_idx):
+    """
+    Print attendnace for student with given idx in percent
 
-        for student in students_attendance:
-            if student.student_idx == given_student_idx:
-                attendance_sum += float(student.state)
-                max_possible_attendance += 1
+    Args:
+        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        student_idx (str): uniqe id number of student
+    """
+    attendance_sum = 0
+    max_possible_attendance = 0
 
-        try:
-            attendance_procent = round(((attendance_sum/max_possible_attendance)*100), 2)
+    for student in students_attendance:
+        if student.student_idx == given_student_idx:
+            attendance_sum += float(student.state)
+            max_possible_attendance += 1
 
-        except ZeroDivisionError:
-            print("This student have no attendance")
-            pass
+    try:
+        attendance_procent = round(((attendance_sum/max_possible_attendance)*100), 2)
 
-        else:
-            print("Student attendance {}%".format(attendance_procent))
+    except ZeroDivisionError:
+        print("This student have no attendance")
+        pass
 
-    @classmethod
-    def check_attendance(cls, students_attendance, students):
-        """
-        Add AttendanceModel object to proper list.
+    else:
+        print("Student attendance {}%".format(attendance_procent))
 
-        Args:
-            students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
-            students (list of :obj: `StudentModels`):list with detail of all students
-        """
-        current_date = date.today()
-        for student in students:
-            question = "Check attendance for {} {}".format(student.name, student.surname)
-            student_detail = None
 
-            while student_detail not in ['0', '1']:
-                student_detail = CodecoolerView.get_inputs(question, ["Attendance state (1 or 0)"])[0]
+def check_attendance(students_attendance, students):
+    """
+    Add AttendanceModel object to proper list.
 
-                if student_detail not in ['0', '1']:
-                    print('Wrong value!')
+    Args:
+        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        students (list of :obj: `StudentModels`):list with detail of all students
+    """
+    current_date = date.today()
+    for student in students:
+        question = "Check attendance for {} {}".format(student.name, student.surname)
+        student_detail = None
 
-            attendance = AttendanceModel(student.idx, current_date, float(student_detail))
-            students_attendance.append(attendance)
+        while student_detail not in ['0', '1']:
+            student_detail = codecooler_view.get_inputs(question, ["Attendance state (1 or 0)"])[0]
 
-    @staticmethod
-    def get_attendnace_list(students_attendance, student_idx):
-        """
-        Create list of attendnace detail for student with given idx
+            if student_detail not in ['0', '1']:
+                print('Wrong value!')
 
-        Args:
-            students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
-            student_idx (str): uniqe id number of student
+        attendance = AttendanceModel(student.idx, current_date, float(student_detail))
+        students_attendance.append(attendance)
 
-        Returns:
-            list of list: str: list of attendnace detail for student with given idx
-        """
-        attendance_student_list = []
-        for attendance in students_attendance:
-            if attendance.student_idx == student_idx:
-                attendance_student_list.append(attendance)
 
-        return attendance_student_list
+def get_attendnace_list(students_attendance, student_idx):
+    """
+    Create list of attendnace detail for student with given idx
 
-    @staticmethod
-    def create_students_attendance_list():
-        """
-        Convert data from csv file to AttendanceModel object and add it to list
-        """
-        students_attendance = []
-        attendance_list = DataManager.read_file("csv/attendance.csv")
-        print(attendance_list)
-        if attendance_list:
-            for attendance_detail in attendance_list:
-                attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
-                students_attendance.append(attendnace)
+    Args:
+        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        student_idx (str): uniqe id number of student
 
-        return students_attendance
+    Returns:
+        list of list: str: list of attendnace detail for student with given idx
+    """
+    attendance_student_list = []
+    for attendance in students_attendance:
+        if attendance.student_idx == student_idx:
+            attendance_student_list.append(attendance)
 
-    @staticmethod
-    def save_attendance(students_attendance):
-        """
-        Save list of attendance of all students in csv file
+    return attendance_student_list
 
-        Args:
-            students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
-        """
-        for i in range(len(students_attendance)):
-            students_attendance[i] = [students_attendance[i].student_idx, students_attendance[i].date,
-                                      students_attendance[i].state]
 
-        DataManager.save_file("csv/attendance.csv", students_attendance)
+def create_students_attendance_list():
+    """
+    Convert data from csv file to AttendanceModel object and add it to list
+    """
+    students_attendance = []
+    attendance_list = DataManager.read_file("csv/attendance.csv")
+    print(attendance_list)
+    if attendance_list:
+        for attendance_detail in attendance_list:
+            attendnace = AttendanceModel(attendance_detail[0], attendance_detail[1], attendance_detail[2])
+            students_attendance.append(attendnace)
+
+    return students_attendance
+
+
+def save_attendance(students_attendance):
+    """
+    Save list of attendance of all students in csv file
+
+    Args:
+        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+    """
+    for i in range(len(students_attendance)):
+        students_attendance[i] = [students_attendance[i].student_idx, students_attendance[i].date,
+                                  students_attendance[i].state]
+
+    DataManager.save_file("csv/attendance.csv", students_attendance)

@@ -1,5 +1,4 @@
 import csv
-from Controllers.instances_manager import InstancesList
 
 
 class DataManager:

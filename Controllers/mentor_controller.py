@@ -1,176 +1,173 @@
 import os
-from Controllers.instances_manager import InstancesList
-from Controllers.student_controller import StudentController
-from Controllers.submit_assignment_controller import SubmitAssignmentController
-from Controllers.assignment_controller import AssignmentController
-from View.codecooler_view import CodecoolerView
+from Controllers import instances_manager
+from Controllers import student_controller
+from Controllers import submit_assignment_controller
+from Controllers import assignment_controller
+from Controllers import attendance_controller
+from View import codecooler_view
 from Models.mentor import Mentor
 from Models.student import Student
-from Controllers.attendance_controller import AttendanceController
 from data_manager import DataManager
 
 
-class MentorController():
-    """Contain logic for MentorController"""
 
-    @classmethod
-    def start_controller(cls, name, surname, idx):
-        """
-        Allow mentor user perform assign tasks.
-        Call functions to print menu for user and get input of choosen option
+def start_controller(name, surname, idx):
+    """
+    Allow mentor user perform assign tasks.
+    Call functions to print menu for user and get input of choosen option
 
-        Args:
-            name (string): name of user
-            surname (string): surname of user
-            idx (string): unique user's id
-        """
+    Args:
+        name (string): name of user
+        surname (string): surname of user
+        idx (string): unique user's id
+    """
 
-        assignments = StudentController.read_assignments("lists")
-        students = Student.student_list
+    assignments = student_controller.read_assignments("lists")
+    students = Student.student_list
 
-        option = 0
-        while not option == "0":
-            os.system("clear")
+    option = 0
+    while not option == "0":
+        os.system("clear")
 
-            CodecoolerView.print_menu("Welcome {} {}".format(name, surname),
-                                      ["Students list", "Add assignment", "Grade assignment",
-                                       "Check attendace", "Edit student"], "Exit")
-            option = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+        codecooler_view.print_menu("Welcome {} {}".format(name, surname),
+                                  ["Students list", "Add assignment", "Grade assignment",
+                                   "Check attendace", "Edit student"], "Exit")
+        option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-            if option == "1":
-                titles = ["Idx", "Password", "Name", "Surname", "Email"]
-                students = InstancesList.prepare_data_to_visualize(Student.student_list)
-                CodecoolerView.print_table(titles, students)
-                cls.get_students_grades()
+        if option == "1":
+            titles = ["Idx", "Password", "Name", "Surname", "Email"]
+            students = instances_manager.prepare_data_to_visualize(Student.student_list)
+            codecooler_view.print_table(titles, students)
+            get_students_grades()
 
-            elif option == "2":
-                AssignmentController.start_controller()
-            elif option == "3":
-                SubmitAssignmentController.start_controller("mentor", assignments, idx)
-            elif option == "4":
-                AttendanceController.start_controller()
-            elif option == "5":
-                cls.start_student_edit_menu()
-            elif option == "0":
-                StudentController.save_students_data()
+        elif option == "2":
+            assignment_controller.start_controller()
+        elif option == "3":
+            submit_assignment_controller.start_controller("mentor", assignments, idx)
+        elif option == "4":
+            attendance_controller.start_controller()
+        elif option == "5":
+            start_student_edit_menu()
+        elif option == "0":
+            student_controller.save_students_data()
 
-    @staticmethod
-    def add_mentor():
-        """
-        Create Mentor object and add to mentor_list
-        """
 
-        title = 'Creating mentor'
-        basic_questions = ['password', 'Name', 'Surname', 'email']
+def add_mentor():
+    """
+    Create Mentor object and add to mentor_list
+    """
 
-        InstancesList.add_person(Mentor.mentor_list, Mentor, title, basic_questions)
+    title = 'Creating mentor'
+    basic_questions = ['password', 'Name', 'Surname', 'email']
 
-    @staticmethod
-    def remove_mentor():
-        """
-        Remove Mentor object from mentor_list
-        """
+    instances_manager.add_person(Mentor.mentor_list, Mentor, title, basic_questions)
 
-        InstancesList.remove_person(Mentor.mentor_list)
 
-    @staticmethod
-    def change_mentor_name():
-        """
-        Change mentor name
-        """
+def remove_mentor():
+    """
+    Remove Mentor object from mentor_list
+    """
 
-        title = 'Modify name'
-        task = ['Provide new name']
-        InstancesList.modify_person_details(Mentor.mentor_list, 'name', title, task)
+    instances_manager.remove_person(Mentor.mentor_list)
 
-    @staticmethod
-    def change_mentor_password():
-        """
-        Change mentor password
-        """
 
-        title = 'Modify password'
-        task = ['Provide new password']
-        InstancesList.modify_person_details(Mentor.mentor_list, 'password', title, task)
+def change_mentor_name():
+    """
+    Change mentor name
+    """
 
-    @staticmethod
-    def change_mentor_surname():
-        """
-        Change mentor surname
-        """
+    title = 'Modify name'
+    task = ['Provide new name']
+    instances_manager.modify_person_details(Mentor.mentor_list, 'name', title, task)
 
-        title = 'Modify surname'
-        task = ['Provide new surname']
-        InstancesList.modify_person_details(Mentor.mentor_list, 'surname', title, task)
 
-    @staticmethod
-    def change_mentor_email():
-        """
-        Change mentor email
-        """
+def change_mentor_password():
+    """
+    Change mentor password
+    """
 
-        title = 'Modify email'
-        task = ['Email']
-        InstancesList.modify_person_details(Mentor.mentor_list, 'email', title, task)
+    title = 'Modify password'
+    task = ['Provide new password']
+    instances_manager.modify_person_details(Mentor.mentor_list, 'password', title, task)
 
-    @classmethod
-    def start_student_edit_menu(cls):
-        """
-        Call functions that get user input and show inner menu
-        """
 
-        user_request = None
-        user_welcome = "Student edit manager"
-        student_edit_menu = ['Add student', 'Delete student', 'Modify student name',
-                             'Modify student surname', 'Modify student password',
-                             'Modify student email']
+def change_mentor_surname():
+    """
+    Change mentor surname
+    """
 
-        while user_request != "0":
-            os.system("clear")
-            CodecoolerView.print_menu(user_welcome, student_edit_menu, "Exit")
-            user_request = CodecoolerView.get_inputs("Please choose a number", ["Number"])[0]
+    title = 'Modify surname'
+    task = ['Provide new surname']
+    instances_manager.modify_person_details(Mentor.mentor_list, 'surname', title, task)
 
-            cls.handle_student_edit_requests(user_request)
 
-    @classmethod
-    def handle_student_edit_requests(cls, user_request):
-        """
-        Call function that perform task from inner menu choosen by user: add student, remove student,
-        change details about student
-        """
+def change_mentor_email():
+    """
+    Change mentor email
+    """
 
-        if user_request == '1':
-            StudentController.add_student()
+    title = 'Modify email'
+    task = ['Email']
+    instances_manager.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
-        elif user_request == '2':
-            StudentController.remove_student()
 
-        elif user_request == '3':
-            StudentController.change_student_name()
+def start_student_edit_menu():
+    """
+    Call functions that get user input and show inner menu
+    """
 
-        elif user_request == '4':
-            StudentController.change_student_surname()
+    user_request = None
+    user_welcome = "Student edit manager"
+    student_edit_menu = ['Add student', 'Delete student', 'Modify student name',
+                         'Modify student surname', 'Modify student password',
+                         'Modify student email']
 
-        elif user_request == '5':
-            StudentController.change_student_password()
+    while user_request != "0":
+        os.system("clear")
+        codecooler_view.print_menu(user_welcome, student_edit_menu, "Exit")
+        user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        elif user_request == '6':
-            StudentController.change_student_email()
+        handle_student_edit_requests(user_request)
 
-    @staticmethod
-    def get_students_grades():
-        check_grades = CodecoolerView.get_inputs("Do you want to see grades of any student?",
-                                                 ["Yes/no"])
-        check_grades = check_grades[0].lower()
-        if check_grades == "yes":
-            idx = CodecoolerView.get_inputs("Please provide idx of the student", ["Idx"])[0]
-            StudentController.view_grades(idx)
 
-    @staticmethod
-    def load_mentors(data):
-        Mentor.mentor_list = InstancesList.convert_data_to_object('mentor', data)
+def handle_student_edit_requests(user_request):
+    """
+    Call function that perform task from inner menu choosen by user: add student, remove student,
+    change details about student
+    """
 
-    @staticmethod
-    def save_mentors_data():
-        data = InstancesList.prepare_data_to_visualize(Mentor.mentor_list)
-        DataManager.save_file('csv/mentors.csv', data)
+    if user_request == '1':
+        student_controller.add_student()
+
+    elif user_request == '2':
+        student_controller.remove_student()
+
+    elif user_request == '3':
+        student_controller.change_student_name()
+
+    elif user_request == '4':
+        student_controller.change_student_surname()
+
+    elif user_request == '5':
+        student_controller.change_student_password()
+
+    elif user_request == '6':
+        student_controller.change_student_email()
+
+
+def get_students_grades():
+    check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
+                                             ["Yes/no"])
+    check_grades = check_grades[0].lower()
+    if check_grades == "yes":
+        idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
+        student_controller.view_grades(idx)
+
+
+def load_mentors(data):
+    Mentor.mentor_list = instances_manager.convert_data_to_object('mentor', data)
+
+
+def save_mentors_data():
+    data = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
+    DataManager.save_file('csv/mentors.csv', data)
