@@ -1,6 +1,6 @@
 import getpass
-from Controllers.table import Table
-from Controllers.employee_controller import EmployeeController
+from Controllers import table
+from Controllers import employee_controller
 
 
 
@@ -24,11 +24,11 @@ def get_inputs(title, questions_list):
             temp.append(getpass.getpass())
         elif question.lower() == "email":
             user_input = input(question + ': ')
-            user_input = EmployeeController.check_given_email(user_input)
+            user_input = employee_controller.check_given_email(user_input)
             temp.append(user_input)
         elif question.lower() == "grade":
             user_input = input(question + ': ')
-            user_input = EmployeeController.check_given_grade(user_input)
+            user_input = employee_controller.check_given_grade(user_input)
             temp.append(user_input)
         else:
             user_input = input(question + ': ')
@@ -78,5 +78,5 @@ def print_table(titles, data):
         title (string): title of table
         data (list of lists): list that contains details about persons as inner list
     """
-    print(Table.table_creator(titles, data))
-    option = CodecoolerView.get_inputs("Enter anything to exit", [""])
+    print(table.table_creator(titles, data))
+    option = get_inputs("Enter anything to exit", [""])
