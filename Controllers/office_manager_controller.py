@@ -1,11 +1,12 @@
 from Models.student import Student
 from Models.office_manager import OfficeManager
 from Controllers import instances_manager
+from Controllers import codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
 import os
 
-def start_controller(name, surname):
+def start_controller(name, surname, idx):
     """
     Allow office manager user perform assign tasks.
     Call functions to print menu for user and get input of choosen option: show students list
@@ -19,7 +20,8 @@ def start_controller(name, surname):
     while not option == "0":
         os.system("clear")
 
-        codecooler_view.print_menu("Welcome {} {}".format(name, surname), ["Show student list"], "Exit")
+        codecooler_view.print_menu("Welcome {} {}".format(name, surname),
+                                   ["Show student list", "Change your password"], "Exit")
         options = codecooler_view.get_inputs("Please choose a number", ["Number"])
         option = options[0]
 
@@ -27,6 +29,14 @@ def start_controller(name, surname):
             titles = ["Idx", "Password", "Name", "Surname", "Email"]
             students = instances_manager.prepare_data_to_visualize(Student.student_list)
             codecooler_view.print_table(titles, students)
+        elif option == "2":
+            codecooler_controller.change_password(idx)
+
+    save_office_managers()
 
 def load_office_managers(data):
     OfficeManager.office_managers_list = instances_manager.convert_data_to_object('officemanager', data)
+
+def save_office_managers():
+    data = instances_manager.prepare_data_to_visualize(OfficeManager.office_managers_list)
+    DataManager.save_file('csv/officemanagers.csv', data)
