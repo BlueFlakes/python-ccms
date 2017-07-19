@@ -1,5 +1,6 @@
-import getpass
 from View.table import Table
+import getpass
+import os
 
 
 def get_inputs(title, questions_list):
@@ -73,3 +74,6 @@ def print_table(titles, data):
     """
     print(Table.table_creator(titles, data))
     option = get_inputs("Enter anything to exit", [""])
+
+def clear_window():
+    os.system("clear")
