@@ -1,7 +1,7 @@
 from Models.student import Student
 from Models.manager import Manager
 from Models.mentor import Mentor
-from Controllers import instances_manager
+from Controllers import instances_manager, talkbox
 from Controllers import student_controller, mentor_controller, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
@@ -19,7 +19,8 @@ def start_controller(name, surname, idx):
     """
 
     user_welcome = "Welcome {} {}".format(name, surname)
-    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password']
+    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password',
+                 "Enter talkbox"]
     user_request = None
 
     while user_request != "0":
@@ -50,6 +51,9 @@ def handle_main_menu_requests(user_request, idx):
 
     elif user_request == '4':
         codecooler_controller.change_password(idx)
+
+    elif user_request == "5":
+        talkbox.start_talkbox()
 
 
 def start_mentor_edit_menu():

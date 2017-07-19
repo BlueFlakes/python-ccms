@@ -1,6 +1,6 @@
 from Models.student import Student
 from Models.office_manager import OfficeManager
-from Controllers import instances_manager, codecooler_controller
+from Controllers import instances_manager, codecooler_controller, talkbox
 from View import codecooler_view
 from data_manager import DataManager
 
@@ -18,7 +18,8 @@ def start_controller(name, surname, idx):
     while not option == "0":
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                   ["Show student list", "Change your password"], "Exit")
+                                   ["Show student list", "Change your password",
+                                    "Enter talkbox"], "Exit")
         options = codecooler_view.get_inputs("Please choose a number", ["Number"])
         option = options[0]
 
@@ -28,6 +29,8 @@ def start_controller(name, surname, idx):
             codecooler_view.print_table(titles, students)
         elif option == "2":
             codecooler_controller.change_password(idx)
+        elif option == "3":
+            talkbox.start_talkbox()
 
     save_office_managers()
 

@@ -1,4 +1,4 @@
-from Controllers import instances_manager
+from Controllers import instances_manager, talkbox
 from Controllers import codecooler_controller, student_controller
 from Controllers import submit_assignment_controller, assignment_controller, attendance_controller
 from View import codecooler_view
@@ -26,7 +26,8 @@ def start_controller(name, surname, idx):
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
-                                   "Check attendace", "Edit student", "Change your password"], "Exit")
+                                   "Check attendace", "Edit student", "Change your password",
+                                   "Enter talkbox"], "Exit")
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
@@ -41,6 +42,8 @@ def start_controller(name, surname, idx):
             start_student_edit_menu(Student.student_list)
         elif option == "6":
             codecooler_controller.change_password(idx)
+        elif option == "7":
+            talkbox.start_talkbox()
 
     student_controller.save_students_data()
     save_mentors_data()
