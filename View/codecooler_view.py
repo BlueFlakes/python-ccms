@@ -1,5 +1,6 @@
-import getpass
 from View.table import Table
+import getpass
+import os
 
 
 def get_inputs(title, questions_list):
