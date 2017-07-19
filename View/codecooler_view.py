@@ -63,6 +63,31 @@ def print_result(result):
 
     print(result)
 
+def print_error_message(error_msg):
+    """
+    Print error message
+
+    Args:
+        error_msg (str):
+
+    """
+    print('\033[91m' + error_msg + '\033[0m', end=2*'\n')
+
+
+def state_locker():
+    import sys, tty, termios
+
+    print('\nEnter anything to exit')
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
 
 def print_table(titles, data):
     """

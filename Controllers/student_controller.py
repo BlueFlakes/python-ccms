@@ -4,7 +4,7 @@ from Models.submit_assignment import SubmitAssignment
 from Controllers import submit_assignment_controller, instances_manager, codecooler_controller, talkbox
 from View import codecooler_view
 from data_manager import DataManager
-
+from time import sleep
 
 def start_controller(name, surname, idx):
     """
@@ -55,10 +55,11 @@ def view_grades(idx):
     if len(students_grades) > 0:
         titles = ["Students idx", "Assignment", "Grade"]
         codecooler_view.print_table(titles, students_grades)
+        codecooler_view.state_locker()
 
     else:
         codecooler_view.print_result("There is no grades!")
-        option = codecooler_view.get_inputs("Enter anything to exit", [""])
+        sleep(1.5)
 
 
 def read_assignments(return_type):

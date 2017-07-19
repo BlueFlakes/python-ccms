@@ -31,7 +31,8 @@ def start_controller(name, surname, idx):
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if option == "1":
-            get_students_list()
+            get_students_list(present_student_grades=True)
+
         elif option == "2":
             assignment_controller.start_controller()
         elif option == "3":
@@ -106,7 +107,7 @@ def change_mentor_email():
     instances_manager.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
 
-def start_student_edit_menu(students):
+def start_student_edit_menu():
     """
     Call functions that get user input and show inner menu
 
@@ -191,12 +192,14 @@ def save_mentors_data():
     DataManager.save_file('csv/mentors.csv', data)
 
 
-def get_students_list(grades=True):
+def get_students_list(present_student_grades=False):
     """
     Call functions to display formatted table with Student object details
     """
+    os.system('clear')
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
-    if grades:
+
+    if present_student_grades:
         get_students_grades()
