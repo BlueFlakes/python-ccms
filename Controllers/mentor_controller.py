@@ -45,6 +45,8 @@ def start_controller(name, surname, idx):
             codecooler_controller.change_password(idx)
         elif option == "7":
             talkbox.start_talkbox(name, surname)
+            
+        codecooler_view.clear_window()
 
     student_controller.save_students_data()
     save_mentors_data()
