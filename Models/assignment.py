@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class Assignment:
     """
     This class represents assigment created by mentor
@@ -7,7 +10,7 @@ class Assignment:
     """
     assignments = []
 
-    def __init__(self, title, description):
+    def __init__(self, title, description, deadline):
         """
         Constructor of assigment object.
 
@@ -18,3 +21,4 @@ class Assignment:
         """
         self.title = title
         self.description = description
+        self.deadline = deadline
