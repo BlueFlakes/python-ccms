@@ -39,7 +39,8 @@ def start_controller(name, surname, idx):
         elif option == "3":
             submit_assignment_controller.start_controller("mentor", assignments, idx)
         elif option == "4":
-            attendance_controller.start_controller()
+            students = instances_manager.prepare_data_to_visualize(Student.student_list)
+            attendance_controller.start_controller(students)
         elif option == "5":
             start_student_edit_menu()
         elif option == "6":
