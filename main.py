@@ -9,10 +9,6 @@ from Controllers import codecooler_controller, employee_controller, manager_cont
 from Controllers import mentor_controller, office_manager_controller, student_controller
 
 from Controllers import tools
-from Controllers import manager_controller
-from Controllers import office_manager_controller
-from Controllers import mentor_controller
-from Controllers import student_controller
 import data_manager
 
 

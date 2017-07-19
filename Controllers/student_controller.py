@@ -2,9 +2,7 @@ import os
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
-from Controllers import submit_assignment_controller
-from Controllers import instances_manager
-from Controllers import codecooler_controller
+from Controllers import submit_assignment_controller, instances_manager, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
 
