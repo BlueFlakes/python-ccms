@@ -2,6 +2,7 @@ from View import codecooler_view
 from data_manager import DataManager
 from Models.submit_assignment import SubmitAssignment
 from time import sleep
+import os
 
 
 def start_controller(position, assignments, idx):
@@ -19,26 +20,27 @@ def start_controller(position, assignments, idx):
     elif position == "mentor":
         mentor_side(assignments)
 
-def mentor_side(assignments):
+
+def mentor_side(submited_assignments):
     """
     Allow mentor to grade submited assigemts. Then list of assigemts is save to csv file.
 
     Args:
-        assignments (list of :obj: `SubmitAssignment`): list of assigemts
+        submited_assignments (list of :obj: `SubmitAssignment`): list of assigemts
     """
     task = codecooler_view.get_inputs("Please provide task's name", ["Task"])
     task = task[0]
 
-    for assgn in assignments:
-        if task == assgn[2]:
+    for student_submit in submited_assignments:
+        if task == student_submit[2]:
 
-            codecooler_view.print_result("Student idx: {} | Date: {}".format(assgn[0], assgn[3]))
-            codecooler_view.print_result("Assignment name: {}".format(assgn[2]))
-            codecooler_view.print_result("Link: {}".format(assgn[1]))
+            codecooler_view.print_result("Student idx: {} | Date: {}".format(student_submit[0], student_submit[3]))
+            codecooler_view.print_result("Assignment name: {}".format(student_submit[2]))
+            codecooler_view.print_result("Link: {}\n".format(student_submit[1]))
 
-            grade = codecooler_view.get_inputs("Grade this assignment: ", ["Grade"])
-            grade = grade[0]
-            DataManager.extend_file("csv/grades.csv", [assgn[0], task, grade])
+            grade = _grade_assigement()
+            DataManager.extend_file("csv/grades.csv", [student_submit[0], task, grade])
+
 
     codecooler_view.clear_window()
 
@@ -60,4 +62,44 @@ def student_side(assignments, idx):
     else:
         codecooler_view.print_result("Wrong assignment name!\n")
         sleep(1.5)
-        codecooler_view.clear_window()
+
+def _grade_assigement():
+    """
+    Allow mentor to eval student's assigment by Danish scale. Show menu with grades assigne to menu options
+    """
+
+    grade = 0
+    eval_categories = ["Stability", "Conform to requirements", "Python basics", "Git workflow", "Teamwork"]
+    possible_eval_options = ["12.0 pts", "10.0 pts", "7.0 pts", "4.0 pts", "2.0 pts", "0.0 pts", "-1.0 pts", "-3.0 pts"]
+
+    for category in eval_categories:
+        option = None
+
+        while option not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+            codecooler_view.print_menu(category, possible_eval_options, "Exit evaluation for student")
+            option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
+
+            if option == "1":
+                grade += 12
+            elif option == "2":
+                grade += 10
+            elif option == "3":
+                grade += 7
+            elif option == "4":
+                grade += 4
+            elif option == "5":
+                grade += 2
+            elif option == "6":
+                grade += 0
+            elif option == "7":
+                grade -= 1
+            elif option == "8":
+                grade -= 3
+            else:
+                print("Wrong option")
+        else:
+            if option == "0":
+                break
+
+    os.system("clear")
+    return grade
