@@ -1,10 +1,7 @@
 import os
 from Controllers import instances_manager
-from Controllers import student_controller
-from Controllers import submit_assignment_controller
-from Controllers import assignment_controller
-from Controllers import attendance_controller
-from Controllers import codecooler_controller
+from Controllers import codecooler_controller, student_controller
+from Controllers import submit_assignment_controller, assignment_controller, attendance_controller
 from View import codecooler_view
 from Models.mentor import Mentor
 from Models.student import Student

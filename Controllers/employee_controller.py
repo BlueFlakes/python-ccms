@@ -1,5 +1,4 @@
 from Models.student import Student
-from View import employee_view
 
 
 def get_student_list():

@@ -2,9 +2,7 @@ from Models.student import Student
 from Models.manager import Manager
 from Models.mentor import Mentor
 from Controllers import instances_manager
-from Controllers import student_controller
-from Controllers import mentor_controller
-from Controllers import codecooler_controller
+from Controllers import student_controller, mentor_controller, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
 import os
