@@ -1,11 +1,10 @@
 from Models.student import Student
 from Models.manager import Manager
 from Models.mentor import Mentor
-from Controllers import instances_manager
+from Controllers import instances_manager, talkbox
 from Controllers import student_controller, mentor_controller, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
-import os
 import sys
 
 
@@ -20,20 +19,20 @@ def start_controller(name, surname, idx):
     """
 
     user_welcome = "Welcome {} {}".format(name, surname)
-    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password']
+    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password',
+                 "Enter talkbox"]
     user_request = None
 
     while user_request != "0":
-        os.system("clear")
         codecooler_view.print_menu(user_welcome, main_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        handle_main_menu_requests(user_request, idx)
+        handle_main_menu_requests(user_request, idx, name, surname)
 
     mentor_controller.save_mentors_data()
     save_managers_data()
 
-def handle_main_menu_requests(user_request, idx):
+def handle_main_menu_requests(user_request, idx, name, surname):
     """
     Call function that perform task from menu choosen by user: see list of students, mentors,
     edit mentors
@@ -53,6 +52,9 @@ def handle_main_menu_requests(user_request, idx):
     elif user_request == '4':
         codecooler_controller.change_password(idx)
 
+    elif user_request == "5":
+        talkbox.start_talkbox(name, surname)
+
 
 def start_mentor_edit_menu():
     """
@@ -65,13 +67,13 @@ def start_mentor_edit_menu():
     user_request = None
 
     while user_request != "0":
-        os.system("clear")
         get_mentors_list()
         codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         handle_mentor_edit_requests(user_request)
 
+    codecooler_view.clear_window()
 
 def handle_mentor_edit_requests(user_request):
     """
@@ -130,6 +132,8 @@ def get_students_grades():
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
         student_controller.view_grades(idx)
+    else:
+        codecooler_view.clear_window()
 
 
 def load_managers(data):

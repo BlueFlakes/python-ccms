@@ -4,11 +4,10 @@ from Models.student import Student
 from Models.office_manager import OfficeManager
 from Models.manager import Manager
 from View import codecooler_view
-from Controllers import student_controller
-from Controllers import mentor_controller
-from Controllers import manager_controller
+from Controllers import student_controller, mentor_controller, manager_controller
 from Controllers import office_manager_controller
 from random import randint
+from time import sleep
 
 
 def login():
@@ -25,6 +24,7 @@ def login():
 
         for ccooler in mergedlist:
             if idx == ccooler.idx and password == ccooler.password:
+                codecooler_view.clear_window()
                 start_controller(ccooler)
                 found = True
                 break
@@ -61,9 +61,10 @@ def change_password(idx):
         passes = codecooler_view.get_inputs("Please provide data", ["Old password", "New password"])
         if passes[0] == user.password:
             user.password = passes[1]
-            codecooler_view.print_result("Password changed succesfully!")
+            codecooler_view.print_result("Password changed succesfully!\n")
+            sleep(1.5)
+            codecooler_view.clear_window()
             correct_pass = True
-
 
 def find_user_by_id(idx):
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list

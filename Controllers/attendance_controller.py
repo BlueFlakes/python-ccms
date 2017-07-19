@@ -4,7 +4,6 @@ from View import codecooler_view
 from datetime import date, datetime
 
 from data_manager import DataManager
-import os
 
 
 def start_controller(students_displayable_formated_data):
@@ -31,6 +30,7 @@ def start_controller(students_displayable_formated_data):
             _calculate_attendnace(students_attendance, choosen_student[0])
             codecooler_view.state_locker()
 
+    codecooler_view.clear_window()
     _save_attendance(students_attendance)
 
 
