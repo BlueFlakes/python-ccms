@@ -30,7 +30,7 @@ def start_controller(name, surname, idx):
         elif option == "2":
             codecooler_controller.change_password(idx)
         elif option == "3":
-            talkbox.start_talkbox()
+            talkbox.start_talkbox(name, surname)
 
     save_office_managers()
 

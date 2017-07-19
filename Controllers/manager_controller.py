@@ -27,12 +27,12 @@ def start_controller(name, surname, idx):
         codecooler_view.print_menu(user_welcome, main_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        handle_main_menu_requests(user_request, idx)
+        handle_main_menu_requests(user_request, idx, name, surname)
 
     mentor_controller.save_mentors_data()
     save_managers_data()
 
-def handle_main_menu_requests(user_request, idx):
+def handle_main_menu_requests(user_request, idx, name, surname):
     """
     Call function that perform task from menu choosen by user: see list of students, mentors,
     edit mentors
@@ -53,7 +53,7 @@ def handle_main_menu_requests(user_request, idx):
         codecooler_controller.change_password(idx)
 
     elif user_request == "5":
-        talkbox.start_talkbox()
+        talkbox.start_talkbox(name, surname)
 
 
 def start_mentor_edit_menu():
