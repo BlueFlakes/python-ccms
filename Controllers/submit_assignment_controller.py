@@ -94,10 +94,11 @@ def _grade_assigement():
                 grade -= 1
             elif option == "8":
                 grade -= 3
-            elif option == "0":
-                break
             else:
                 print("Wrong option")
+        else:
+            if option == "0":
+                break
 
     os.system("clear")
     return grade
