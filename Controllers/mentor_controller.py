@@ -37,9 +37,10 @@ def start_controller(name, surname, idx):
         elif option == "3":
             submit_assignment_controller.start_controller("mentor", assignments, idx)
         elif option == "4":
-            attendance_controller.start_controller()
+            students = instances_manager.prepare_data_to_visualize(Student.student_list)
+            attendance_controller.start_controller(students)
         elif option == "5":
-            start_student_edit_menu(Student.student_list)
+            start_student_edit_menu()
         elif option == "6":
             codecooler_controller.change_password(idx)
         elif option == "7":
@@ -195,7 +196,7 @@ def get_students_list(present_student_grades=False):
     """
     Call functions to display formatted table with Student object details
     """
-    os.system('clear')
+    codecooler_view.clear_window()
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)

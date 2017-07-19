@@ -53,6 +53,9 @@ def print_menu(title, available_options, exit_message):
         print('{}{}) {}'.format('\t', '0', exit_message), end=2 * '\n')
 
 
+def clear_window():
+    os.system("clear")
+
 def print_result(result):
     """
     Show results of action
