@@ -49,7 +49,7 @@ def view_grades(idx):
     all_grades = DataManager.read_file("csv/grades.csv")
 
     for grade in all_grades:
-        if idx in grade[0]:
+        if idx == grade[0]:
             students_grades.append(grade)
 
     if len(students_grades) > 0:
