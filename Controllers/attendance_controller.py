@@ -1,13 +1,12 @@
 from Models.attendance import AttendanceModel
 from Models.student import Student
-
 from View import codecooler_view
 from datetime import date, datetime
-
+from time import sleep
 from data_manager import DataManager
 
 
-def start_controller():
+def start_controller(students_displayable_formated_data):
     """
     Contain main logic for AttendanceController.
     """
@@ -16,6 +15,7 @@ def start_controller():
     option = 0
     menu_options = ["Check attendnace", "View student attendance"]
     while not option == "0":
+        codecooler_view.clear_window()
 
         codecooler_view.print_menu("Student's attendance menu", menu_options, "Exit")
         options = codecooler_view.get_inputs("Please choose a number", ["Number"])
@@ -24,9 +24,11 @@ def start_controller():
         if option == "1":
             _check_attendance(students_attendance, students)
         elif option == "2":
+            display_student_list(students_displayable_formated_data)
             choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
+
 
     codecooler_view.clear_window()
     _save_attendance(students_attendance)
@@ -53,11 +55,11 @@ def _calculate_attendnace(students_attendance, given_student_idx):
 
     except ZeroDivisionError:
         print("This student have no attendance")
-        pass
+        sleep(1.5)
 
     else:
         print("Student attendance {}%\n".format(attendance_procent))
-
+        codecooler_view.state_locker()
 
 def _check_attendance(students_attendance, students):
     """
@@ -74,13 +76,13 @@ def _check_attendance(students_attendance, students):
             _vaildate_correct_date(current_date, student, students_attendance)
         except ValueError as err:
             print(err)
+            codecooler_view.state_locker()
             continue
 
         attendance_option = None
         attendance_state = None
         check_attendance_person = "Check attendance for {} {}:".format(student.name, student.surname)
         while attendance_option not in ["0", "1", "2", "3"]:
-
             codecooler_view.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
             attendance_options = codecooler_view.get_inputs("Please choose a number", ["Number"])
             attendance_option = attendance_options[0]
@@ -139,6 +141,13 @@ def _create_students_attendance_list():
         pass
 
     return students_attendance
+
+def display_student_list(students):
+    """
+    Call functions to display formatted table with Student object details
+    """
+    titles = ["Idx", "Password", "Name", "Surname", "Email"]
+    codecooler_view.print_table(titles, students)
 
 
 def _save_attendance(students_attendance):

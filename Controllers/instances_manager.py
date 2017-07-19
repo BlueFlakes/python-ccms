@@ -80,7 +80,7 @@ def get_user_details(questions_list):
             user_input = codecooler_view.get_inputs('', [question])[0]
             user_input = additional_filters_for_user_details(question, user_input)
 
-            if not user_input:
+            if user_input == None:
                 print('Error 999: [\'@\', \'.\'] one of those sign was not provided.', end=2*'\n')
 
         user_details.append(user_input)

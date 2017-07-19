@@ -11,6 +11,7 @@ def start_controller():
     """
     is_empty = True
 
+
     assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
     is_empty = is_empty_input(assgn_details)
 

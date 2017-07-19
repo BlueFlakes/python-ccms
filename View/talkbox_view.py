@@ -1,17 +1,20 @@
-from prettytable import PrettyTable
+from prettytable import PrettyTable, ALL, NONE
+from View import codecooler_view
 
 def print_chat(chat):
+    prettytable = PrettyTable(header=False, hrules=ALL, vrules=NONE)
 
-    print('\n {:-<88}'.format(''))
     for message in chat:
-        print("| {:>15}: {:<70}|".format(message[0], message[1]))
-        print('|{:-<88}|'.format(''))
+        sentence = ': ' + message[1]
+        author = message[0]
+        prettytable.add_row([author, sentence])
+
+    prettytable.align = 'l'
+    print(prettytable)
 
 
 def get_message():
-    message = input("""\nLeave your message
-Or type 0 to exit: """)
-
+    message = codecooler_view.get_inputs('', ['\nLeave your message Or type 0 to exit'])[0]
     return message
 
 def too_long_message():

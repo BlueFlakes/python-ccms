@@ -53,6 +53,9 @@ def print_menu(title, available_options, exit_message):
         print('{}{}) {}'.format('\t', '0', exit_message), end=2 * '\n')
 
 
+def clear_window():
+    os.system("clear")
+
 def print_result(result):
     """
     Show results of action
@@ -98,7 +101,3 @@ def print_table(titles, data):
         data (list of lists): list that contains details about persons as inner list
     """
     print(Table.table_creator(titles, data))
-    print("\n")
-
-def clear_window():
-    os.system("clear")

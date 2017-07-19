@@ -62,7 +62,6 @@ def student_side(assignments, idx):
         codecooler_view.print_result("Wrong assignment name!\n")
         sleep(1.5)
 
-
 def _grade_assigement():
     """
     Allow mentor to eval student's assigment by Danish scale. Show menu with grades assigne to menu options
