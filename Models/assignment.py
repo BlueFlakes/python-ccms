@@ -1,6 +1,3 @@
-from datetime import date
-
-
 class Assignment:
     """
     This class represents assigment created by mentor
