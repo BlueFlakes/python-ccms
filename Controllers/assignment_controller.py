@@ -12,11 +12,11 @@ def start_controller():
     is_empty = True
 
 
-    assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
+    assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description", "Deadline"])
     is_empty = is_empty_input(assgn_details)
 
     if not is_empty:
-        Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1]))
+        Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1], assgn_details[2]))
         save_assignment(assgn_details)
         codecooler_view.print_result('Succesfuly added assignment.')
 
