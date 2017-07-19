@@ -5,7 +5,6 @@ from Controllers import instances_manager
 from Controllers import student_controller, mentor_controller, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
-import os
 import sys
 
 
@@ -24,7 +23,6 @@ def start_controller(name, surname, idx):
     user_request = None
 
     while user_request != "0":
-        os.system("clear")
         codecooler_view.print_menu(user_welcome, main_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
@@ -65,13 +63,13 @@ def start_mentor_edit_menu():
     user_request = None
 
     while user_request != "0":
-        os.system("clear")
         get_mentors_list()
         codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         handle_mentor_edit_requests(user_request)
 
+    codecooler_view.clear_window()
 
 def handle_mentor_edit_requests(user_request):
     """
@@ -130,6 +128,8 @@ def get_students_grades():
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
         student_controller.view_grades(idx)
+    else:
+        codecooler_view.clear_window()
 
 
 def load_managers(data):

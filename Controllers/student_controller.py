@@ -1,4 +1,3 @@
-import os
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
@@ -22,7 +21,6 @@ def start_controller(name, surname, idx):
 
     option = 0
     while not option == "0":
-        os.system("clear")
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Submit assignment", "View grades", "Change your password"], "Exit")

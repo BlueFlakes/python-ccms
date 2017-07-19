@@ -73,7 +73,7 @@ def print_table(titles, data):
         data (list of lists): list that contains details about persons as inner list
     """
     print(Table.table_creator(titles, data))
-    option = get_inputs("Enter anything to exit", [""])
+    print("\n")
 
 def clear_window():
     os.system("clear")

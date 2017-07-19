@@ -1,6 +1,7 @@
 from View import codecooler_view
 from Models.assignment import Assignment
 from data_manager import DataManager
+from time import sleep
 
 
 
@@ -14,6 +15,9 @@ def start_controller():
     while is_empty:
         assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
         is_empty = is_empty_input(assgn_details)
+    codecooler_view.print_result("Assignment added succesfully!")
+    sleep(1.5)
+    codecooler_view.clear_window()
 
 
     Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1]))

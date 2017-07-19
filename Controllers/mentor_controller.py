@@ -1,4 +1,3 @@
-import os
 from Controllers import instances_manager
 from Controllers import codecooler_controller, student_controller
 from Controllers import submit_assignment_controller, assignment_controller, attendance_controller
@@ -24,7 +23,6 @@ def start_controller(name, surname, idx):
 
     option = 0
     while not option == "0":
-        os.system("clear")
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
@@ -33,7 +31,6 @@ def start_controller(name, surname, idx):
 
         if option == "1":
             get_students_list()
-
         elif option == "2":
             assignment_controller.start_controller()
         elif option == "3":
@@ -41,7 +38,7 @@ def start_controller(name, surname, idx):
         elif option == "4":
             attendance_controller.start_controller()
         elif option == "5":
-            start_student_edit_menu()
+            start_student_edit_menu(Student.student_list)
         elif option == "6":
             codecooler_controller.change_password(idx)
 
@@ -121,15 +118,15 @@ def start_student_edit_menu(students):
                          'Modify student email']
 
     while user_request != "0":
-        os.system("clear")
 
-        get_students_list()
+        get_students_list(False)
 
         codecooler_view.print_menu(user_welcome, student_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         handle_student_edit_requests(user_request)
 
+    codecooler_view.clear_window()
 
 def handle_student_edit_requests(user_request):
     """
@@ -169,6 +166,8 @@ def get_students_grades():
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
         student_controller.view_grades(idx)
+    else:
+        codecooler_view.clear_window()
 
 
 def load_mentors(data):
@@ -189,11 +188,12 @@ def save_mentors_data():
     DataManager.save_file('csv/mentors.csv', data)
 
 
-def get_students_list():
+def get_students_list(grades=True):
     """
     Call functions to display formatted table with Student object details
     """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
-    get_students_grades()
+    if grades:
+        get_students_grades()

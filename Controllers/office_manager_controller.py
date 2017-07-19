@@ -3,7 +3,6 @@ from Models.office_manager import OfficeManager
 from Controllers import instances_manager, codecooler_controller
 from View import codecooler_view
 from data_manager import DataManager
-import os
 
 def start_controller(name, surname, idx):
     """
@@ -17,7 +16,6 @@ def start_controller(name, surname, idx):
 
     option = 0
     while not option == "0":
-        os.system("clear")
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                    ["Show student list", "Change your password"], "Exit")

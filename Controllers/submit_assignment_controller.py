@@ -40,6 +40,8 @@ def mentor_side(assignments):
             grade = grade[0]
             DataManager.extend_file("csv/grades.csv", [assgn[0], task, grade])
 
+    codecooler_view.clear_window()
+
 def student_side(assignments, idx):
     """
     Allows student to submit assignment
@@ -56,5 +58,6 @@ def student_side(assignments, idx):
             assignments.append(SubmitAssignment(idx, args[0], args[1]))
             break
     else:
-        codecooler_view.print_result("Wrong assignment name!")
+        codecooler_view.print_result("Wrong assignment name!\n")
         sleep(1.5)
+        codecooler_view.clear_window()

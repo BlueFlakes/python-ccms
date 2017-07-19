@@ -5,7 +5,6 @@ from View import codecooler_view
 from datetime import date, datetime
 
 from data_manager import DataManager
-import os
 
 
 def start_controller():
@@ -29,6 +28,7 @@ def start_controller():
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
 
+    codecooler_view.clear_window()
     _save_attendance(students_attendance)
 
 
