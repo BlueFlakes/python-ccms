@@ -33,7 +33,7 @@ def start_controller(name, surname, idx):
         if option == "1":
             get_students_list(present_student_grades=True)
         elif option == "2":
-            assignment_controller.start_controller()
+            assignment_controller.start_controller(students)
         elif option == "3":
             submit_assignment_controller.start_controller("mentor", assignments, idx)
         elif option == "4":
