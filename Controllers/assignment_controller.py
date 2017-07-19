@@ -1,7 +1,7 @@
 from View import codecooler_view
 from Models.assignment import Assignment
 from data_manager import DataManager
-
+from time import sleep
 
 
 def start_controller():
@@ -11,14 +11,19 @@ def start_controller():
     """
     is_empty = True
 
-    while is_empty:
-        assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
-        is_empty = is_empty_input(assgn_details)
 
+    assgn_details = codecooler_view.get_inputs("Add assignment", ["Title", "Description"])
+    is_empty = is_empty_input(assgn_details)
 
-    Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1]))
+    if not is_empty:
+        Assignment.assignments.append(Assignment(assgn_details[0], assgn_details[1]))
+        save_assignment(assgn_details)
+        codecooler_view.print_result('Succesfuly added assignment.')
 
-    save_assignment(assgn_details)
+    else:
+        codecooler_view.print_error_message('Wrong type of title or description.')
+
+    sleep(2)
 
 
 def save_assignment(assgn):
@@ -36,7 +41,6 @@ def is_empty_input(assgn_details):
 
     for answer in assgn_details:
         if len(answer) < 1:
-            codecooler_view.print_result("You can't make assignment without title or description!")
             return True
 
     return False

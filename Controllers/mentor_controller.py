@@ -106,7 +106,7 @@ def change_mentor_email():
     instances_manager.modify_person_details(Mentor.mentor_list, 'email', title, task)
 
 
-def start_student_edit_menu(students):
+def start_student_edit_menu():
     """
     Call functions that get user input and show inner menu
 
@@ -193,6 +193,7 @@ def get_students_list():
     """
     Call functions to display formatted table with Student object details
     """
+    os.system('clear')
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
