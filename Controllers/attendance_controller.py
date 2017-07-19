@@ -2,7 +2,7 @@ from Models.attendance import AttendanceModel
 from Models.student import Student
 from View import codecooler_view
 from datetime import date, datetime
-
+from time import sleep
 from data_manager import DataManager
 
 
@@ -15,7 +15,7 @@ def start_controller(students_displayable_formated_data):
     option = 0
     menu_options = ["Check attendnace", "View student attendance"]
     while not option == "0":
-        os.system("clear")
+        codecooler_view.clear_window()
 
         codecooler_view.print_menu("Student's attendance menu", menu_options, "Exit")
         options = codecooler_view.get_inputs("Please choose a number", ["Number"])
@@ -28,7 +28,7 @@ def start_controller(students_displayable_formated_data):
             choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
-            codecooler_view.state_locker()
+
 
     codecooler_view.clear_window()
     _save_attendance(students_attendance)
@@ -55,11 +55,11 @@ def _calculate_attendnace(students_attendance, given_student_idx):
 
     except ZeroDivisionError:
         print("This student have no attendance")
-        pass
+        sleep(1.5)
 
     else:
         print("Student attendance {}%\n".format(attendance_procent))
-
+        codecooler_view.state_locker()
 
 def _check_attendance(students_attendance, students):
     """
