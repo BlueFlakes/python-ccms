@@ -10,13 +10,12 @@ from datetime import date
 
 def get_person(a_list, title, task):
     """
-    Check is there such user
+    Check by person's id if person is on list.
 
     Args:
-        login (str): user login
-
-    Return:
-        accounts_list (object) or None if couldn't find user.
+        a_list (list of :obj:): list of object representation of person
+        title (string): title of performed task
+        task (list of strings): list that tell user what infromation should be provided
     """
 
     idx = codecooler_view.get_inputs(title, task)[0]
@@ -37,10 +36,10 @@ def get_person(a_list, title, task):
 
 def remove_person(a_list):
     """
-    Remove given user if he exist.
+    Remove object representation of person from list.
 
     Args:
-        login (str): user login
+        a_list (list of :obj:): list of object representation of person
     """
 
     title = 'Remove person'
@@ -57,11 +56,17 @@ def remove_person(a_list):
 
 def add_person(a_list, obj_to_create, title):
     """
-    Add person to the list
+    Add object representation of person from list.
 
     Args:
-        person (object): Student or mentor object in this case
+        a_list (list of :obj:): list of object representation of person
+        obj_to_create (class): class of person that will be created
+        title (string): title of performed task
+
+    Examples:
+        obj_to_create can be Mentor or Student class depending on place of function call
     """
+
     person = get_user_details()
     idx = tools.gen_idx(obj_to_create.__name__.lower())
     a_list.append(obj_to_create(idx, *person))
@@ -70,6 +75,17 @@ def add_person(a_list, obj_to_create, title):
 
 
 def get_user_details():
+    """
+    Return detail about person
+
+    Returns:
+        list of strings: list of strings with details about person as fallow:
+        password, Name, Surname, email
+
+    Raises:
+        ValueError: if person email have not proper format
+    """
+
     questions_list = ['password', 'Name', 'Surname', 'email']
     user_details = []
 
@@ -94,6 +110,16 @@ def get_user_details():
 
 
 def additional_filters_for_user_details(question, user_input):
+    """
+    Validation of person eamil format.
+
+    Returns:
+        string: person email
+
+    Raises:
+        ValueError: if person email have not proper format
+    """
+
     if question == 'email':
         expected_signs = ['@', '.']
 
@@ -106,14 +132,18 @@ def additional_filters_for_user_details(question, user_input):
 
 def modify_person_details(a_list, choosen_detail, title, task):
     """
-    Use to choose person and details we want to modify
+    Modify given information about person
 
     Args:
-        a_list (list of :obj:): attribute of choosen class as list of persons
+        a_list (list of :obj:): list of object representation of person
         choosen_detail (string): detail about person we want to change
-        title (str): menu title
-        task (list): list of questions
+        title (string): title of performed task
+        task (list of strings): list that tell user what infromation should be provided
+
+    Raises:
+        ValueError: if person email have not proper format
     """
+
     person = get_person(a_list, 'Choose person', ['Please provide person idx to modify'])
 
     if person:
@@ -133,6 +163,7 @@ def _modify_person_details_request(person, choosen_detail, updated_information):
     Use to modify detail about choosen person
 
     Args:
+        person (:obj:): object representation of person
         choosen_detail (string): detail about person we want to change
         updated_information (string): updated information
     """
@@ -158,6 +189,7 @@ def prepare_data_to_visualize(data):
     Args:
         data (list of :obj:): list objects where evry object is information about person
     """
+
     person_collection = []
 
     for person in data:
