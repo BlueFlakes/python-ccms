@@ -26,8 +26,9 @@ def start_controller(students):
     assgn_details = codecooler_view.get_inputs("Add assignment", questions)
     deadline_details = codecooler_view.get_inputs("Provide deadline", deadline_questions)
     is_empty = is_empty_input(assgn_details)
+    check_adding_assignment_possibility = is_possible_to_add_assignment(assgn_details[0])
 
-    if not is_empty:
+    if not is_empty and check_adding_assignment_possibility:
         try:
             deadline = set_deadline(*deadline_details)
             Assignment.assignments.append(Assignment(*assgn_details, deadline))
@@ -37,9 +38,23 @@ def start_controller(students):
             codecooler_view.print_result("Provided deadline is impossible!")
 
     else:
-        codecooler_view.print_error_message('Wrong type of title or description.')
+        codecooler_view.print_error_message('Please provide title, description. Or Try another title.')
 
     sleep(2)
+
+
+def is_possible_to_add_assignment(user_choice):
+    assignments = Assignment.get_assignments_list()
+    validate = True
+
+    for assignment in assignments:
+        if assignment.title.lower() == user_choice.lower():
+            validate = False
+            break
+
+    return validate
+
+
 
 
 def is_empty_input(assgn_details):
