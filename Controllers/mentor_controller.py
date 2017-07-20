@@ -5,6 +5,7 @@ from View import codecooler_view
 from Models.mentor import Mentor
 from Models.student import Student
 from data_manager import DataManager
+from Models.submit_assignment import SubmitAssignment
 
 
 def start_controller(name, surname, idx):
@@ -17,12 +18,10 @@ def start_controller(name, surname, idx):
         surname (string): surname of user
         idx (string): unique user's id
     """
+    students = Student.get_students_list()
+    option = None
 
-    assignments = student_controller.read_assignments("lists")
-    students = Student.student_list
-
-    option = 0
-    while not option == "0":
+    while option != "0":
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
@@ -33,9 +32,9 @@ def start_controller(name, surname, idx):
         if option == "1":
             get_students_list(present_student_grades=True)
         elif option == "2":
-            assignment_controller.start_controller()
+            assignment_controller.start_controller(students)
         elif option == "3":
-            submit_assignment_controller.start_controller("mentor", assignments, idx)
+            submit_assignment_controller.start_controller("mentor", idx)
         elif option == "4":
             students = instances_manager.prepare_data_to_visualize(Student.student_list)
             attendance_controller.start_controller(students)
@@ -47,9 +46,6 @@ def start_controller(name, surname, idx):
             talkbox.start_talkbox(name, surname)
 
         codecooler_view.clear_window()
-
-    student_controller.save_students_data()
-    save_mentors_data()
 
 
 def add_mentor():
@@ -167,31 +163,14 @@ def get_students_grades():
     Call functions to display detail about choosen student grades
     """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
-                                              ["Yes/no"])
+                                              ["Type \'Yes\' or anything else to go back to menu"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
         student_controller.view_grades(idx)
+
     else:
         codecooler_view.clear_window()
-
-
-def load_mentors(data):
-    """
-    Call function to convet data from csv file to Mentor objects
-
-    Args:
-        data (lista of list): data to convert from csv file
-    """
-    Mentor.mentor_list = instances_manager.convert_data_to_object('mentor', data)
-
-
-def save_mentors_data():
-    """
-    Call function to save data in csv file
-    """
-    data = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
-    DataManager.save_file('csv/mentors.csv', data)
 
 
 def get_students_list(present_student_grades=False):

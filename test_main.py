@@ -1,5 +1,5 @@
 # imports all models
-from Controllers.manager_controller import start_controller
+from Data import data_loader
 
 # imports all view modules
 
@@ -8,7 +8,7 @@ from Controllers.manager_controller import start_controller
 
 
 def main():
-    start_controller()
+    data_loader.load_data_from_files()
 
 
 

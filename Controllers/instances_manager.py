@@ -117,7 +117,7 @@ def modify_person_details(a_list, choosen_detail, title, task):
         _modify_person_details_requests(person, choosen_detail, updated_information)
 
 
-def _modify_person_details_requests(person, choosen_detail, updated_information):
+def _modify_person_details_request(person, choosen_detail, updated_information):
     """
     Use to modify detail about choosen person
 
@@ -147,7 +147,6 @@ def prepare_data_to_visualize(data):
     Args:
         data (list of :obj:): list objects where evry object is information about person
     """
-
     person_collection = []
 
     for person in data:

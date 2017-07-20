@@ -29,8 +29,6 @@ def start_controller(name, surname, idx):
 
         handle_main_menu_requests(user_request, idx, name, surname)
 
-    mentor_controller.save_mentors_data()
-    save_managers_data()
 
 def handle_main_menu_requests(user_request, idx, name, surname):
     """
@@ -134,21 +132,3 @@ def get_students_grades():
         student_controller.view_grades(idx)
     else:
         codecooler_view.clear_window()
-
-
-def load_managers(data):
-    """
-    Call function to convet data from csv file to Manager objects
-
-    Args:
-        data (lista of list): data to convert from csv file
-    """
-    Manager.manager_list = instances_manager.convert_data_to_object('manager', data)
-
-
-def save_managers_data():
-    """
-    Call function to save data in csv file
-    """
-    data = instances_manager.prepare_data_to_visualize(Manager.manager_list)
-    DataManager.save_file('csv/managers.csv', data)

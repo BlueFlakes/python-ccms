@@ -8,14 +8,15 @@ from Controllers import student_controller, mentor_controller, manager_controlle
 from Controllers import office_manager_controller
 from random import randint
 from time import sleep
+from Data import data_loader
 
 
 def login():
     """
     Check if user of given id exist and entered correct password
     """
-
     found = False
+    data_loader.load_data_from_files()
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
 
     while not found:
@@ -43,7 +44,6 @@ def start_controller(ccooler):
     Examples:
         Use can have role of Manager, Office Employee, Mentor or Student
     """
-
     if ccooler.__class__.__name__ == "Student":
         student_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "Mentor":
@@ -53,18 +53,21 @@ def start_controller(ccooler):
     elif ccooler.__class__.__name__ == "OfficeManager":
         office_manager_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
 
+    data_loader.save_data_to_files()
+
 def change_password(idx):
     user = find_user_by_id(idx)
-    correct_pass = False
+    passes = codecooler_view.get_inputs("Please provide data", ["Old password", "New password"])
 
-    while not correct_pass:
-        passes = codecooler_view.get_inputs("Please provide data", ["Old password", "New password"])
-        if passes[0] == user.password:
-            user.password = passes[1]
-            codecooler_view.print_result("Password changed succesfully!\n")
-            sleep(1.5)
-            codecooler_view.clear_window()
-            correct_pass = True
+    if passes[0] == user.password:
+        user.password = passes[1]
+        codecooler_view.print_result("Password changed succesfully!\n")
+
+    else:
+        codecooler_view.print_error_message('Wrong old password provided.')
+
+    sleep(1.5)
+    codecooler_view.clear_window()
 
 def find_user_by_id(idx):
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
