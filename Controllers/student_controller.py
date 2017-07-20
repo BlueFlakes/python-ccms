@@ -40,7 +40,8 @@ def start_controller(name, surname, idx):
             talkbox.start_talkbox(name, surname)
 
         elif user_choice == "5":
-            calculate_debt(idx)
+            debt = calculate_debt(idx)
+            codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
 
 
 def view_grades(idx):
@@ -122,4 +123,18 @@ def change_student_email():
 
 def calculate_debt(idx):
     today = date.today()
+    start_date = get_start_date(idx)
+
+    delta = today - start_date
+
+    return (delta.days * 41)
+
+def get_start_date(idx):
     start_date = date.today()
+    for person in Student.student_list:
+        if person.idx == idx:
+            start_date = start_date.replace(day=int(person.registration_date[0:2]))
+            start_date = start_date.replace(month=int(person.registration_date[3:5]))
+            start_date = start_date.replace(year=int(person.registration_date[6:10]))
+
+    return start_date
