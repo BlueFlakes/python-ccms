@@ -114,7 +114,7 @@ def modify_person_details(a_list, choosen_detail, title, task):
 
     if person:
         updated_information = codecooler_view.get_inputs(title, task)[0]
-        _modify_person_details_requests(person, choosen_detail, updated_information)
+        _modify_person_details_request(person, choosen_detail, updated_information)
 
 
 def _modify_person_details_request(person, choosen_detail, updated_information):
