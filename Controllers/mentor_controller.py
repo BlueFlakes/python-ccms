@@ -6,6 +6,7 @@ from Models.mentor import Mentor
 from Models.student import Student
 from data_manager import DataManager
 from Models.submit_assignment import SubmitAssignment
+from Models.assignment import Assignment
 
 
 def start_controller(name, surname, idx):
@@ -22,18 +23,20 @@ def start_controller(name, surname, idx):
     option = None
 
     while option != "0":
-
+        codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
                                    "Check attendace", "Edit student", "Student ranking",
                                    "Change your password", "Enter talkbox"], "Exit")
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
+        codecooler_view.clear_window()
 
         if option == "1":
             get_students_list(present_student_grades=True)
         elif option == "2":
             assignment_controller.start_controller(students)
         elif option == "3":
+            show_assignments()
             submit_assignment_controller.start_controller("mentor", idx)
         elif option == "4":
             students = instances_manager.prepare_data_to_visualize(Student.student_list)
@@ -49,7 +52,13 @@ def start_controller(name, surname, idx):
         elif option == "8":
             talkbox.start_talkbox(name, surname)
 
-        codecooler_view.clear_window()
+
+
+
+def show_assignments():
+    assignments = [[assign.title] for assign in Assignment.get_assignments_list()]
+    title = ['Assignment title']
+    codecooler_view.print_table(title, assignments)
 
 
 def add_mentor():
