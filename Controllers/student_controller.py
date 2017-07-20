@@ -5,39 +5,38 @@ from Controllers import submit_assignment_controller, instances_manager, codecoo
 from View import codecooler_view
 from data_manager import DataManager
 from time import sleep
+from Models.grade import Grade
 
 def start_controller(name, surname, idx):
     """
     Allow student user perform assign tasks.
-    Call functions to print menu for user and get input of choosen option
+    Call functions to print menu for user and get input of choosen user_choice
 
     Args:
         name (string): name of user
         surname (string): surname of user
         idx (string): unique user's id
     """
+    user_choice = None
 
-    assignments = read_assignments("objects")
-
-    option = 0
-    while not option == "0":
+    while user_choice != "0":
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Submit assignment", "View grades", "Change your password",
                                    "Enter talkbox"], "Exit")
-        option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
+        user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        if option == "1":
-            submit_assignment_controller.start_controller("student", assignments, idx)
-        elif option == "2":
+        if user_choice == "1":
+            submit_assignment_controller.start_controller("student", idx)
+
+        elif user_choice == "2":
             view_grades(idx)
-        elif option == "3":
-            codecooler_controller.change_password(idx)
-        elif option == "4":
-            talkbox.start_talkbox(name, surname)
 
-    save_assignments(assignments)
-    save_students_data()
+        elif user_choice == "3":
+            codecooler_controller.change_password(idx)
+
+        elif user_choice == "4":
+            talkbox.start_talkbox(name, surname)
 
 
 def view_grades(idx):
@@ -46,11 +45,11 @@ def view_grades(idx):
     """
 
     students_grades = []
-    all_grades = DataManager.read_file("csv/grades.csv")
+    all_grades = Grade.get_grades_list()
 
     for grade in all_grades:
-        if idx == grade[0]:
-            students_grades.append(grade)
+        if idx == grade.idx and grade.grade != 0:
+            students_grades.append([grade.idx, grade.title, str(grade.grade)])
 
     if len(students_grades) > 0:
         titles = ["Students idx", "Assignment", "Grade"]
@@ -60,39 +59,6 @@ def view_grades(idx):
     else:
         codecooler_view.print_result("There is no grades!")
         sleep(1.5)
-
-
-def read_assignments(return_type):
-    """
-    Convert data from csv file to SubmitAssignment object and add it to list
-
-    Args:
-        return_type (string): indicate whta type return will be
-    """
-    assignments_list = DataManager.read_file("csv/submitted_assgn.csv")
-    assignments = SubmitAssignment.assignments
-
-    for i in range(len(assignments_list)):
-
-        to_append = SubmitAssignment(assignments_list[i][0], assignments_list[i][1],
-                                     assignments_list[i][2], assignments_list[i][3])
-        assignments.append(to_append)
-
-    if return_type == "objects":
-        return assignments
-    elif return_type == "lists":
-        return assignments_list
-
-
-def save_assignments(assignments):
-    """
-    Allow save submitted assigement to csv file
-    """
-    for i in range(len(assignments)):
-        assignments[i] = [assignments[i].idx, assignments[i].link,
-                          assignments[i].name, assignments[i].date]
-
-    DataManager.save_file("csv/submitted_assgn.csv", assignments)
 
 
 def remove_student():
@@ -149,12 +115,3 @@ def change_student_email():
     title = 'Modify email'
     task = ['Email']
     instances_manager.modify_person_details(Student.student_list, 'email', title, task)
-
-
-def load_students(data):
-    Student.student_list = instances_manager.convert_data_to_object('student', data)
-
-
-def save_students_data():
-    data = instances_manager.prepare_data_to_visualize(Student.student_list)
-    DataManager.save_file('csv/students.csv', data)

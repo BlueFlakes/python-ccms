@@ -13,7 +13,6 @@ import data_manager
 
 
 def main():
-    data_manager.load_data_setup(manager_controller, student_controller, mentor_controller, office_manager_controller)
     codecooler_controller.login()
 
 

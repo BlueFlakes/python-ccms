@@ -147,7 +147,6 @@ def prepare_data_to_visualize(data):
     Args:
         data (list of :obj:): list objects where evry object is information about person
     """
-
     person_collection = []
 
     for person in data:

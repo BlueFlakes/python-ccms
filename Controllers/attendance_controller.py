@@ -10,28 +10,28 @@ def start_controller(students_displayable_formated_data):
     """
     Contain main logic for AttendanceController.
     """
-    students = Student.student_list
-    students_attendance = _create_students_attendance_list()
-    option = 0
+    students = Student.get_students_list()
+    students_attendance = AttendanceModel.get_attendance_list()
+    user_choice = None
     menu_options = ["Check attendnace", "View student attendance"]
-    while not option == "0":
+
+    while user_choice != "0":
         codecooler_view.clear_window()
 
         codecooler_view.print_menu("Student's attendance menu", menu_options, "Exit")
-        options = codecooler_view.get_inputs("Please choose a number", ["Number"])
-        option = options[0]
+        user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-        if option == "1":
+
+        if user_choice == "1":
             _check_attendance(students_attendance, students)
-        elif option == "2":
+
+        elif user_choice == "2":
             display_student_list(students_displayable_formated_data)
             choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
 
-
     codecooler_view.clear_window()
-    _save_attendance(students_attendance)
 
 
 def _calculate_attendnace(students_attendance, given_student_idx):
@@ -79,22 +79,20 @@ def _check_attendance(students_attendance, students):
             codecooler_view.state_locker()
             continue
 
-        attendance_option = None
+        user_choice = None
         attendance_state = None
-        check_attendance_person = "Check attendance for {} {}:".format(student.name, student.surname)
-        while attendance_option not in ["0", "1", "2", "3"]:
-            codecooler_view.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
-            attendance_options = codecooler_view.get_inputs("Please choose a number", ["Number"])
-            attendance_option = attendance_options[0]
+        check_attendance_person = "Check attendance for {} {}".format(student.name, student.surname)
 
-            if attendance_option == "1":
-                attendance_state = 1.0
-            elif attendance_option == "2":
-                attendance_state = 0.0
-            elif attendance_option == "3":
-                attendance_state = 0.8
+        while user_choice not in ["0", "1", "2", "3"]:
+            codecooler_view.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
+            user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
+            attendance_values = {'1': 1, '2': 0.0, '3': 0.8}
+
+            if user_choice in attendance_values:
+                attendance_state = attendance_values[user_choice]
+
             else:
-                print("Wrong option")
+                codecooler_view.print_error_message('Wrong option!')
 
         if attendance_state:
             student_attendance = AttendanceModel(student.idx, current_date, attendance_state)
@@ -120,48 +118,12 @@ def _get_attendnace_list(students_attendance, student_idx):
     return attendance_student_list
 
 
-def _create_students_attendance_list():
-    """
-    Convert data from csv file to AttendanceModel object and add it to list
-    """
-    students_attendance = []
-    attendance_list = DataManager.read_file("csv/attendance.csv")
-
-    try:
-        if attendance_list:
-            for attendance_detail in attendance_list:
-                student_idx = attendance_detail[0]
-                attendance_date = datetime.strptime(attendance_detail[1], "%Y-%m-%d").date()
-                attendance_state = attendance_detail[2]
-
-                attendnace = AttendanceModel(student_idx, attendance_date, attendance_state)
-                students_attendance.append(attendnace)
-
-    except IndexError:
-        pass
-
-    return students_attendance
-
 def display_student_list(students):
     """
     Call functions to display formatted table with Student object details
     """
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     codecooler_view.print_table(titles, students)
-
-
-def _save_attendance(students_attendance):
-    """
-    Save list of attendance of all students in csv file
-
-    Args:
-        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
-    """
-    for i in range(len(students_attendance)):
-        students_attendance[i] = [students_attendance[i].student_idx, students_attendance[i].date,
-                                  students_attendance[i].state]
-
-    DataManager.save_file("csv/attendance.csv", students_attendance)
 
 
 def _vaildate_correct_date(current_date, student, students_attendance):
