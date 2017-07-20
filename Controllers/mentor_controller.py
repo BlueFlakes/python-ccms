@@ -26,8 +26,8 @@ def start_controller(name, surname, idx):
         codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Students list", "Add assignment", "Grade assignment",
-                                   "Check attendace", "Edit student", "Change your password",
-                                   "Enter talkbox"], "Exit")
+                                   "Check attendace", "Edit student", "Student ranking",
+                                   "Change your password", "Enter talkbox"], "Exit")
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
         codecooler_view.clear_window()
 
@@ -44,8 +44,12 @@ def start_controller(name, surname, idx):
         elif option == "5":
             start_student_edit_menu()
         elif option == "6":
-            codecooler_controller.change_password(idx)
+            rank = student_controller.get_ranking()
+            codecooler_view.print_table(["Name", "Total points" ], rank)
+            codecooler_view.state_locker()
         elif option == "7":
+            codecooler_controller.change_password(idx)
+        elif option == "8":
             talkbox.start_talkbox(name, surname)
 
 

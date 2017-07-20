@@ -19,8 +19,8 @@ def start_controller(name, surname, idx):
     """
 
     user_welcome = "Welcome {} {}".format(name, surname)
-    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password',
-                 "Enter talkbox"]
+    main_menu = ['List mentors', 'Edit mentors', 'List Students', "Students ranking",
+                 'Change your password', "Enter talkbox"]
     user_request = None
 
     while user_request != "0":
@@ -47,10 +47,16 @@ def handle_main_menu_requests(user_request, idx, name, surname):
     elif user_request == '3':
         get_students_list()
 
-    elif user_request == '4':
+    elif user_request == "4":
+        rank = student_controller.get_ranking()
+        codecooler_view.print_table(["Name", "Total points" ], rank)
+        codecooler_view.state_locker()
+        codecooler_view.clear_window()
+
+    elif user_request == '5':
         codecooler_controller.change_password(idx)
 
-    elif user_request == "5":
+    elif user_request == "6":
         talkbox.start_talkbox(name, surname)
 
 
@@ -65,6 +71,7 @@ def start_mentor_edit_menu():
     user_request = None
 
     while user_request != "0":
+        codecooler_view.clear_window()
         get_mentors_list()
         codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
@@ -125,7 +132,7 @@ def get_students_grades():
     Call functions to display detail about choosen student grades
     """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
-                                             ["Yes/no"])
+                                              ["Type \'Yes\' or anything else to go back to menu"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
