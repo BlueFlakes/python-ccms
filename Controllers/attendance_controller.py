@@ -1,16 +1,20 @@
 from Models.attendance import AttendanceModel
 from Models.student import Student
+from Controllers import instances_manager
 from View import codecooler_view
 from datetime import date, datetime
 from time import sleep
 from data_manager import DataManager
 
 
-def start_controller(students_displayable_formated_data):
+def start_controller(students):
     """
-    Contain main logic for AttendanceController.
+    Contain main logic for AttendanceController. Call functions that allow
+    mentor check attendance and see student's prevous attendance.
+
+    Args:
+        student (:obj: `Student`): object representation of student
     """
-    students = Student.get_students_list()
     students_attendance = AttendanceModel.get_attendance_list()
     user_choice = None
     menu_options = ["Check attendnace", "View student attendance"]
@@ -21,12 +25,11 @@ def start_controller(students_displayable_formated_data):
         codecooler_view.print_menu("Student's attendance menu", menu_options, "Exit")
         user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
-
         if user_choice == "1":
             _check_attendance(students_attendance, students)
 
         elif user_choice == "2":
-            display_student_list(students_displayable_formated_data)
+            display_student_list(students)
             choosen_student = codecooler_view.get_inputs("Student attendance detail", ["Student idx"])
             attendance_student_list = _get_attendnace_list(students_attendance, choosen_student[0])
             _calculate_attendnace(students_attendance, choosen_student[0])
@@ -36,11 +39,14 @@ def start_controller(students_displayable_formated_data):
 
 def _calculate_attendnace(students_attendance, given_student_idx):
     """
-    Print attendnace for student with given idx in percent
+    Calculate student attendance in percents.
 
     Args:
-        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        students_attendance (list of :obj: `AttendanceModel`): list with detail of attendance for all students
         student_idx (str): uniqe id number of student
+
+    Raises:
+        ZeroDivisionError: if student have no records about attendance
     """
     attendance_sum = 0
     max_possible_attendance = 0
@@ -61,13 +67,18 @@ def _calculate_attendnace(students_attendance, given_student_idx):
         codecooler_view.print_result("Student attendance {}%\n".format(attendance_procent))
         codecooler_view.state_locker()
 
+
 def _check_attendance(students_attendance, students):
     """
-    Add AttendanceModel object to proper list.
+    Create `AttendnaceModel` object with given student id, state and current date.
 
     Args:
-        students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
+        students_attendance (list of :obj: `AttendanceModels`): list with detail of attendance for all students
         students (list of :obj: `StudentModels`):list with detail of all students
+
+    Examples:
+        `AttendnaceModel` object have state as float representing presance of student during class in current day date.
+        Presence with it's float value is as follow: Present: 1.0, Not present: 0.0 and Late: 0.8
     """
     current_date = str(date.today())
 
@@ -102,7 +113,7 @@ def _check_attendance(students_attendance, students):
 
 def _get_attendnace_list(students_attendance, student_idx):
     """
-    Create list of attendnace detail for student with given idx
+    Create list with attendnace detail for student with given idx
 
     Args:
         students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
@@ -121,21 +132,24 @@ def _get_attendnace_list(students_attendance, student_idx):
 
 def display_student_list(students):
     """
-    Call functions to display formatted table with Student object details
+    Call functions to display formatted table with Student object details and row heads
+    as given in variable.
     """
+    students = instances_manager.prepare_data_to_visualize(students)
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     codecooler_view.print_table(titles, students)
 
 
 def _vaildate_correct_date(current_date, student, students_attendance):
     """
-    Check if student's attendance wasn't check today jet
+    Check if student's attendance wasn't check today yet.
 
     Args:
-        current_date (datetime :obj:): today date as year, month, day
-        student (Student :obj:): object representation of student person
-        students_attendance (list of datetime :obj:): all students attendance list
+        current_date (:obj: `datetime`): today date as year, month, day
+        student (:obj: `Student`): object representation of student
+        students_attendance (list of :obj: `AttendanceModel`): all students attendance list
     """
+
     current_date = datetime.strptime(current_date, "%Y-%m-%d").date()
 
     for attendance in students_attendance:
