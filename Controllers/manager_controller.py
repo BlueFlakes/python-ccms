@@ -19,8 +19,8 @@ def start_controller(name, surname, idx):
     """
 
     user_welcome = "Welcome {} {}".format(name, surname)
-    main_menu = ['List mentors', 'Edit mentors', 'List Students', 'Change your password',
-                 "Enter talkbox"]
+    main_menu = ['List mentors', 'Edit mentors', 'List Students', "Students ranking",
+                 'Change your password', "Enter talkbox"]
     user_request = None
 
     while user_request != "0":
@@ -47,10 +47,16 @@ def handle_main_menu_requests(user_request, idx, name, surname):
     elif user_request == '3':
         get_students_list()
 
-    elif user_request == '4':
+    elif user_request == "4":
+        rank = student_controller.get_ranking()
+        codecooler_view.print_table(["Name", "Total points" ], rank)
+        codecooler_view.state_locker()
+        codecooler_view.clear_window()
+
+    elif user_request == '5':
         codecooler_controller.change_password(idx)
 
-    elif user_request == "5":
+    elif user_request == "6":
         talkbox.start_talkbox(name, surname)
 
 

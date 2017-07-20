@@ -23,8 +23,8 @@ def start_controller(name, surname, idx):
     while user_choice != "0":
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                  ["Submit assignment", "View grades", "Change your password",
-                                   "Enter talkbox", "Debt calculator"], "Exit")
+                                  ["Submit assignment", "View grades", "Students ranking",
+                                   "Change your password", "Enter talkbox", "Debt calculator"], "Exit")
         user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if user_choice == "1":
@@ -34,12 +34,18 @@ def start_controller(name, surname, idx):
             view_grades(idx)
 
         elif user_choice == "3":
-            codecooler_controller.change_password(idx)
+            rank = get_ranking()
+            codecooler_view.print_table(["Name", "Total points" ], rank)
+            codecooler_view.state_locker()
+            codecooler_view.clear_window()
 
         elif user_choice == "4":
-            talkbox.start_talkbox(name, surname)
+            codecooler_controller.change_password(idx)
 
         elif user_choice == "5":
+            talkbox.start_talkbox(name, surname)
+
+        elif user_choice == "6":
             debt = calculate_debt(idx)
             codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
 
@@ -138,3 +144,25 @@ def get_start_date(idx):
             start_date = start_date.replace(year=int(person.registration_date[6:10]))
 
     return start_date
+
+def get_ranking():
+    students_rank = {}
+
+    for person in Student.student_list:
+        grades = get_grades(person)
+        info = person.name + " " + person.surname
+        students_rank[info] = grades
+
+    rank = sorted(students_rank.items(), key=lambda grades: grades[1], reverse=True)
+
+    return rank
+
+
+def get_grades(person):
+    grades_sum = 0
+
+    for grd in Grade.grades_list:
+        if grd.idx == person.idx:
+            grades_sum += int(grd.grade)
+
+    return str(grades_sum)
