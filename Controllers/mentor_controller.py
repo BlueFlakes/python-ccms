@@ -36,13 +36,12 @@ def start_controller(name, surname, idx):
         elif option == "3":
             submit_assignment_controller.start_controller("mentor", idx)
         elif option == "4":
-            students = instances_manager.prepare_data_to_visualize(Student.student_list)
             attendance_controller.start_controller(students)
         elif option == "5":
             start_student_edit_menu()
         elif option == "6":
             rank = student_controller.get_ranking()
-            codecooler_view.print_table(["Name", "Total points" ], rank)
+            codecooler_view.print_table(["Name", "Total points"], rank)
             codecooler_view.state_locker()
         elif option == "7":
             codecooler_controller.change_password(idx)
