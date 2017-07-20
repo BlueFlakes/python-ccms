@@ -26,9 +26,10 @@ def start_controller(name, surname, idx):
     while option != "0":
         codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                  ["Students list", "Add assignment", "Grade assignment",
-                                   "Check attendace", "Edit student", "Student ranking",
-                                   "Change your password", "Enter talkbox"], "Exit")
+                                   ["Students list", "Add assignment", "Grade assignment",
+                                    "Check attendace", "Edit student", "Student ranking",
+                                    "Change your password", "Enter talkbox"], "Exit"
+                                   )
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
         codecooler_view.clear_window()
 
@@ -65,7 +66,7 @@ def show_assignments():
 
 def add_mentor():
     """
-    Create Mentor object and add to mentor_list
+    Create Mentor object
     """
 
     title = 'Creating mentor'
@@ -122,7 +123,8 @@ def change_mentor_email():
 
 def start_student_edit_menu():
     """
-    Call functions that get user input and show inner menu
+    Call functions that get user input and show inner menu to modify Student object
+    or creat new Student object.
 
     Args:
         students (list of :obj: Student): list of all students
