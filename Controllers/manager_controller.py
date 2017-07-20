@@ -71,6 +71,7 @@ def start_mentor_edit_menu():
     user_request = None
 
     while user_request != "0":
+        codecooler_view.clear_window()
         get_mentors_list()
         codecooler_view.print_menu(user_welcome, mentor_edit_menu, "Exit")
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
@@ -131,7 +132,7 @@ def get_students_grades():
     Call functions to display detail about choosen student grades
     """
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
-                                             ["Yes/no"])
+                                              ["Type \'Yes\' or anything else to go back to menu"])
     check_grades = check_grades[0].lower()
     if check_grades == "yes":
         idx = codecooler_view.get_inputs("Please provide idx of the student", ["Idx"])[0]
