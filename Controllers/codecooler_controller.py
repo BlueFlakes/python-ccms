@@ -13,8 +13,9 @@ from Data import data_loader
 
 def login():
     """
-    Check if user of given id exist and entered correct password
+    Contain logic of user login to program. Create list of all users and check if user login and password are correct.
     """
+
     found = False
     data_loader.load_data_from_files()
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
@@ -44,6 +45,7 @@ def start_controller(ccooler):
     Examples:
         Use can have role of Manager, Office Employee, Mentor or Student
     """
+
     if ccooler.__class__.__name__ == "Student":
         student_controller.start_controller(ccooler.name, ccooler.surname, ccooler.idx)
     elif ccooler.__class__.__name__ == "Mentor":
@@ -55,7 +57,15 @@ def start_controller(ccooler):
 
     data_loader.save_data_to_files()
 
+
 def change_password(idx):
+    """
+    Allow user to change his password
+
+    Args:
+        idx (string): unique id of user
+    """
+
     user = find_user_by_id(idx)
     passes = codecooler_view.get_inputs("Please provide data", ["Old password", "New password"])
 
@@ -69,7 +79,15 @@ def change_password(idx):
     sleep(1.5)
     codecooler_view.clear_window()
 
+
 def find_user_by_id(idx):
+    """
+    Find user on of given id on list of all users.
+
+    Args:
+        idx (string): unique id of user
+    """
+
     mergedlist = Student.student_list + Mentor.mentor_list + OfficeManager.office_managers_list + Manager.manager_list
 
     for person in mergedlist:
