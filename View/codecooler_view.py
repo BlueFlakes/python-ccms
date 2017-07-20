@@ -54,17 +54,23 @@ def print_menu(title, available_options, exit_message):
 
 
 def clear_window():
+    """
+    Call clear
+    """
+
     os.system("clear")
+
 
 def print_result(result):
     """
-    Show results of action
+    Print results of action
 
     Args:
         result (str): print message with result to user
     """
 
     print(result)
+
 
 def print_error_message(error_msg):
     """
@@ -74,11 +80,18 @@ def print_error_message(error_msg):
         error_msg (str):
 
     """
+
     print('\033[91m' + error_msg + '\033[0m', end=2*'\n')
 
 
 def state_locker():
-    import sys, tty, termios
+    """
+    Stop clear_window() until any push key
+    """
+
+    import sys
+    import tty
+    import termios
 
     print('\nEnter anything to exit')
     fd = sys.stdin.fileno()
@@ -100,4 +113,5 @@ def print_table(titles, data):
         title (string): title of table
         data (list of lists): list that contains details about persons as inner list
     """
+
     print(Table.table_creator(titles, data))
