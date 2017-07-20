@@ -54,11 +54,11 @@ def _calculate_attendnace(students_attendance, given_student_idx):
         attendance_procent = round(((attendance_sum/max_possible_attendance)*100), 2)
 
     except ZeroDivisionError:
-        print("This student have no attendance")
+        codecooler_view.print_error_message("This student have no attendance")
         sleep(1.5)
 
     else:
-        print("Student attendance {}%\n".format(attendance_procent))
+        codecooler_view.print_result("Student attendance {}%\n".format(attendance_procent))
         codecooler_view.state_locker()
 
 def _check_attendance(students_attendance, students):
@@ -69,7 +69,8 @@ def _check_attendance(students_attendance, students):
         students_attendance (list of :obj: `AssigementModels`): list with detail of attendance for all students
         students (list of :obj: `StudentModels`):list with detail of all students
     """
-    current_date = date.today()
+    current_date = str(date.today())
+
     for student in students:
 
         try:
@@ -84,9 +85,9 @@ def _check_attendance(students_attendance, students):
         check_attendance_person = "Check attendance for {} {}".format(student.name, student.surname)
 
         while user_choice not in ["0", "1", "2", "3"]:
-            codecooler_view.print_menu(check_attendance_person, ["Present", "Not presaent", "Late"], "Exit")
+            codecooler_view.print_menu(check_attendance_person, ["Present", "Not present", "Late"], "Exit")
             user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
-            attendance_values = {'1': 1, '2': 0.0, '3': 0.8}
+            attendance_values = {'1': '1.0', '2': '0.0', '3': '0.8'}
 
             if user_choice in attendance_values:
                 attendance_state = attendance_values[user_choice]
@@ -95,7 +96,7 @@ def _check_attendance(students_attendance, students):
                 codecooler_view.print_error_message('Wrong option!')
 
         if attendance_state:
-            student_attendance = AttendanceModel(student.idx, current_date, attendance_state)
+            student_attendance = AttendanceModel(student.idx, current_date, float(attendance_state))
             students_attendance.append(student_attendance)
 
 
@@ -135,6 +136,8 @@ def _vaildate_correct_date(current_date, student, students_attendance):
         student (Student :obj:): object representation of student person
         students_attendance (list of datetime :obj:): all students attendance list
     """
+    current_date = datetime.strptime(current_date, "%Y-%m-%d").date()
+
     for attendance in students_attendance:
         if attendance.student_idx == student.idx:
             if attendance.date == current_date:

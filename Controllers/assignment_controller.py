@@ -39,6 +39,5 @@ def is_empty_input(assgn_details):
 def _create_student_assigments(students, title):
 
     for student in students:
-        print(student)
         student_assigment = SubmitAssignment(student.idx, "empty", title, "empty")
         SubmitAssignment.add_assignment(student_assigment)

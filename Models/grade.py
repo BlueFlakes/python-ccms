@@ -8,11 +8,14 @@ class Grade:
         self.idx = idx
         self.title = title
         self.grade = grade
-        Grade.grades_list.append(self)
 
     @classmethod
     def get_grades_list(cls):
         return cls.grades_list
+
+    @classmethod
+    def add_grade(cls, idx, title, grade):
+        cls.grades_list.append(Grade(idx, title, grade))
 
     @classmethod
     def load_grades(cls):
