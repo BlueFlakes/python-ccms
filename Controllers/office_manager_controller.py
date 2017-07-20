@@ -22,20 +22,30 @@ def start_controller(name, surname, idx):
                                     "Enter talkbox"], "Exit")
         user_choices = codecooler_view.get_inputs("Please choose a number", ["Number"])
         user_choice = user_choices[0]
+        handle_menu(user_choice, idx, name, surname)
 
-        if user_choice == "1":
-            titles = ["Idx", "Password", "Name", "Surname", "Email"]
-            students = instances_manager.prepare_data_to_visualize(Student.student_list)
-            codecooler_view.print_table(titles, students)
+def handle_menu(user_choice, idx, name, surname):
 
-        elif user_choice == "2":
-            rank = student_controller.get_ranking()
-            codecooler_view.print_table(["Name", "Total points" ], rank)
-            codecooler_view.state_locker()
-            codecooler_view.clear_window()
+    if user_choice == "1":
+        get_students_list()
+    elif user_choice == "2":
+        show_ranking()
+    elif user_choice == "3":
+        codecooler_controller.change_password(idx)
+    elif user_choice == "4":
+        talkbox.start_talkbox(name, surname)
 
-        elif user_choice == "3":
-            codecooler_controller.change_password(idx)
+    codecooler_view.clear_window()
 
-        elif user_choice == "4":
-            talkbox.start_talkbox(name, surname)
+def get_students_list():
+    titles = ["Idx", "Password", "Name", "Surname", "Email"]
+    students = instances_manager.prepare_data_to_visualize(Student.student_list)
+    codecooler_view.clear_window()
+    codecooler_view.print_table(titles, students)
+    codecooler_view.state_locker()
+
+def show_ranking():
+    rank = student_controller.get_ranking()
+    codecooler_view.print_table(["Name", "Total points" ], rank)
+    codecooler_view.state_locker()
+    codecooler_view.clear_window()

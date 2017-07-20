@@ -11,23 +11,25 @@ from Models.assignment import Assignment
 
 def start_controller(name, surname, idx):
     """
-    Allow mentor user perform assign tasks.
-    Call functions to print menu for user and get input of choosen option
+    Allow mentor perform assign tasks. Call functions to print menu for user and get input of choosen option.
+    Then call proper function to perform given task.
 
     Args:
         name (string): name of user
         surname (string): surname of user
         idx (string): unique user's id
     """
+
     students = Student.get_students_list()
     option = None
 
     while option != "0":
         codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                  ["Students list", "Add assignment", "Grade assignment",
-                                   "Check attendace", "Edit student", "Student ranking",
-                                   "Change your password", "Enter talkbox"], "Exit")
+                                   ["Students list", "Add assignment", "Grade assignment",
+                                    "Check attendace", "Edit student", "Student ranking",
+                                    "Change your password", "Enter talkbox"], "Exit"
+                                   )
         option = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
         codecooler_view.clear_window()
 
@@ -52,9 +54,11 @@ def start_controller(name, surname, idx):
             talkbox.start_talkbox(name, surname)
 
 
-
-
 def show_assignments():
+    """
+    Call functions to display existing Assigment objects in formatted table.
+    """
+
     assignments = [[assign.title] for assign in Assignment.get_assignments_list()]
     title = ['Assignment title']
     codecooler_view.print_table(title, assignments)
@@ -62,7 +66,7 @@ def show_assignments():
 
 def add_mentor():
     """
-    Create Mentor object and add to mentor_list
+    Create Mentor object
     """
 
     title = 'Creating mentor'
@@ -119,7 +123,8 @@ def change_mentor_email():
 
 def start_student_edit_menu():
     """
-    Call functions that get user input and show inner menu
+    Call functions that get user input and show inner menu to modify Student object
+    or creat new Student object.
 
     Args:
         students (list of :obj: Student): list of all students
@@ -141,6 +146,7 @@ def start_student_edit_menu():
         handle_student_edit_requests(user_request)
 
     codecooler_view.clear_window()
+
 
 def handle_student_edit_requests(user_request):
     """
@@ -174,6 +180,7 @@ def get_students_grades():
     """
     Call functions to display detail about choosen student grades
     """
+
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
                                               ["Type \'Yes\' or anything else to go back to menu"])
     check_grades = check_grades[0].lower()
@@ -188,7 +195,11 @@ def get_students_grades():
 def get_students_list(present_student_grades=False):
     """
     Call functions to display formatted table with Student object details
+
+    Args:
+        present_student_grades (bool): tell if show detail about student grades
     """
+
     codecooler_view.clear_window()
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
