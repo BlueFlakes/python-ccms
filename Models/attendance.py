@@ -1,6 +1,7 @@
 from Data import tools
 from datetime import datetime
 
+
 class AttendanceModel:
     """This class represents attendance of students on lessons"""
     staff_attendance = []
@@ -26,14 +27,30 @@ class AttendanceModel:
 
     @classmethod
     def get_attendance_list(cls):
+        """
+        Returns:
+            staff_attendance (list of :obj: `AttendanceModel`): list of all attendances
+        """
+
         return cls.staff_attendance
 
     @classmethod
     def load_attendance(cls):
+        """
+        Call function to open csv file and convert it rows to AttendanceModel objects
+        """
+
         cls.staff_attendance = tools.get_data_from_file(cls._file_name, AttendanceModel)
 
     @classmethod
     def get_records_from_objects(cls):
+        """
+        Get specified attributes from object
+
+        Returns:
+            list of lists: list with attributes of all Attendance objects
+        """
+
         temp = []
 
         for task in cls.staff_attendance:
@@ -43,5 +60,9 @@ class AttendanceModel:
 
     @classmethod
     def save_attendance(cls):
+        """
+        Call functions to save AttendanceModel to csv file
+        """
+
         attendance_data_records = cls.get_records_from_objects()
         tools.save_data_to_file(cls._file_name, attendance_data_records)
