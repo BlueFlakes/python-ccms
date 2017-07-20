@@ -40,6 +40,9 @@ def remove_person(a_list):
 
     Args:
         a_list (list of :obj:): list of object representation of person
+
+    Raises:
+        ValueError: if no person on persons list
     """
 
     title = 'Remove person'
