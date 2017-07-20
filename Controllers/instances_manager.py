@@ -158,38 +158,3 @@ def prepare_data_to_visualize(data):
         person_collection.append([person.idx, person.password, person.name,
                                  person.surname, person.email])
     return person_collection
-
-
-def convert_data_to_object(given_type, data):
-    """
-    Convert data from list of elements to proper objec and add it to list of objects
-
-    Args:
-        given_type (string): arbitrary name that indicate class of created object
-        data (list of lists): list that contains details about persons as inner list
-
-    Returns:
-        list of :obj: list of objects from proper class
-    """
-    temp = []
-
-    for record in data:
-        idx = record[0]
-        password = record[1]
-        name = record[2]
-        surname = record[3]
-        email = record[4]
-
-        if given_type == 'manager':
-            temp.append(Manager(idx, password, name, surname, email))
-
-        elif given_type == 'mentor':
-            temp.append(Mentor(idx, password, name, surname, email))
-
-        elif given_type == 'student':
-            temp.append(Student(idx, password, name, surname, email))
-
-        elif given_type == 'officemanager':
-            temp.append(OfficeManager(idx, password, name, surname, email))
-
-    return temp
