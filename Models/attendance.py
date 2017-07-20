@@ -1,4 +1,5 @@
 from Data import tools
+from datetime import datetime
 
 class AttendanceModel:
     """This class represents attendance of students on lessons"""
@@ -20,7 +21,7 @@ class AttendanceModel:
 
         """
         self.student_idx = student_idx
-        self.date = date
+        self.date = datetime.strptime(date, "%Y-%m-%d").date()
         self.state = state
 
     @classmethod
