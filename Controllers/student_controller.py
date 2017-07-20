@@ -138,3 +138,25 @@ def get_start_date(idx):
             start_date = start_date.replace(year=int(person.registration_date[6:10]))
 
     return start_date
+
+def get_ranking():
+    students_rank = {}
+
+    for person in Student.student_list:
+        grades = get_grades(person)
+        info = person.name + " " + person.surname
+        students_rank[info] = grades
+
+    rank = sorted(students_rank.items(), key=lambda grades: grades[1], reverse=True)
+
+    return rank
+
+
+def get_grades(person):
+    grades_sum = 0
+
+    for grd in Grade.grades_list:
+        if grd.idx == person.idx:
+            grades_sum += int(grd.grade)
+
+    return str(grades_sum)
