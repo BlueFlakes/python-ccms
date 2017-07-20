@@ -5,7 +5,7 @@ from Models.submit_assignment import SubmitAssignment
 from Models.grade import Grade
 from time import sleep
 from prettytable import PrettyTable, ALL
-
+from datetime import date
 
 def start_controller(position, idx):
     """
@@ -32,17 +32,21 @@ def mentor_side():
     submited_assignments = SubmitAssignment.get_submit_assignments_list()
     user_choice = codecooler_view.get_inputs("Please provide task's name", ["Task"])[0]
 
-    for submitted_task in submited_assignments:
-        if user_choice == submitted_task.name:
-            codecooler_view.clear_window()
-            codecooler_view.print_result("Student idx: {} | Date: {}".format(submitted_task.idx, submitted_task.date))
-            codecooler_view.print_result("Assignment name: {}".format(submitted_task.name))
-            codecooler_view.print_result("Link: {}\n".format(submitted_task.link))
+    if is_assignment_in_submit_assignments(user_choice, submited_assignments):
+        assignment = find_and_return_assignment(user_choice)
+        for submitted_task in submited_assignments:
 
-            task_grade = _grade_assigement()
-            if task_grade != 'no graded assignment':
-                Grade.add_grade(submitted_task.idx, user_choice, task_grade)
-            break
+            if user_choice == submitted_task.title:
+                codecooler_view.clear_window()
+                codecooler_view.print_result("Student idx: {}".format(submitted_task.idx))
+                codecooler_view.print_result("Task deadline: {} | Task provided date: {}".format(assignment.deadline, submitted_task.deadline))
+                codecooler_view.print_result("Assignment name: {}".format(submitted_task.title))
+                codecooler_view.print_result("Link: {}\n".format(submitted_task.link))
+
+                task_grade = _grade_assigement()
+                if task_grade != 'no graded assignment':
+                    Grade.add_grade(submitted_task.idx, user_choice, task_grade)
+
     else:
         codecooler_view.print_error_message("Wrong task\'s name!")
         sleep(2)
@@ -50,8 +54,30 @@ def mentor_side():
     codecooler_view.clear_window()
 
 
-def show_assignments(existing_assignments):
-    assignments = [[assign.title, assign.status] for assign in existing_assignments]
+def find_and_return_assignment(user_choice):
+    assignments = Assignment.get_assignments_list()
+
+    for assignment in assignments:
+        if user_choice == assignment.title:
+            return assignment
+
+
+def is_assignment_in_submit_assignments(provided_key, submited_assignments):
+    found = False
+
+    for assignment in submited_assignments:
+        if provided_key == assignment.title:
+            found = True
+            break
+
+    return found
+
+
+
+
+
+def show_assignments(student_assignments):
+    assignments = [[assign.title, assign.status] for assign in student_assignments]
     title = ['Assignment title', 'Status']
     codecooler_view.print_table(title, assignments)
 
@@ -75,10 +101,19 @@ def find_belonging_task(idx, submit_assignments, assignment_title):
     found_submit_assignment = None
 
     for submit_assignment in submit_assignments:
-        if idx == submit_assignment.idx and submit_assignment.name == assignment_title:
+        if idx == submit_assignment.idx and submit_assignment.title == assignment_title:
             found_submit_assignment = submit_assignment
 
     return found_submit_assignment
+
+def find_all_belonging_tasks(idx, submit_assignments):
+    temp = []
+
+    for submit_assignment in submit_assignments:
+        if idx == submit_assignment.idx:
+            temp.append(submit_assignment)
+
+    return temp
 
 
 def student_side(idx):
@@ -88,7 +123,7 @@ def student_side(idx):
     Args:
         idx (string): uniqe student id
     """
-    existing_assignments = Assignment.get_assignments_list()
+    assignments = Assignment.get_assignments_list()
     user_choice = None
 
     while user_choice != '0':
@@ -97,7 +132,7 @@ def student_side(idx):
         user_choice = codecooler_view.get_inputs("", ["Your choice"])[0]
 
         if user_choice == '1':
-            manage_request(idx, existing_assignments)
+            manage_request(idx, assignments)
 
         elif user_choice == '0':
             pass
@@ -107,13 +142,14 @@ def student_side(idx):
             sleep(1.5)
 
 
-def manage_request(idx, existing_assignments):
+def manage_request(idx, assignments):
     submit_assignments = SubmitAssignment.get_submit_assignments_list()
+
     codecooler_view.clear_window()
-    show_assignments(existing_assignments)
+    show_assignments(find_all_belonging_tasks(idx, submit_assignments))
     user_choice = codecooler_view.get_inputs("", ["Assignment name"])[0]
 
-    found_assigment = find_assignment(user_choice, existing_assignments)
+    found_assigment = find_assignment(user_choice, assignments)
 
     if found_assigment:
         author_assignment = find_belonging_task(idx, submit_assignments, found_assigment.title)
@@ -127,7 +163,7 @@ def assignment_management_controller(found_assigment, student_submit_assignment)
 
     while user_choice != '0':
         codecooler_view.clear_window()
-        show_assignments([found_assigment])
+        show_assignments([student_submit_assignment])
         codecooler_view.print_menu('Lets submit Assignment', menu, 'Exit')
         user_choice = codecooler_view.get_inputs("", ["Your choice"])[0]
 
@@ -136,7 +172,10 @@ def assignment_management_controller(found_assigment, student_submit_assignment)
             codecooler_view.state_locker()
 
         elif user_choice == '2':
-            # attach link and deadline
+            link = codecooler_view.get_inputs('', ['Please provide link'])[0]
+            student_submit_assignment.link = link
+            student_submit_assignment.status = 'Provided'
+            student_submit_assignment.convert_deadline(str(date.today()))
 
         elif user_choice == '0':
             pass

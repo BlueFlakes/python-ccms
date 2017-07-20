@@ -70,7 +70,7 @@ def _create_student_assigments(students, title):
     """
 
     for student in students:
-        student_assigment = SubmitAssignment(student.idx, "empty", title, "empty")
+        student_assigment = SubmitAssignment(student.idx, "", title, "")
         SubmitAssignment.add_assignment(student_assigment)
 
 
