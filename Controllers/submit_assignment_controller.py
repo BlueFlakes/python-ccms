@@ -38,7 +38,8 @@ def mentor_side():
             codecooler_view.print_result("Link: {}\n".format(submitted_task.link))
 
             task_grade = _grade_assigement()
-            Grade(submitted_task.idx, user_choice, task_grade)
+            if task_grade != 'no graded assignment':
+                Grade.add_grade(submitted_task.idx, user_choice, task_grade)
 
     codecooler_view.clear_window()
 
@@ -86,7 +87,7 @@ def _grade_assigement():
                 codecooler_view.print_error_message('Wrong choice!')
 
         if user_choice == "0":
-            grade = 0
+            grade = 'no graded assignment'
             break
 
     return grade
