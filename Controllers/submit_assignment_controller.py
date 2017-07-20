@@ -7,15 +7,16 @@ from time import sleep
 from prettytable import PrettyTable, ALL
 from datetime import date
 
+
 def start_controller(position, idx):
     """
-    Determines user role in Codecool. Allow user perform assign tasks.
+    Determines user role in Codecool and call proper function.
 
     Args:
         position (string): user role in Codecool
-        assignments (list of :obj: `SubmitAssignment`): list of assigemts
         idx (string): uniqe student id
     """
+
     if position == "student":
         student_side(idx)
     elif position == "mentor":
@@ -24,11 +25,10 @@ def start_controller(position, idx):
 
 def mentor_side():
     """
-    Allow mentor to grade submited assigemts. Then list of assigemts is save to csv file.
-
-    Args:
-        submited_assignments (list of :obj: `SubmitAssignment`): list of assigemts
+    Allow mentor to grade submited assigemts. By call proper functions user see all assigments,
+    than user can grade choosen assigments of all students.
     """
+
     submited_assignments = SubmitAssignment.get_submit_assignments_list()
     user_choice = codecooler_view.get_inputs("Please provide task's name", ["Task"])[0]
 
@@ -73,16 +73,32 @@ def is_assignment_in_submit_assignments(provided_key, submited_assignments):
     return found
 
 
-
-
-
 def show_assignments(student_assignments):
+    """
+    Display to user list of all assigments with their status.
+
+    Args:
+        existing_assignments (list of :obj: `Assignment`): list of all created assigments
+    """
+
     assignments = [[assign.title, assign.status] for assign in student_assignments]
+
     title = ['Assignment title', 'Status']
     codecooler_view.print_table(title, assignments)
 
 
 def find_assignment(user_choice, existing_assignments):
+    """
+    Validate if user give correcs assigment name.
+
+    Args:
+        user_choice (string): assigment name give by user
+        existing_assignments (list of :obj: `Assignment`): list of all created assigments
+
+    Returns:
+        :obj: `Assignment`: assigment choosen by user
+    """
+
     found_assigment = None
 
     for assignment in existing_assignments:
@@ -98,6 +114,18 @@ def find_assignment(user_choice, existing_assignments):
 
 
 def find_belonging_task(idx, submit_assignments, assignment_title):
+    """
+    Return choosen assigment from submit assgiment list to user
+
+    Args:
+        idx (string): unique user's id
+        submit_assignments (list of :obj: `SubmitAssignment`): list of assigment to sumbit or submited one
+        assignment_title (string): title of assigment
+
+    Returns:
+        :obj: `SubmitAssignment`: assigment choosen by user
+    """
+
     found_submit_assignment = None
 
     for submit_assignment in submit_assignments:
@@ -105,6 +133,7 @@ def find_belonging_task(idx, submit_assignments, assignment_title):
             found_submit_assignment = submit_assignment
 
     return found_submit_assignment
+
 
 def find_all_belonging_tasks(idx, submit_assignments):
     temp = []
@@ -118,12 +147,14 @@ def find_all_belonging_tasks(idx, submit_assignments):
 
 def student_side(idx):
     """
-    Allows student to submit assignment
+    Allows student to submit choosen assignment
 
     Args:
         idx (string): uniqe student id
     """
+
     assignments = Assignment.get_assignments_list()
+
     user_choice = None
 
     while user_choice != '0':
@@ -184,6 +215,7 @@ def assignment_management_controller(found_assigment, student_submit_assignment)
             codecooler_view.print_error_message('No possible action!')
             sleep(1.5)
 
+
 def prepare_prettytable(found_assigment):
     prettytable = PrettyTable(hrules=ALL)
     table_data = [['Title', found_assigment.title], ['Description', found_assigment.description],
@@ -193,6 +225,7 @@ def prepare_prettytable(found_assigment):
         prettytable.add_row(record)
 
     return prettytable
+
 
 def _grade_assigement():
     """
