@@ -4,15 +4,18 @@ from Controllers import instances_manager, codecooler_controller, student_contro
 from View import codecooler_view
 from data_manager import DataManager
 
+
 def start_controller(name, surname, idx):
     """
-    Allow office manager user perform assign tasks.
-    Call functions to print menu for user and get input of choosen user_choice: show students list
+    Allow office manager perform assign tasks. Call functions to print menu for user
+    and get input of choosen option: show students list, students ranking or use talkbox.
 
     Args:
         name (string): name of user
         surname (string): surname of user
+        idx (strung): unique user idx
     """
+
     user_choice = None
 
     while user_choice != "0":
@@ -24,7 +27,17 @@ def start_controller(name, surname, idx):
         user_choice = user_choices[0]
         handle_menu(user_choice, idx, name, surname)
 
+
 def handle_menu(user_choice, idx, name, surname):
+    """
+    Contain logic for call functions to perform assign tasks.
+
+    Args:
+        user_choice (string): menu option choosen by user
+        name (string): name of user
+        surname (string): surname of user
+        idx (strung): unique user idx
+    """
 
     if user_choice == "1":
         get_students_list()
@@ -37,15 +50,25 @@ def handle_menu(user_choice, idx, name, surname):
 
     codecooler_view.clear_window()
 
+
 def get_students_list():
+    """
+    Call functions to display students list as formatted table
+    """
+
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.clear_window()
     codecooler_view.print_table(titles, students)
     codecooler_view.state_locker()
 
+
 def show_ranking():
+    """
+    Call functions to display students ranking by grades
+    """
+
     rank = student_controller.get_ranking()
-    codecooler_view.print_table(["Name", "Total points" ], rank)
+    codecooler_view.print_table(["Name", "Total points"], rank)
     codecooler_view.state_locker()
     codecooler_view.clear_window()
