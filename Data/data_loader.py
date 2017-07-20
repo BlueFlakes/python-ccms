@@ -6,6 +6,7 @@ from Models.manager import Manager
 from Models.office_manager import OfficeManager
 from Models.grade import Grade
 from Models.attendance import AttendanceModel
+from Models.talkbox import TalkBox
 
 def load_data_from_files():
     SubmitAssignment.load_submit_assignments()
@@ -16,6 +17,7 @@ def load_data_from_files():
     OfficeManager.load_office_managers()
     Grade.load_grades()
     AttendanceModel.load_attendance()
+    TalkBox.load_talkbox()
 
 def save_data_to_files():
     OfficeManager.save_office_managers()
@@ -26,3 +28,4 @@ def save_data_to_files():
     SubmitAssignment.save_submit_assignments()
     Grade.save_grades()
     AttendanceModel.save_attendance()
+    TalkBox.save_talkbox()
