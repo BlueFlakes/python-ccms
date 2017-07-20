@@ -5,6 +5,7 @@ from Models.mentor import Mentor
 from Models.student import Student
 from Models.office_manager import OfficeManager
 from time import sleep
+from datetime import date
 
 
 def get_person(a_list, title, task):
@@ -84,6 +85,10 @@ def get_user_details(questions_list):
                 print('Error 999: [\'@\', \'.\'] one of those sign was not provided.', end=2*'\n')
 
         user_details.append(user_input)
+
+    today = date.today()
+    today = "{}.{}.{}".format(today.day, today.month, today.year)
+    user_details.append(today)
 
     return user_details
 
