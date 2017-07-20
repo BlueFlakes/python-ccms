@@ -78,10 +78,11 @@ def get_user_details():
 
         while not user_input:
             user_input = codecooler_view.get_inputs('', [question])[0]
-            user_input = additional_filters_for_user_details(question, user_input)
-
-            if user_input == None:
-                print('Error 999: [\'@\', \'.\'] one of those sign was not provided.', end=2*'\n')
+            try:
+                user_input = additional_filters_for_user_details(question, user_input)
+            except ValueError as err:
+                print(err)
+                user_input = None
 
         user_details.append(user_input)
 
@@ -98,8 +99,7 @@ def additional_filters_for_user_details(question, user_input):
 
         for sign in expected_signs:
             if sign not in user_input:
-                user_input = None
-                break
+                raise ValueError("Not proper email format\n")
 
     return user_input
 
@@ -118,7 +118,14 @@ def modify_person_details(a_list, choosen_detail, title, task):
 
     if person:
         updated_information = codecooler_view.get_inputs(title, task)[0]
-        _modify_person_details_request(person, choosen_detail, updated_information)
+
+        try:
+            updated_information = additional_filters_for_user_details(choosen_detail, updated_information)
+        except ValueError as err:
+            print(err)
+            sleep(1.5)
+        else:
+            _modify_person_details_request(person, choosen_detail, updated_information)
 
 
 def _modify_person_details_request(person, choosen_detail, updated_information):
