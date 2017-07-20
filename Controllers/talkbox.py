@@ -1,36 +1,26 @@
 from View import talkbox_view, codecooler_view
+from Models.talkbox import TalkBox
+from Models.message import Message
 from data_manager import DataManager
 from time import sleep
 
 
 def start_talkbox(name, surname):
     name = name + " " + surname
-    chat = DataManager.read_file("csv/talkbox.csv")
-
-    chat = start_chat(chat, name)
-    DataManager.save_file("csv/talkbox.csv", chat)
+    start_chat(name)
 
 
-def start_chat(chat, name):
-    message = 1
-    while not message == "0":
-        talkbox_view.print_chat(chat)
-        message = talkbox_view.get_message()
-        codecooler_view.clear_window()
+def start_chat(name):
+    received_message = None
 
-        if len(message) > 70:
+    while received_message != "0":
+        talkbox_view.print_chat(TalkBox.get_talkbox()[::-1])
+        received_message = talkbox_view.get_message()
+        #codecooler_view.clear_window()
+
+        if len(received_message) > 70:
             talkbox_view.too_long_message()
             sleep(1.5)
 
-        elif message != "0":
-            chat.append([name, message])
-
-        chat = archive(chat)
-
-    return chat
-
-def archive(chat):
-    if len(chat) > 20:
-        chat = chat[-20:]
-
-    return chat
+        elif received_message != "0":
+            TalkBox.add_message(name, received_message)
