@@ -16,7 +16,7 @@ def start_chat(name):
     while received_message != "0":
         talkbox_view.print_chat(TalkBox.get_talkbox()[::-1])
         received_message = talkbox_view.get_message()
-        #codecooler_view.clear_window()
+        codecooler_view.clear_window()
 
         if len(received_message) > 70:
             talkbox_view.too_long_message()
