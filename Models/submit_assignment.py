@@ -27,7 +27,7 @@ class SubmitAssignment:
         self.status = status
 
     def convert_deadline(self, deadline_update):
-        self.deadline = datetime.strptime(deadline_update, "%Y-%m-%d").date()        
+        self.deadline = datetime.strptime(deadline_update, "%Y-%m-%d").date()
 
     @classmethod
     def add_assignment(cls, task):
@@ -42,7 +42,6 @@ class SubmitAssignment:
     @classmethod
     def load_submit_assignments(cls):
         cls.submit_assignments = tools.get_data_from_file(cls._file_name, SubmitAssignment)
-        print(cls.submit_assignments)
 
     @classmethod
     def get_records_from_objects(cls):
