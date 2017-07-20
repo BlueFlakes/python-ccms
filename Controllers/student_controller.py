@@ -10,6 +10,7 @@ from time import sleep
 from datetime import date
 from Models.grade import Grade
 
+
 def start_controller(name, surname, idx):
     """
     Allow student user perform assign tasks.
@@ -50,8 +51,7 @@ def start_controller(name, surname, idx):
             talkbox.start_talkbox(name, surname)
 
         elif user_choice == "6":
-            debt = calculate_debt(idx)
-            codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
+            show_debt(idx)
 
 
 def show_assignments():
@@ -138,6 +138,13 @@ def change_student_email():
     task = ['Email']
     instances_manager.modify_person_details(Student.student_list, 'email', title, task)
 
+
+def show_debt(idx):
+    debt = calculate_debt(idx)
+    codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
+    codecooler_view.state_locker()
+
+
 def calculate_debt(idx):
     today = date.today()
     start_date = get_start_date(idx)
@@ -145,6 +152,7 @@ def calculate_debt(idx):
     delta = today - start_date
 
     return (delta.days * 41)
+
 
 def get_start_date(idx):
     start_date = date.today()
