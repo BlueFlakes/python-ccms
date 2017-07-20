@@ -8,7 +8,12 @@ from Models.grade import Grade
 from Models.attendance import AttendanceModel
 from Models.talkbox import TalkBox
 
+
 def load_data_from_files():
+    """
+    Load data from all csv files as call of proper methods for classes
+    """
+
     SubmitAssignment.load_submit_assignments()
     Assignment.load_assignments()
     Student.load_students()
@@ -19,7 +24,12 @@ def load_data_from_files():
     AttendanceModel.load_attendance()
     TalkBox.load_talkbox()
 
+
 def save_data_to_files():
+    """
+    Save data from all csv files as call of proper methods for classes
+    """
+
     OfficeManager.save_office_managers()
     Student.save_students()
     Mentor.save_mentors()
