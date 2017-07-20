@@ -1,4 +1,5 @@
 from Data import tools
+from datetime import datetime, date
 
 class SubmitAssignment:
     """This class represents students submited assigements
@@ -9,7 +10,7 @@ class SubmitAssignment:
     submit_assignments = []
     _file_name = 'csv/submitted_assgn.csv'
 
-    def __init__(self, idx, link, title, date='', status='not provided'):
+    def __init__(self, idx, link, title, deadline, status='not provided'):
         """
         Constructor of SubmitAssignment object.
 
@@ -22,24 +23,17 @@ class SubmitAssignment:
         self.idx = idx
         self.link = link
         self.title = title
-        self.date = self.add_date(date)
+        self.deadline = deadline
         self.status = status
 
-
-    def add_date(self, date):
-        try:
-            self.date = date(date)
-
-        except TypeError:
-            self.date = date
+    def convert_deadline(self, deadline_update):
+        self.deadline = datetime.strptime(deadline_update, "%Y-%m-%d").date()        
 
     @classmethod
     def add_assignment(cls, task):
-        if type(task) == SubmitAssignment:
-            cls.submit_assignments.append(task)
+        cls.submit_assignments.append(task)
 
-        else:
-            raise TypeError('Wrong values you tried to push here.')
+
 
     @classmethod
     def get_submit_assignments_list(cls):
@@ -55,7 +49,7 @@ class SubmitAssignment:
         temp = []
 
         for task in cls.submit_assignments:
-            temp.append([task.idx, task.link, task.title, task.status, task.date])
+            temp.append([task.idx, task.link, task.title, str(task.deadline), task.status])
 
         return temp
 

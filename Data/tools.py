@@ -11,10 +11,7 @@ def get_data_from_file(file_name, object_type):
     temp_list_of_objects = []
 
     for record in temp_list_of_records:
-
         to_append = object_type(*record)
-
-
 
         temp_list_of_objects.append(to_append)
 
@@ -25,7 +22,7 @@ def convert_objects_to_record(person_objects):
 
     for person in person_objects:
         temp.append([person.idx, person.password, person.name,
-                                 person.surname, person.email])
+                                 person.surname, person.email, person.registration_date])
 
     return temp
 

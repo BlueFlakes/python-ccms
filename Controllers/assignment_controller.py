@@ -47,7 +47,7 @@ def is_empty_input(assgn_details):
 def _create_student_assigments(students, title):
 
     for student in students:
-        student_assigment = SubmitAssignment(student.idx, "link", title, "date")
+        student_assigment = SubmitAssignment(student.idx, "", title, "")
         SubmitAssignment.add_assignment(student_assigment)
 
 def set_deadline(d_day, d_month, d_year):
