@@ -1,7 +1,9 @@
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
+from Models.assignment import Assignment
 from Controllers import submit_assignment_controller, instances_manager, codecooler_controller, talkbox
+from Controllers import assignment_controller
 from View import codecooler_view
 from data_manager import DataManager
 from time import sleep
@@ -26,8 +28,10 @@ def start_controller(name, surname, idx):
                                   ["Submit assignment", "View grades", "Change your password",
                                    "Enter talkbox", "Debt calculator"], "Exit")
         user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
+        codecooler_view.clear_window()
 
         if user_choice == "1":
+            show_assignments()
             submit_assignment_controller.start_controller("student", idx)
 
         elif user_choice == "2":
@@ -42,6 +46,13 @@ def start_controller(name, surname, idx):
         elif user_choice == "5":
             debt = calculate_debt(idx)
             codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
+
+
+def show_assignments():
+    assignments = [[assign.title, assign.status] for assign in Assignment.get_assignments_list()]
+    title = ['Assignment title', 'Status']
+    codecooler_view.print_table(title, assignments)
+
 
 
 def view_grades(idx):
