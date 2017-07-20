@@ -20,12 +20,13 @@ def start_controller(name, surname, idx):
         surname (string): surname of user
         idx (string): unique user's id
     """
+
     user_choice = None
 
     while user_choice != "0":
         codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
-                                  ["Submit assignment", "View grades", "Students ranking",
+                                   ["Submit assignment", "View grades", "Students ranking",
                                    "Change your password", "Enter talkbox", "Debt calculator"], "Exit")
         user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
         codecooler_view.clear_window()
@@ -38,7 +39,7 @@ def start_controller(name, surname, idx):
 
         elif user_choice == "3":
             rank = get_ranking()
-            codecooler_view.print_table(["Name", "Total points" ], rank)
+            codecooler_view.print_table(["Name", "Total points"], rank)
             codecooler_view.state_locker()
             codecooler_view.clear_window()
 
@@ -54,7 +55,10 @@ def start_controller(name, surname, idx):
 
 def view_grades(idx):
     """
-    Read grades from csv file. Allow student to see his/her grades
+    Allow student to see assigments grades
+
+    Args:
+        idx (string): unique user's id
     """
 
     students_grades = []
@@ -89,6 +93,7 @@ def add_student():
 
     title = 'Creating student'
     instances_manager.add_person(Student.student_list, Student, title)
+
 
 def change_student_name():
     """
@@ -131,12 +136,29 @@ def change_student_email():
 
 
 def show_debt(idx):
+    """
+    Call functions to display student's debet
+
+    Args:
+        idx (string): unique user's id
+    """
+
     debt = calculate_debt(idx)
     codecooler_view.print_result("If you will leave us now, your debt will be ~{} PLN.\n".format(debt))
     codecooler_view.state_locker()
 
 
 def calculate_debt(idx):
+    """
+    Based on current date and date of student's course start calculate student's debet.
+
+    Args:
+        idx (string): unique user's id
+
+    Returns:
+        int: student's debet
+    """
+
     today = date.today()
     start_date = get_start_date(idx)
 
@@ -146,6 +168,16 @@ def calculate_debt(idx):
 
 
 def get_start_date(idx):
+    """
+    Get course start date of student with given idx
+
+    Args:
+        idx (string): unique user's id
+
+    Returns:
+        :obj: `date`: student's course start date
+    """
+
     start_date = date.today()
     for person in Student.student_list:
         if person.idx == idx:
@@ -155,7 +187,16 @@ def get_start_date(idx):
 
     return start_date
 
+
 def get_ranking():
+    """
+    Create students ranking with descending order as dictionary.
+    Key is student's name and surname, value is student summary grade.
+
+    Returns:
+        dict: ranking of students by grades
+    """
+
     students_rank = {}
 
     for person in Student.student_list:
@@ -169,6 +210,16 @@ def get_ranking():
 
 
 def get_grades(person):
+    """
+    Count sum of student's grades
+
+    Args:
+        person (:obj: `Student`): object representing student
+
+    Returns:
+        string: sum of student grade as string
+    """
+
     grades_sum = 0
 
     for grd in Grade.grades_list:
