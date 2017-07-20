@@ -5,9 +5,7 @@ def print_chat(chat):
     prettytable = PrettyTable(header=False, hrules=ALL, vrules=NONE)
 
     for message in chat:
-        sentence = ': ' + message[1]
-        author = message[0]
-        prettytable.add_row([author, sentence])
+        prettytable.add_row(message.compilated_message())
 
     prettytable.align = 'l'
     print(prettytable)
@@ -18,4 +16,4 @@ def get_message():
     return message
 
 def too_long_message():
-    print("Your message is too long!")
+    codecooler_view.print_error_message("Your message is too long!")
