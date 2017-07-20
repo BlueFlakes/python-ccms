@@ -1,4 +1,3 @@
-from datetime import datetime
 from Data import tools
 
 class SubmitAssignment:
@@ -10,7 +9,7 @@ class SubmitAssignment:
     submit_assignments = []
     _file_name = 'csv/submitted_assgn.csv'
 
-    def __init__(self, idx, link, name, date=None):
+    def __init__(self, idx, link, title, date='', status='not provided'):
         """
         Constructor of SubmitAssignment object.
 
@@ -22,14 +21,17 @@ class SubmitAssignment:
         """
         self.idx = idx
         self.link = link
-        self.name = name
+        self.title = title
+        self.date = self.add_date(date)
+        self.status = status
 
-        if type(date) == str:
+
+    def add_date(self, date):
+        try:
+            self.date = date(date)
+
+        except TypeError:
             self.date = date
-        else:
-            date = datetime.today()
-            self.date = "{}.{}.{} - {}:{}".format(date.day, date.month, date.year, date.hour, date.minute)
-
 
     @classmethod
     def add_assignment(cls, task):
@@ -38,7 +40,7 @@ class SubmitAssignment:
 
         else:
             raise TypeError('Wrong values you tried to push here.')
-            
+
     @classmethod
     def get_submit_assignments_list(cls):
         return cls.submit_assignments
@@ -46,13 +48,14 @@ class SubmitAssignment:
     @classmethod
     def load_submit_assignments(cls):
         cls.submit_assignments = tools.get_data_from_file(cls._file_name, SubmitAssignment)
+        print(cls.submit_assignments)
 
     @classmethod
     def get_records_from_objects(cls):
         temp = []
 
         for task in cls.submit_assignments:
-            temp.append([task.idx, task.link, task.name, task.date])
+            temp.append([task.idx, task.link, task.title, task.status, task.date])
 
         return temp
 

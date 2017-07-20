@@ -24,8 +24,6 @@ class Assignment:
         self.title = title
         self.description = description
         self.deadline = deadline
-        self.status = 'not provided'
-
 
     @classmethod
     def get_assignments_list(cls):

@@ -11,11 +11,10 @@ def get_data_from_file(file_name, object_type):
     temp_list_of_objects = []
 
     for record in temp_list_of_records:
-        try:
-            to_append = object_type(*record)
 
-        except TypeError:
-            continue
+        to_append = object_type(*record)
+
+
 
         temp_list_of_objects.append(to_append)
 
@@ -26,7 +25,7 @@ def convert_objects_to_record(person_objects):
 
     for person in person_objects:
         temp.append([person.idx, person.password, person.name,
-                                 person.surname, person.email, person.registration_date])
+                                 person.surname, person.email])
 
     return temp
 
