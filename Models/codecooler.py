@@ -1,7 +1,7 @@
 class Codecooler:
     """This abstract class represents Codecooler person"""
 
-    def __init__(self, login, password, name, surname, email):
+    def __init__(self, login, password, name, surname, email, registration_date):
         """
         Constructor of Codecooler object.
 
@@ -18,3 +18,4 @@ class Codecooler:
         self.name = name
         self.surname = surname
         self.email = email
+        self.registration_date = registration_date
