@@ -1,5 +1,6 @@
 from View import codecooler_view
 from data_manager import DataManager
+from Models.assignment import Assignment
 from Models.submit_assignment import SubmitAssignment
 from Models.grade import Grade
 from time import sleep
@@ -50,18 +51,25 @@ def student_side(idx):
     Args:
         idx (string): uniqe student id
     """
-    assignments = SubmitAssignment.get_submit_assignments_list()
-    assignments_available = DataManager.read_file("csv/assignments.csv")
-    args = codecooler_view.get_inputs("Submit your assignment", ["Link", "Assignment name"])
+    submit_assignments = SubmitAssignment.get_submit_assignments_list()
+    existing_assignments = Assignment.get_assignments_list()
 
-    for assgn in assignments_available:
-        if args[1] == assgn[0]:
-            assignments.append(SubmitAssignment(idx, args[0], args[1]))
+    user_choice = codecooler_view.get_inputs("Submit your assignment", ["Assignment name"])[0]
+
+
+    for assign in existing_assignments:
+        if user_choice == assign.title:
+
+
+
             break
 
     else:
         codecooler_view.print_result("Wrong assignment name!\n")
         sleep(1.5)
+
+
+
 
 def _grade_assigement():
     """
