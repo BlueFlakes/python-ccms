@@ -5,6 +5,7 @@ from Models.manager import Manager
 from Models.office_manager import OfficeManager
 from data_manager import DataManager
 
+
 def gen_idx(position):
     """
     Returns unical id for new user

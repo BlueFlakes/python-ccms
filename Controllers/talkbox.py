@@ -6,11 +6,24 @@ from time import sleep
 
 
 def start_talkbox(name, surname):
+    """
+    Start talkbox
+
+    Args:
+        name (string): user name
+        surname (string): user surname
+    """
+
     name = name + " " + surname
     start_chat(name)
 
 
 def start_chat(name):
+    """
+    Contain logic for talkbox. Call function to print previous 20 massages
+    and add new write by user. Also validate if new masseg isn't too long.
+    """
+
     received_message = None
 
     while received_message != "0":
