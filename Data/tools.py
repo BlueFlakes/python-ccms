@@ -26,7 +26,7 @@ def convert_objects_to_record(person_objects):
 
     for person in person_objects:
         temp.append([person.idx, person.password, person.name,
-                                 person.surname, person.email])
+                                 person.surname, person.email, person.registration_date])
 
     return temp
 

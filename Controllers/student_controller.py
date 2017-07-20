@@ -5,6 +5,7 @@ from Controllers import submit_assignment_controller, instances_manager, codecoo
 from View import codecooler_view
 from data_manager import DataManager
 from time import sleep
+from datetime import date
 from Models.grade import Grade
 
 def start_controller(name, surname, idx):
@@ -23,7 +24,7 @@ def start_controller(name, surname, idx):
 
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Submit assignment", "View grades", "Change your password",
-                                   "Enter talkbox"], "Exit")
+                                   "Enter talkbox", "Debt calculator"], "Exit")
         user_choice = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         if user_choice == "1":
@@ -37,6 +38,9 @@ def start_controller(name, surname, idx):
 
         elif user_choice == "4":
             talkbox.start_talkbox(name, surname)
+
+        elif user_choice == "5":
+            calculate_debt(idx)
 
 
 def view_grades(idx):
@@ -115,3 +119,7 @@ def change_student_email():
     title = 'Modify email'
     task = ['Email']
     instances_manager.modify_person_details(Student.student_list, 'email', title, task)
+
+def calculate_debt(idx):
+    today = date.today()
+    start_date = date.today()

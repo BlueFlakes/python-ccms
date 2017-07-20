@@ -3,7 +3,6 @@ from data_manager import DataManager
 from Models.submit_assignment import SubmitAssignment
 from Models.grade import Grade
 from time import sleep
-import os
 
 
 def start_controller(position, idx):
@@ -58,7 +57,7 @@ def student_side(idx):
         if args[1] == assgn[0]:
             assignments.append(SubmitAssignment(idx, args[0], args[1]))
             break
-            
+
     else:
         codecooler_view.print_result("Wrong assignment name!\n")
         sleep(1.5)
