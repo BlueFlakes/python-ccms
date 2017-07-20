@@ -36,11 +36,15 @@ def start_controller(name, surname, idx):
 def handle_main_menu_requests(user_request, idx, name, surname):
     """
     Call function that perform task from menu choosen by user: see list of students, mentors,
-    edit mentors
+    edit mentors, use talkbox
 
     Args:
         user_request (string): option choosen by user
+        idx (string): uniqe person id
+        name (string): person name
+        surname (strin): person surname
     """
+
     if user_request == '1':
         get_mentors_list(lock=True)
 
@@ -52,9 +56,8 @@ def handle_main_menu_requests(user_request, idx, name, surname):
 
     elif user_request == "4":
         rank = student_controller.get_ranking()
-        codecooler_view.print_table(["Name", "Total points" ], rank)
+        codecooler_view.print_table(["Name", "Total points"], rank)
         codecooler_view.state_locker()
-
 
     elif user_request == '5':
         codecooler_controller.change_password(idx)
@@ -65,8 +68,10 @@ def handle_main_menu_requests(user_request, idx, name, surname):
 
 def start_mentor_edit_menu():
     """
-    Call functions that get user input and show inner menu
+    Call functions that get user input and show inner menu with options to modification Mentor object
+    or creat new Mentor object.
     """
+
     mentor_edit_menu = ['Add mentor', 'Delete mentor', 'Modify mentor name',
                         'Modify mentor surname', 'Modify mentor password',
                         'Modify mentor email']
@@ -80,7 +85,6 @@ def start_mentor_edit_menu():
         user_request = codecooler_view.get_inputs("Please choose a number", ["Number"])[0]
 
         handle_mentor_edit_requests(user_request)
-
 
 
 def handle_mentor_edit_requests(user_request):
@@ -117,10 +121,12 @@ def handle_mentor_edit_requests(user_request):
         codecooler_view.print_error_message('Wrong choice!')
         sleep(1.5)
 
+
 def get_mentors_list(lock=False):
     """
     Call functions to display formatted table with all Mentor objects details
     """
+
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     mentors = instances_manager.prepare_data_to_visualize(Mentor.mentor_list)
     codecooler_view.print_table(titles, mentors)
@@ -128,10 +134,12 @@ def get_mentors_list(lock=False):
     if lock:
         codecooler_view.state_locker()
 
+
 def get_students_list():
     """
     Call functions to display formatted table with Student object details
     """
+
     titles = ["Idx", "Password", "Name", "Surname", "Email"]
     students = instances_manager.prepare_data_to_visualize(Student.student_list)
     codecooler_view.print_table(titles, students)
@@ -142,6 +150,7 @@ def get_students_grades():
     """
     Call functions to display detail about choosen student grades
     """
+
     check_grades = codecooler_view.get_inputs("Do you want to see grades of any student?",
                                               ["Type \'Yes\' or anything else to go back to menu"])
     check_grades = check_grades[0].lower()
