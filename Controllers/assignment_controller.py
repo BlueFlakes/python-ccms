@@ -11,6 +11,12 @@ def start_controller(students):
     """
     Contain main logic for AssignmentController.
     Ask user about assigemnt details and add it to assigments list
+
+    Args:
+        students (list of :obj: `Student`): list of all students
+
+    Raises:
+        ValueError: if deadline date is wrong
     """
 
     "is_empty = True"
@@ -94,6 +100,9 @@ def check_date(deadline):
 
     Args:
         deadline (:obj: `date`): date of deadline
+
+    Raises:
+        ValueError: if deadline date is wrong
     """
 
     if deadline == date.today() or deadline < date.today():
