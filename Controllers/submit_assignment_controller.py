@@ -41,6 +41,10 @@ def mentor_side():
             task_grade = _grade_assigement()
             if task_grade != 'no graded assignment':
                 Grade.add_grade(submitted_task.idx, user_choice, task_grade)
+            break
+    else:
+        codecooler_view.print_error_message("Wrong task\'s name!")
+        sleep(2)
 
     codecooler_view.clear_window()
 
