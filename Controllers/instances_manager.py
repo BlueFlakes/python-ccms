@@ -62,16 +62,15 @@ def add_person(a_list, obj_to_create, title):
     Args:
         person (object): Student or mentor object in this case
     """
-    questions_list = ['password', 'Name', 'Surname', 'email']
-    person = get_user_details(questions_list)
-
+    person = get_user_details()
     idx = tools.gen_idx(obj_to_create.__name__.lower())
     a_list.append(obj_to_create(idx, *person))
-    print('Succesfully added new person.')
+    codecooler_view.print_result('Succesfully added new person.')
     sleep(1.5)
 
 
-def get_user_details(questions_list):
+def get_user_details():
+    questions_list = ['password', 'Name', 'Surname', 'email']
     user_details = []
 
     for question in questions_list:

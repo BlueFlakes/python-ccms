@@ -21,7 +21,7 @@ def start_controller(name, surname, idx):
     user_choice = None
 
     while user_choice != "0":
-
+        codecooler_view.clear_window()
         codecooler_view.print_menu("Welcome {} {}".format(name, surname),
                                   ["Submit assignment", "View grades", "Students ranking",
                                    "Change your password", "Enter talkbox", "Debt calculator"], "Exit")

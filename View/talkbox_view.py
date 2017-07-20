@@ -5,7 +5,8 @@ def print_chat(chat):
     prettytable = PrettyTable(header=False, hrules=ALL, vrules=NONE)
 
     for message in chat:
-        prettytable.add_row(message.compilated_message())
+        author, sentence = message.compilated_message()
+        prettytable.add_row([author, ': ' + sentence])
 
     prettytable.align = 'l'
     print(prettytable)
