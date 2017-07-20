@@ -1,7 +1,6 @@
 from Models.student import Student
 from Models.codecooler import Codecooler
 from Models.submit_assignment import SubmitAssignment
-from Models.assignment import Assignment
 from Controllers import submit_assignment_controller, instances_manager, codecooler_controller, talkbox
 from Controllers import assignment_controller
 from View import codecooler_view
@@ -32,7 +31,6 @@ def start_controller(name, surname, idx):
         codecooler_view.clear_window()
 
         if user_choice == "1":
-            show_assignments()
             submit_assignment_controller.start_controller("student", idx)
 
         elif user_choice == "2":
@@ -52,13 +50,6 @@ def start_controller(name, surname, idx):
 
         elif user_choice == "6":
             show_debt(idx)
-
-
-def show_assignments():
-    assignments = [[assign.title, assign.status] for assign in Assignment.get_assignments_list()]
-    title = ['Assignment title', 'Status']
-    codecooler_view.print_table(title, assignments)
-
 
 
 def view_grades(idx):

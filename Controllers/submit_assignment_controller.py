@@ -4,6 +4,7 @@ from Models.assignment import Assignment
 from Models.submit_assignment import SubmitAssignment
 from Models.grade import Grade
 from time import sleep
+from prettytable import PrettyTable, ALL
 
 
 def start_controller(position, idx):
@@ -44,6 +45,38 @@ def mentor_side():
 
     codecooler_view.clear_window()
 
+
+def show_assignments(existing_assignments):
+    assignments = [[assign.title, assign.status] for assign in existing_assignments]
+    title = ['Assignment title', 'Status']
+    codecooler_view.print_table(title, assignments)
+
+
+def find_assignment(user_choice, existing_assignments):
+    found_assigment = None
+
+    for assignment in existing_assignments:
+        if user_choice == assignment.title:
+            found_assigment = assignment
+            break
+
+    if found_assigment is None and user_choice != '0':
+        codecooler_view.print_error_message("Wrong assignment name!\n")
+        sleep(1.5)
+
+    return found_assigment
+
+
+def find_belonging_task(idx, submit_assignments, assignment_title):
+    found_submit_assignment = None
+
+    for submit_assignment in submit_assignments:
+        if idx == submit_assignment.idx and submit_assignment.name == assignment_title:
+            found_submit_assignment = submit_assignment
+
+    return found_submit_assignment
+
+
 def student_side(idx):
     """
     Allows student to submit assignment
@@ -51,25 +84,72 @@ def student_side(idx):
     Args:
         idx (string): uniqe student id
     """
-    submit_assignments = SubmitAssignment.get_submit_assignments_list()
     existing_assignments = Assignment.get_assignments_list()
+    user_choice = None
 
-    user_choice = codecooler_view.get_inputs("Submit your assignment", ["Assignment name"])[0]
+    while user_choice != '0':
+        codecooler_view.clear_window()
+        codecooler_view.print_menu('Assigment management', ['Submit your assignment'], 'Exit')
+        user_choice = codecooler_view.get_inputs("", ["Your choice"])[0]
+
+        if user_choice == '1':
+            manage_request(idx, existing_assignments)
+
+        elif user_choice == '0':
+            pass
+
+        else:
+            codecooler_view.print_error_message('No possible action!')
+            sleep(1.5)
 
 
-    for assign in existing_assignments:
-        if user_choice == assign.title:
+def manage_request(idx, existing_assignments):
+    submit_assignments = SubmitAssignment.get_submit_assignments_list()
+    codecooler_view.clear_window()
+    show_assignments(existing_assignments)
+    user_choice = codecooler_view.get_inputs("", ["Assignment name"])[0]
+
+    found_assigment = find_assignment(user_choice, existing_assignments)
+
+    if found_assigment:
+        author_assignment = find_belonging_task(idx, submit_assignments, found_assigment.title)
+        assignment_management_controller(found_assigment, author_assignment)
 
 
+def assignment_management_controller(found_assigment, student_submit_assignment):
+    menu = ['Show assignment details', 'Attach link']
+    user_choice = None
+    prettytable = prepare_prettytable(found_assigment)
 
-            break
+    while user_choice != '0':
+        codecooler_view.clear_window()
+        show_assignments([found_assigment])
+        codecooler_view.print_menu('Lets submit Assignment', menu, 'Exit')
+        user_choice = codecooler_view.get_inputs("", ["Your choice"])[0]
 
-    else:
-        codecooler_view.print_result("Wrong assignment name!\n")
-        sleep(1.5)
+        if user_choice == '1':
+            print(prettytable)
+            codecooler_view.state_locker()
 
+        elif user_choice == '2':
+            # attach link and deadline
 
+        elif user_choice == '0':
+            pass
 
+        else:
+            codecooler_view.print_error_message('No possible action!')
+            sleep(1.5)
+
+def prepare_prettytable(found_assigment):
+    prettytable = PrettyTable(hrules=ALL)
+    table_data = [['Title', found_assigment.title], ['Description', found_assigment.description],
+                  ['Deadline', found_assigment.deadline]]
+
+    for record in table_data:
+        prettytable.add_row(record)
+
+    return prettytable
 
 def _grade_assigement():
     """
