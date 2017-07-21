@@ -15,7 +15,7 @@ class Grade:
 
     def __init__(self, idx, title, grade):
         """
-        Constructor of assigment object.
+        Constructor of grade object.
 
         Args:
             idx (string): uniqe person id

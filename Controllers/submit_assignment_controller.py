@@ -39,7 +39,8 @@ def mentor_side():
             if user_choice == submitted_task.title:
                 codecooler_view.clear_window()
                 codecooler_view.print_result("Student idx: {}".format(submitted_task.idx))
-                codecooler_view.print_result("Task deadline: {} | Task provided date: {}".format(assignment.deadline, submitted_task.deadline))
+                temp_str = "Task deadline: {} | Task provided date: {}"
+                codecooler_view.print_result(temp_str.format(assignment.deadline, submitted_task.deadline))
                 codecooler_view.print_result("Assignment name: {}".format(submitted_task.title))
                 codecooler_view.print_result("Link: {}\n".format(submitted_task.link))
 
@@ -55,6 +56,16 @@ def mentor_side():
 
 
 def find_and_return_assignment(user_choice):
+    """
+    Return Assigment object of given title
+
+    Args:
+        user_choice (string): title of assigment
+
+    Returns:
+        :obj: Assigment: assigment of name given by user
+    """
+
     assignments = Assignment.get_assignments_list()
 
     for assignment in assignments:
@@ -63,6 +74,17 @@ def find_and_return_assignment(user_choice):
 
 
 def is_assignment_in_submit_assignments(provided_key, submited_assignments):
+    """
+    Validate if assigment is submited by user
+
+    Args:
+        provided_key (string): assigment title
+        submited_assignments (list of :obj: `SubmitAssignment`): list of all submited assigments
+
+    Returns:
+        bool: tell if assignement is submited
+    """
+
     found = False
 
     for assignment in submited_assignments:
@@ -136,6 +158,17 @@ def find_belonging_task(idx, submit_assignments, assignment_title):
 
 
 def find_all_belonging_tasks(idx, submit_assignments):
+    """
+    Create list of all submited assigment belong to user of given id
+
+    Args:
+        idx (string): uniqe person id
+        submit_assignments (list of :obj: `SubmitAssignment`): list of all assigment to sumbit or submited one
+
+    Returns:
+        list of :obj: `SubmitAssignment`: assigments belong to person of given id
+    """
+
     temp = []
 
     for submit_assignment in submit_assignments:

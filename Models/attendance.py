@@ -36,7 +36,7 @@ class AttendanceModel:
     def get_attendance_list(cls):
         """
         Returns:
-            staff_attendance (list of :obj: `AttendanceModel`): list of all attendances
+            list of :obj: `AttendanceModel`: list of all attendances
         """
 
         return cls.staff_attendance
