@@ -3,7 +3,14 @@ from datetime import datetime
 
 
 class AttendanceModel:
-    """This class represents attendance of students on lessons"""
+    """
+    This class represents attendance of students on lessons
+
+    Attributes:
+        staff_attendance (list of :obj: `AttendanceModel`): list of created attendances
+        _file_name (string): name of file to open
+    """
+
     staff_attendance = []
     _file_name = "csv/attendance.csv"
 
@@ -29,7 +36,7 @@ class AttendanceModel:
     def get_attendance_list(cls):
         """
         Returns:
-            staff_attendance (list of :obj: `AttendanceModel`): list of all attendances
+            list of :obj: `AttendanceModel`: list of all attendances
         """
 
         return cls.staff_attendance

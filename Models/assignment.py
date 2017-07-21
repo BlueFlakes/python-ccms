@@ -8,7 +8,8 @@ class Assignment:
     This class represents assigment created by mentor
 
     Attributes:
-        assignments (list): list of created assigments
+        assignments (:obj: `Assignment`): list of created assigments
+        _file_name (string): name of file to open
     """
     assignments = []
     _file_name = 'csv/assignments.csv'
@@ -31,7 +32,7 @@ class Assignment:
     def get_assignments_list(cls):
         """
         Returns:
-            assignments (list of :obj: `Assignment`): list of all assigments
+            list of :obj: `Assignment`: list of all assigments
         """
 
         return cls.assignments
