@@ -58,6 +58,16 @@ def mentor_side():
 
 
 def days_amount(assignment, submitted_assignment):
+    """Calculate time delay between submitted assignment date and assignment deadline
+
+    Args:
+        assignment (Assignment object)
+        submitted_assignment (SubmitAssgiment object)
+
+    Return:
+        message (str)
+
+    """
     time_delay = None
     message = ''
 
@@ -227,6 +237,14 @@ def student_side(idx):
 
 
 def manage_request(idx, assignments):
+    """Look for assginment in assignments list and then if found, manager will
+    let us go to the next step.
+
+    Args:
+        idx (str): identificator
+        assignments (list of objects)
+
+    """
     submit_assignments = SubmitAssignment.get_submit_assignments_list()
 
     codecooler_view.clear_window()
@@ -241,6 +259,13 @@ def manage_request(idx, assignments):
 
 
 def assignment_management_controller(found_assigment, student_submit_assignment):
+    """Manage student submitted assigment
+
+    Args:
+        found_assigment (Assignment object)
+        student_submit_assignment (SubmitAssignment object)
+
+    """
     menu = ['Show assignment details', 'Attach link']
     user_choice = None
     prettytable = prepare_prettytable(found_assigment)
@@ -270,6 +295,15 @@ def assignment_management_controller(found_assigment, student_submit_assignment)
 
 
 def prepare_prettytable(found_assigment):
+    """Create table specially for this specfic situation
+
+    Args:
+        found_assigment (Assignment object)
+
+    Return:
+        prettytable (PrettyTable object)
+
+    """
     prettytable = PrettyTable(hrules=ALL)
     table_data = [['Title', found_assigment.title], ['Description', found_assigment.description],
                   ['Deadline', found_assigment.deadline]]
