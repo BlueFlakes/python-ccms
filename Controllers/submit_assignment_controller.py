@@ -5,7 +5,7 @@ from Models.submit_assignment import SubmitAssignment
 from Models.grade import Grade
 from time import sleep
 from prettytable import PrettyTable, ALL
-from datetime import date
+from datetime import date, datetime
 
 
 def start_controller(position, idx):
@@ -38,9 +38,11 @@ def mentor_side():
 
             if user_choice == submitted_task.title:
                 codecooler_view.clear_window()
+
+                task_return_delay = days_amount(assignment, submitted_task)
                 codecooler_view.print_result("Student idx: {}".format(submitted_task.idx))
-                temp_str = "Task deadline: {} | Task provided date: {}"
-                codecooler_view.print_result(temp_str.format(assignment.deadline, submitted_task.deadline))
+                deadline = [assignment.deadline, submitted_task.deadline, task_return_delay]
+                codecooler_view.print_result("Task deadline: {} | Task provided date: {}{}".format(*deadline))
                 codecooler_view.print_result("Assignment name: {}".format(submitted_task.title))
                 codecooler_view.print_result("Link: {}\n".format(submitted_task.link))
 
@@ -53,6 +55,24 @@ def mentor_side():
         sleep(2)
 
     codecooler_view.clear_window()
+
+
+def days_amount(assignment, submitted_assignment):
+    time_delay = None
+    message = ''
+
+    try:
+        deadline = datetime.strptime(assignment.deadline, "%Y-%m-%d").date()
+        submit_date = datetime.strptime(submitted_assignment.deadline, "%Y-%m-%d").date()
+
+        if submit_date > deadline:
+            time_delay = (submit_date - deadline).days
+            message = ' | Late by ' + str(time_delay) + ' days'
+
+    except ValueError:
+        pass
+
+    return message
 
 
 def find_and_return_assignment(user_choice):
@@ -124,7 +144,7 @@ def find_assignment(user_choice, existing_assignments):
     found_assigment = None
 
     for assignment in existing_assignments:
-        if user_choice == assignment.title:
+        if user_choice.lower() == assignment.title.lower():
             found_assigment = assignment
             break
 
