@@ -4,6 +4,18 @@ class Table:
 
     @classmethod
     def table_creator(cls, table_titles, data):
+        """Table creator is a manager which calculate table sizes,
+        and then based on those values he create proper visualization for data
+        in table.
+
+        Args:
+            table_titles (list): contains string with titles
+            data (list): nested lists with minor data as strings
+
+        Return:
+            table_visualisation (str)
+
+        """
         cls.table = [table_titles] + data
         cls.table_sizes = cls._get_table_sizes()
         table_visualisation = cls._create_table()
@@ -12,6 +24,13 @@ class Table:
 
     @classmethod
     def _get_table_sizes(cls):
+        """Calculate table sizes
+
+        Return:
+            max_table_sizes_per_column (list): with highest width per column
+                and add empty space on the sides.
+
+        """
         record_length = len(cls.table[0])
         table_length = len(cls.table)
         empty_space = 3
@@ -29,6 +48,12 @@ class Table:
 
     @classmethod
     def _create_table(cls):
+        """Create table visualisation based on provided sizes
+
+        Return:
+            table_visualisation (str)
+
+        """
         table_visualisation = ''
 
         for record in cls.table:
@@ -43,6 +68,15 @@ class Table:
 
     @classmethod
     def _make_row(cls, record):
+        """Fill up string in proper format with provided data
+
+        Args:
+            record (list)
+
+        return:
+            row (str)
+
+        """
         row = '|'
 
         for i, column in enumerate(record):
@@ -59,6 +93,15 @@ class Table:
 
     @staticmethod
     def _make_separator(row):
+        """Create row separator for table
+
+        Args:
+            record (row)
+
+        return:
+            row (str)
+
+        """
         separator = ''
 
         for i in range(len(row)):
@@ -76,6 +119,16 @@ class Table:
 
     @staticmethod
     def _modify_corners(table_visualisation):
+        """This function without any at least intermediate logic level,
+        modify corners to expected look.
+
+        Args:
+            table_visualisation (str)
+
+        Return:
+            table (str)
+
+        """
         table = table_visualisation.split('\n')
         row_length = len(table[0])
         first_separator = '/' + ((row_length - 2) * '-') + '\\'
