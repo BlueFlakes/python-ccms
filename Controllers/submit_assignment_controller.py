@@ -62,8 +62,8 @@ def days_amount(assignment, submitted_assignment):
     message = ''
 
     try:
-        deadline = datetime.strptime(assignment.deadline, "%Y-%m-%d").date()
-        submit_date = datetime.strptime(submitted_assignment.deadline, "%Y-%m-%d").date()
+        deadline = datetime.strptime(str(assignment.deadline), "%Y-%m-%d").date()
+        submit_date = datetime.strptime(str(submitted_assignment.deadline), "%Y-%m-%d").date()
 
         if submit_date > deadline:
             time_delay = (submit_date - deadline).days
